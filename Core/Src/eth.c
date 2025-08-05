@@ -108,7 +108,7 @@ void MX_ETH_Init(void)
 {
 
     /* USER CODE BEGIN ETH_Init 0 */
-    NETMPU_Config(); // MPU配置
+    NETMPU_Config(); // MPU configuration
 
     /* USER CODE END ETH_Init 0 */
 
@@ -139,22 +139,22 @@ void MX_ETH_Init(void)
         Error_Handler();
     }
     memset(&TxConfig, 0, sizeof(ETH_TxPacketConfig));
-    TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD; // Tx特性配置
-    TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;                 // 计算IP头和负载的校验和
-    TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;                                            // 在数据包末尾插入CRC填充
+    TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD; // Tx feature configuration
+    TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;                 // Calculate IP header and payload checksum
+    TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;                                            // Insert CRC padding at end of packet
     /* USER CODE BEGIN ETH_Init 2 */
     uint32_t idx = 0;
-    ETH_MACFilterConfigTypeDef filterDef; // ETH MAC过滤器配置
+    ETH_MACFilterConfigTypeDef filterDef; // ETH MAC filter configuration
 
-    HAL_ETH_GetMACFilterConfig(&heth, &filterDef); // 获取ETH MAC过滤器配置
-    filterDef.PromiscuousMode = ENABLE;            // 使能混杂模式
-    HAL_ETH_SetMACFilterConfig(&heth, &filterDef); // 设置ETH MAC过滤器配置
+    HAL_ETH_GetMACFilterConfig(&heth, &filterDef); // Get ETH MAC filter configuration
+    filterDef.PromiscuousMode = ENABLE;            // Enable promiscuous mode
+    HAL_ETH_SetMACFilterConfig(&heth, &filterDef); // Set ETH MAC filter configuration
 
     for (idx = 0; idx < ETH_RX_DESC_CNT; idx++)
     {
-        HAL_ETH_DescAssignMemory(&heth, idx, Rx_Buff[idx], NULL);//分配RX描述符内存
+        HAL_ETH_DescAssignMemory(&heth, idx, Rx_Buff[idx], NULL);//Assign RX descriptor memory
     }
-    HAL_ETH_SetMDIOClockRange(&heth); // 设置MDIO时钟范围
+    HAL_ETH_SetMDIOClockRange(&heth); // Set MDIO clock range
     /* USER CODE END ETH_Init 2 */
 }
 
@@ -275,7 +275,7 @@ void ethernet_write_phy(uint16_t reg, uint16_t value)
     HAL_ETH_WritePHYRegister(&heth, ETH_CHIP_ADDR, reg, temp);
 }
 
-/* 获取以太网芯片速度 */
+/* Get Ethernet chip speed */
 uint8_t ethernet_chip_get_speed(void)
 {
     uint8_t speed;
@@ -407,19 +407,19 @@ void PhyReset(void)
 
 if ((PHY_TYPE & 0xFFF) == 0xFFF) /*LAN8720A*/
     {
-        pcf8574_write_bit(ETH_RESET_IO, 1); // 使能自动协商
-        osal_usleep(100000);                // 等待 PHY 复位
-        pcf8574_write_bit(ETH_RESET_IO, 0); // 取消 PHY 复位
+        pcf8574_write_bit(ETH_RESET_IO, 1); // Enable auto-negotiation
+        osal_usleep(100000);                // Wait for PHY reset
+        pcf8574_write_bit(ETH_RESET_IO, 0); // Release PHY reset
 
     }
     else /*YT8512C*/
     {
-        pcf8574_write_bit(ETH_RESET_IO, 0); // 取消 PHY 复位
-        osal_usleep(100000);                // 等待 PHY 复位
-        pcf8574_write_bit(ETH_RESET_IO, 1); // 使能自动协商
+        pcf8574_write_bit(ETH_RESET_IO, 0); // Release PHY reset
+        osal_usleep(100000);                // Wait for PHY reset
+        pcf8574_write_bit(ETH_RESET_IO, 1); // Enable auto-negotiation
         osal_usleep(100000);
     }
-    __set_PRIMASK(0); // 使能中断
+    __set_PRIMASK(0); // Enable interrupts
     HAL_ETH_ReadPHYRegister(&heth, ETH_CHIP_ADDR, PHY_REGISTER2, &regvalue);
     switch (regvalue)
     {
@@ -427,7 +427,7 @@ if ((PHY_TYPE & 0xFFF) == 0xFFF) /*LAN8720A*/
         HAL_ETH_ReadPHYRegister(&heth, ETH_CHIP_ADDR, PHY_REGISTER3, &regvalue);
         if (regvalue == 0x128)
         {
-            // 识别为 YT8512C
+            // Identified as YT8512C
             ETH_CHIP_PHYSCSR = ((uint16_t)0x11);
             ETH_CHIP_SPEED_STATUS = ((uint16_t)0x4010);
             ETH_CHIP_DUPLEX_STATUS = ((uint16_t)0x2000);
@@ -435,7 +435,7 @@ if ((PHY_TYPE & 0xFFF) == 0xFFF) /*LAN8720A*/
         }
         else
         {
-            // 识别为 RTL8201
+            // Identified as RTL8201
             ETH_CHIP_PHYSCSR = ((uint16_t)0x10);
             ETH_CHIP_SPEED_STATUS = ((uint16_t)0x0022);
             ETH_CHIP_DUPLEX_STATUS = ((uint16_t)0x0004);
@@ -443,14 +443,14 @@ if ((PHY_TYPE & 0xFFF) == 0xFFF) /*LAN8720A*/
         }
         break;
     case SR8201F_PHYREGISTER2:
-        // 识别为 SR8201F
+        // 识锟斤拷为 SR8201F
         ETH_CHIP_PHYSCSR = ((uint16_t)0x00);
         ETH_CHIP_SPEED_STATUS = ((uint16_t)0x2020);
         ETH_CHIP_DUPLEX_STATUS = ((uint16_t)0x0100);
         PHY_TYPE = SR8201F;
         break;
     case LAN8720A_PHYREGISTER2:
-        // 识别为 LAN8720A
+        // 识锟斤拷为 LAN8720A
         ETH_CHIP_PHYSCSR = ((uint16_t)0x1F);
         ETH_CHIP_SPEED_STATUS = ((uint16_t)0x0004);
         ETH_CHIP_DUPLEX_STATUS = ((uint16_t)0x0010);
@@ -513,24 +513,24 @@ void PhyEventHandler(void)
                 break;
             }
 
-            /* 取消 PHY 复位 */
+            /* Release PHY reset */
             HAL_ETH_GetMACConfig(&heth, &macConfig);
             macConfig.DuplexMode = duplex;
             macConfig.Speed = speed;
-            macConfig.TransmitQueueMode = ETH_TRANSMITTHRESHOLD_128; // ETH 发送队列模式
+            macConfig.TransmitQueueMode = ETH_TRANSMITTHRESHOLD_128; // ETH transmit queue mode
             HAL_ETH_SetMACConfig(&heth, &macConfig);
-            linkState = TRUE; // 连接状态
+            linkState = TRUE; // 锟斤拷锟斤拷状态
             if (HAL_ETH_Start_IT(&heth) == HAL_OK)
                 printf("HAL_ETH_Start_IT_SUCCESS\r\n");
             else
                 printf("HAL_ETH_Start_IT_ERROR\r\n");
 
-            HAL_ETH_BuildRxDescriptors(&heth);  // 取消 PHY 复位
+            HAL_ETH_BuildRxDescriptors(&heth);  // Release PHY reset
         }
     }
     else
     {
-        linkState = FALSE; // 连接状态
+        linkState = FALSE; // 锟斤拷锟斤拷状态
     }
 }
 
@@ -541,25 +541,25 @@ void PhyTick(void)
     uint32_t value;
     int link;
 
-    // 读取 PHY 状态寄存器
+    // Read PHY status register
     HAL_ETH_ReadPHYRegister(&heth, ETH_CHIP_ADDR, ETH_CHIP_BSR, &value);
     HAL_ETH_ReadPHYRegister(&heth, ETH_CHIP_ADDR, ETH_CHIP_BSR, &value);
 
-    // 解析 PHY 链接状态
+    // Parse PHY link status
     link = (value & ETH_CHIP_BSR_LINK_STATUS) ? TRUE : FALSE;
 
     //printf("PHY link = %d, linkState = %d\n", link, linkState);
-    // 连接状态变化处理
+    // Handle link status change
     if (link && !linkState)
     {
-        phyEvent = TRUE; // 连接建立事件
-        dorun = 1;       // 运行标志
+        phyEvent = TRUE; // Link established event
+        dorun = 1;       // Run flag
         printf("Link up event\n");
     }
     else if (!link && linkState)
     {
         phyEvent = TRUE; // Link down event
-        dorun = 0;       // 运行标志
+        dorun = 0;       // Run flag
         printf("Link down event\n");
     }
 }
@@ -570,7 +570,7 @@ void low_level_output(uint8_t *p,uint32_t length)
 {  
     uint32_t framelen = 0;
     HAL_StatusTypeDef HalStatus;
-    ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT]; // 发送缓冲区
+    ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT]; // Transmit buffer
 
     memset(Txbuffer, 0, ETH_TX_DESC_CNT * sizeof(ETH_BufferTypeDef));
     Txbuffer[0].buffer = p;
@@ -605,7 +605,7 @@ void HAL_ETH_RxCpltCallback(ETH_HandleTypeDef *heth)
 }
 void HAL_ETH_TxCpltCallback(ETH_HandleTypeDef *heth)
 {
-    sendfinishflag = 0;// 发送完成标志
+    sendfinishflag = 0;// Send complete flag
 }
 
 int bfin_EMAC_send (void *packet, int length)
