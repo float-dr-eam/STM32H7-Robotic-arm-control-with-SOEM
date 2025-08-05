@@ -1,6 +1,16 @@
 # STM32H7机器人手臂控制系统
 
-基于STM32H7和EtherCAT的机器人手臂控制系统，实现了实时运动控制和轨迹规划。
+基于STM32H7和EtherCAT的机器人手臂(七轴)控制系统，实现了实时运动控制和轨迹规划。
+
+本项目是机器人手臂控制系统的嵌入式实现部分，配合 [MATLAB机械臂仿真建模](https://github.com/float-dr-eam/Mechanical-Arm-Simulation-Based-on-MATLAB) 项目可以实现完整的机械臂设计、仿真和控制系统。
+
+## 相关项目
+
+- [MATLAB机械臂仿真建模](https://github.com/float-dr-eam/Mechanical-Arm-Simulation-Based-on-MATLAB): 使用MATLAB进行机械臂的运动学仿真和轨迹规划
+  - 提供完整的机械臂D-H参数建模
+  - 实现正逆运动学计算
+  - 轨迹规划算法验证
+  - 可视化仿真环境
 
 ## 项目特点
 
@@ -20,10 +30,11 @@
    - 状态监控
 
 2. 运动控制
-   - 正向运动学计算
-   - 轨迹规划
+   - 正向运动学计算（基于D-H参数模型）
+   - 轨迹规划（与MATLAB仿真验证结果一致）
    - 非阻塞运动执行
    - 位置和速度控制
+   - 支持从MATLAB导入轨迹数据
 
 3. 状态监控
    - LCD实时显示
@@ -48,10 +59,22 @@
 
 1. 克隆项目
 2. 配置硬件连接
-3. 使用MDK-ARM或STM32CubeIDE编译
+3. 使用MDK-ARM或EIDE编译
 4. 下载程序到开发板
 5. 连接EtherCAT从站
 6. 上电运行
+
+### 与MATLAB仿真结合使用
+
+1. 首先使用 [MATLAB仿真项目](https://github.com/float-dr-eam/Mechanical-Arm-Simulation-Based-on-MATLAB) 进行：
+   - 机械臂D-H参数建模
+   - 运动学计算验证
+   - 轨迹规划仿真
+
+2. 在本项目中：
+   - 使用非阻塞运动控制执行轨迹
+   - 通过LCD实时监控执行状态
+   - 根据反馈进行位置调整
 
 ## 许可证
 
