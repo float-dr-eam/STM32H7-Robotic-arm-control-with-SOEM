@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "ethercat.h": "c",
+        "ld3m_ec7010.h": "c",
+        "arm_const_structs.h": "c",
+        "malloc.h": "c",
+        "my_arm.h": "c"
+    },
+    "idf.pythonInstallPath": "D:\\Espressif\\tools\\idf-python\\3.11.2\\python.exe",
+    "idf.openOcdConfigs": [
+        "board/esp32s3-builtin.cfg"
+    ],
+    "idf.portWin": "COM8"
+}

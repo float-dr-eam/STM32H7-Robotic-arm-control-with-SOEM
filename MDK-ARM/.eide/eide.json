@@ -1,0 +1,539 @@
+{
+  "name": "EtherCat_Master",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": [
+      {
+        "name": "Application",
+        "files": [],
+        "folders": [
+          {
+            "name": "MDK-ARM",
+            "files": [
+              {
+                "path": "startup_stm32h743xx.s"
+              }
+            ],
+            "folders": []
+          },
+          {
+            "name": "User",
+            "files": [],
+            "folders": [
+              {
+                "name": "Core",
+                "files": [
+                  {
+                    "path": "../Core/Src/main.c"
+                  },
+                  {
+                    "path": "../Core/Src/gpio.c"
+                  },
+                  {
+                    "path": "../Core/Src/dma.c"
+                  },
+                  {
+                    "path": "../Core/Src/eth.c"
+                  },
+                  {
+                    "path": "../Core/Src/memorymap.c"
+                  },
+                  {
+                    "path": "../Core/Src/tim.c"
+                  },
+                  {
+                    "path": "../Core/Src/usart.c"
+                  },
+                  {
+                    "path": "../Core/Src/stm32h7xx_it.c"
+                  },
+                  {
+                    "path": "../Core/Src/stm32h7xx_hal_msp.c"
+                  },
+                  {
+                    "path": "../Core/Src/my_flah.c"
+                  }
+                ],
+                "folders": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "SOEM",
+        "files": [
+          {
+            "path": "../SOEM/soem/ethercatbase.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercatcoe.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercatconfig.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercatdc.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercateoe.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercatfoe.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercatmain.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercatprint.c"
+          },
+          {
+            "path": "../SOEM/soem/ethercatsoe.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "OSAL",
+        "files": [
+          {
+            "path": "../SOEM/osal/osal.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "OSHW",
+        "files": [
+          {
+            "path": "../SOEM/oshw/nicdrv.c"
+          },
+          {
+            "path": "../SOEM/oshw/oshw.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "APP",
+        "files": [
+          {
+            "path": "../SOEM/app/DcSync.c"
+          },
+          {
+            "path": "../SOEM/app/servoS7test.c"
+          },
+          {
+            "path": "../SOEM/app/simpletest.c"
+          },
+          {
+            "path": "../SOEM/app/slaveinfo.c"
+          },
+          {
+            "path": "../SOEM/app/LD3M_ec7010.c"
+          },
+          {
+            "path": "../SOEM/app/my_arm.c"
+          },
+          {
+            "path": "../SOEM/app/interpolation.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "BSP",
+        "files": [
+          {
+            "path": "../BSP/24CXX/24cxx.c"
+          },
+          {
+            "path": "../BSP/KEY/key.c"
+          },
+          {
+            "path": "../BSP/LCD/ltdc.c"
+          },
+          {
+            "path": "../BSP/LCD/lcd.c"
+          },
+          {
+            "path": "../BSP/PCF8574/pcf8574.c"
+          },
+          {
+            "path": "../BSP/SDRAM/sdram.c"
+          },
+          {
+            "path": "../BSP/TOUCH/ctiic.c"
+          },
+          {
+            "path": "../BSP/TOUCH/ft5206.c"
+          },
+          {
+            "path": "../BSP/TOUCH/gt9xxx.c"
+          },
+          {
+            "path": "../BSP/TOUCH/touch.c"
+          },
+          {
+            "path": "../BSP/IIC/myiic.c"
+          },
+          {
+            "path": "../BSP/MPU/mpu.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Drivers",
+        "files": [],
+        "folders": [
+          {
+            "name": "STM32H7xx_HAL_Driver",
+            "files": [
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hsem.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_exti.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_eth_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sdram.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_sram.c"
+              },
+              {
+                "path": "../Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_ltdc.c"
+              }
+            ],
+            "folders": []
+          },
+          {
+            "name": "CMSIS",
+            "files": [
+              {
+                "path": "../Core/Src/system_stm32h7xx.c"
+              },
+              {
+                "path": "../Drivers/CMSIS/DSP/Include/arm_const_structs.h"
+              },
+              {
+                "path": "../Drivers/CMSIS/DSP/Include/arm_math.h"
+              },
+              {
+                "path": "../Drivers/CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c"
+              }
+            ],
+            "folders": []
+          }
+        ]
+      },
+      {
+        "name": "::CMSIS",
+        "files": [],
+        "folders": []
+      },
+      {
+        "name": "Middle",
+        "files": [
+          {
+            "path": "../Middlewares/USMART/usmart.c"
+          },
+          {
+            "path": "../Middlewares/USMART/usmart_config.c"
+          },
+          {
+            "path": "../Middlewares/USMART/usmart_port.c"
+          },
+          {
+            "path": "../Middlewares/USMART/usmart_str.c"
+          },
+          {
+            "path": "../Middlewares/MALLOC/malloc.c"
+          }
+        ],
+        "folders": []
+      }
+    ]
+  },
+  "outDir": "build",
+  "deviceName": "STM32H743IITx",
+  "packDir": ".pack/Keil/STM32H7xx_DFP.4.0.0",
+  "miscInfo": {
+    "uid": "4705a4e5795bc94e592aabeaf4e403df"
+  },
+  "targets": {
+    "EtherCat_Master": {
+      "excludeList": [
+        "<virtual_root>/APP/mid",
+        "<virtual_root>/usmart_config.c",
+        "<virtual_root>/usmart_port.c",
+        "<virtual_root>/usmart_str.c",
+        "<virtual_root>/usmart.c"
+      ],
+      "toolchain": "AC5",
+      "compileConfig": {
+        "cpuType": "Cortex-M7",
+        "floatingPointHardware": "double",
+        "scatterFilePath": "",
+        "useCustomScatterFile": false,
+        "storageLayout": {
+          "RAM": [
+            {
+              "tag": "RAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "RAM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x20000000",
+                "size": "0x20000"
+              },
+              "isChecked": false,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x24000000",
+                "size": "0x80000"
+              },
+              "isChecked": true,
+              "noInit": false
+            }
+          ],
+          "ROM": [
+            {
+              "tag": "ROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "ROM",
+              "id": 3,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            },
+            {
+              "tag": "IROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x8000000",
+                "size": "0x200000"
+              },
+              "isChecked": true,
+              "isStartup": true
+            },
+            {
+              "tag": "IROM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x0",
+                "size": "0x0"
+              },
+              "isChecked": false,
+              "isStartup": false
+            }
+          ]
+        },
+        "options": "null",
+        "archExtensions": ""
+      },
+      "uploader": "OpenOCD",
+      "uploadConfig": {
+        "bin": "",
+        "target": "stm32h7x_dual_bank",
+        "interface": "stlink",
+        "baseAddr": "0x08000000"
+      },
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "",
+          "cpuInfo": {
+            "vendor": "null",
+            "cpuName": "null"
+          },
+          "proType": 1,
+          "speed": 8000,
+          "otherCmds": ""
+        }
+      },
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          ".",
+          "../Core/Inc",
+          "../Drivers/STM32H7xx_HAL_Driver/Inc",
+          "../Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
+          "../Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+          "../Drivers/CMSIS/Include",
+          "../SOEM/app",
+          "../SOEM/osal",
+          "../SOEM/oshw",
+          "../SOEM/soem",
+          "../BSP",
+          "../BSP/TOUCH",
+          "../BSP/LCD",
+          "../BSP/PCF8574",
+          "../BSP/KEY",
+          "../BSP/IIC",
+          "../BSP/24CXX",
+          "../BSP/SDRAM",
+          ".cmsis/include",
+          "RTE/_EtherCat_Master",
+          "../Middlewares/USMART",
+          "../Middlewares/MALLOC",
+          "../Drivers/CMSIS/DSP/Include",
+          "../Drivers/CMSIS/DSP/Lib/ARM",
+          "../BSP/MPU"
+        ],
+        "libList": [],
+        "defineList": [
+          "USE_HAL_DRIVER",
+          "STM32H743xx",
+          " ARM_MATH_CM7",
+          "__TARGET_FPU_VFP"
+        ]
+      },
+      "builderOptions": {
+        "AC5": {
+          "version": 4,
+          "beforeBuildTasks": [],
+          "afterBuildTasks": [],
+          "global": {
+            "output-debug-info": "enable"
+          },
+          "c/cpp-compiler": {
+            "optimization": "level-0",
+            "one-elf-section-per-function": true,
+            "c99-mode": true,
+            "warnings": "all-warnings",
+            "C_FLAGS": "--gnu"
+          },
+          "asm-compiler": {},
+          "linker": {
+            "output-format": "elf",
+            "ro-base": "0x08000000",
+            "rw-base": "0x20000000"
+          }
+        }
+      }
+    }
+  },
+  "version": "3.6"
+}

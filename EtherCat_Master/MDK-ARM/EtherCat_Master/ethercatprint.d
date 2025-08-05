@@ -1,0 +1,10 @@
+ethercat_master\ethercatprint.o: ..\SOEM\soem\ethercatprint.c
+ethercat_master\ethercatprint.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+ethercat_master\ethercatprint.o: ..\SOEM\oshw\oshw.h
+ethercat_master\ethercatprint.o: ..\SOEM\soem\ethercattype.h
+ethercat_master\ethercatprint.o: ..\SOEM\osal\osal.h
+ethercat_master\ethercatprint.o: ..\SOEM\osal\osal_defs.h
+ethercat_master\ethercatprint.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+ethercat_master\ethercatprint.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+ethercat_master\ethercatprint.o: ..\SOEM\oshw\nicdrv.h
+ethercat_master\ethercatprint.o: ..\SOEM\soem\ethercatmain.h

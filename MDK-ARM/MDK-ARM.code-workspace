@@ -1,0 +1,97 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.autoGuessEncoding": true,
+        "C_Cpp.default.configurationProvider": "cl.eide",
+        "C_Cpp.errorSquiggles": "disabled",
+        "files.associations": {
+            ".eideignore": "ignore",
+            "*.a51": "a51",
+            "*.h": "c",
+            "*.c": "c",
+            "*.hxx": "cpp",
+            "*.hpp": "cpp",
+            "*.c++": "cpp",
+            "*.cpp": "cpp",
+            "*.cxx": "cpp",
+            "*.cc": "cpp",
+            "limits": "c",
+            "type_traits": "c",
+            "cmath": "c",
+            "array": "c",
+            "string": "c",
+            "string_view": "c",
+            "vector": "c",
+            "istream": "c",
+            "ostream": "c",
+            "sstream": "c",
+            "streambuf": "c",
+            "algorithm": "c",
+            "atomic": "c",
+            "cctype": "c",
+            "cerrno": "c",
+            "cfloat": "c",
+            "climits": "c",
+            "clocale": "c",
+            "cstdarg": "c",
+            "cstddef": "c",
+            "cstdint": "c",
+            "cstdio": "c",
+            "cstdlib": "c",
+            "cwchar": "c",
+            "cwctype": "c",
+            "deque": "c",
+            "unordered_map": "c",
+            "exception": "c",
+            "memory": "c",
+            "memory_resource": "c",
+            "optional": "c",
+            "system_error": "c",
+            "tuple": "c",
+            "utility": "c",
+            "fstream": "c",
+            "initializer_list": "c",
+            "ios": "c",
+            "iosfwd": "c",
+            "iostream": "c",
+            "new": "c",
+            "queue": "c",
+            "stdexcept": "c",
+            "cinttypes": "c",
+            "cstdbool": "c",
+            "random": "c",
+            "typeinfo": "c"
+        },
+        "[yaml]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4,
+            "editor.autoIndent": "advanced"
+        },
+        "trae.enableCodelens": {
+            "enableInlineDocumentation": false,
+            "enableInlineUnitTest": false,
+            "enableInlineExplain": false,
+            "enableExploreIde": false
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "cl.eide",
+            "keroc.hex-fmt",
+            "xiaoyongdong.srecord",
+            "hars.cppsnippets",
+            "zixuanwang.linkerscript",
+            "redhat.vscode-yaml",
+            "IBM.output-colorizer",
+            "cschlosser.doxdocgen",
+            "ms-vscode.vscode-serial-monitor",
+            "alefragnani.project-manager",
+            "dan-c-underwood.arm",
+            "marus25.cortex-debug"
+        ]
+    }
+}

@@ -1,0 +1,3477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package schemaVersion="1.7.36" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.36/schema/PACK.xsd">
+  <vendor>Keil</vendor>
+  <name>STM32H7xx_DFP</name>
+  <description overview="Documents/OVERVIEW.md">STMicroelectronics STM32H7 Series Device Support</description>
+  <url>https://www.keil.com/pack/</url>
+  <repository type="git">https://github.com/Open-CMSIS-Pack/STM32H7xx_DFP.git</repository>
+  <license>LICENSE</license>
+  <licenseSets>
+    <licenseSet id="all" default="true" gating="true">
+      <license name="LICENSE" title="Apache 2.0 open-source license" spdx="Apache-2.0"/>
+    </licenseSet>
+  </licenseSets>
+
+  <releases>
+    <release version="4.0.0" date="2024-10-11" tag="v4.0.0">
+      Updated for new CMSIS-Toolbox CubeMX integration
+      Removed CMSIS Drivers
+      Removed STM32CubeMX_FW_H7
+      Removed board drivers (ADC, Buttons, GLCD, LED...)
+      Removed all examples
+      Removed previous generator (gpdsc)
+      Added new global generator
+      Package Description (pdsc):
+      - Removed Device:Startup component
+      - Removed Device:STM32Cube HAL components
+      - Removed Device:STM32Cube LL components
+      - Removed Board descriptions
+      - Removed BSP components
+      - Removed compile device header from device description
+      - Removed unused conditions
+      - Replaced documentation files with permalinks
+    </release>
+    <release version="3.1.1" date="2023-07-04">
+      Board Support:
+      - Updated emWin examples
+      -- emWin LCD configuration for STM32H743I_EVAL
+      CMSIS-Driver:
+      - I2C: Updated I2C_GetPeriClock function implementation
+    </release>
+    <release version="3.1.0" date="2023-03-22">
+      Updated Pack to STM32Cube_FW_H7 Firmware Package version to V1.11.0
+      Device Support:
+      - Updated documentation
+      - Updated SVD files
+      Pack Description:
+      - Removed HAL dependency for component ::Device:Startup
+      - Removed unnecessary Documentation components (STM32H743I-EVAL and STM32H7B3I-EVAL)
+      Board Support:
+      - Updated STM32H743I_EVAL and STM32H7B3I_EVAL emWin LCD configuration
+      Examples:
+      - Updated linker script files (relating to LTO)
+      - Updated MPU region for SDRAM and SDRAM configuration
+      - Corrected EMAC DMA descriptors positioning for toolchains other than GNU
+      - Added command-line option for placement of unassigned sections (--any_placement=first_fit).
+      - Updated RTX_Config files
+      CMSIS-Driver:
+      - Updated documentation
+      - Updated necessary variables to volatile to avoid LTO problems
+      - EMAC:
+      -- Updated receive functions for HAL zero-copy concept
+      -- Corrected multicast address filtering
+      - I2C:
+      -- Corrected MasterTransmit and MasterReceive functions when not generating STOP condition (when xfer_pending is "true")
+      -- Corrected Bus Clear functionality
+      -- Corrected check if I2C peripheral is enabled in the CubeMx and improved user experience if it is not enabled
+      -- Added support for DMA and Data Cache handling
+      - MCI:
+      -- Improved PowerControl and Control functions
+      - SPI:
+      -- Corrected GetDataCount implementation
+      -- Corrected GetStatus function handling of Mode Fault
+      -- Improved robustness of Initialize, Uninitialize, PowerControl and Control functions
+      -- Updated DMA and Data Cache handling (improved code readability and maintainability)
+      - USART:
+      -- Corrected Flow Control capabilities
+      -- Corrected GetStatus function and status flags handling
+      -- Corrected GetTxCount and GetRxCount implementation
+      -- Updated DMA and Data Cache handling (improved code readability and maintainability)
+      - USBH:
+      -- Corrected check if Host mode is enabled
+    </release>
+    <release version="3.0.0" date="2022-02-28">
+      STM32CubeMX integration:
+      - New workflow concept (incompatible with earlier STM32H7xx_DFPs).
+      - Automatic migration of projects created with earlier STM32H7xx_DFPs.
+      - Added STM32CubeMX integration for Dual-core devices.
+      CMSIS-Driver:
+      - I2C: Added I2C interface for I2C5 (Driver_I2C5).
+      - USART:
+      -- LPUART1 interface accessed by Driver_USART21 (previously by Driver_USART9).
+      -- Added UART interface for USART9 (Driver_USART9).
+      -- Added UART interface for USART10 (Driver_USART10).
+      - MCI:
+      -- Updated retrieval of SDMMC kernel clock frequency in PowerControl function.
+      Examples:
+      - Migrated to new workflow concept.
+      - Added MPU configuration.
+      - Added linker scatter files.
+    </release>
+    <release version="2.8.0" date="2021-09-13">
+      Updated Pack to STM32Cube_FW_H7 Firmware Package version V1.9.0.
+      STM32CubeMX integration:
+      - Added support for BDMA, I2S, LIBJPEG, RNG, SPDIFRX, VREFBUF configurations (FrameworkCubeMX_gpdsc.ftl).
+      - Suppressed generation of the condition for the Debug Component (FrameworkCubeMX_gpdsc.ftl).
+      - Synchronized versions of generated component ::Device:STM32Cube Framework:STM32CubeMX (in gpdsc) and its bootstrap (in pdsc).
+      Package Description (pdsc):
+      - Updated schemaVersion (1.7.2).
+      - Corrected device in board description attribute 'mountedDevice'.
+      - Corrected RAM settings for STM32H72x, STM32H73x devices.
+      - Added debugProbe to board description.
+      - Added global define USE_HAL_DRIVER to the component ::Device:STM32Cube HAL:Common.
+      - Added global define USE_FULL_LL_DRIVER to the component ::Device:STM32Cube LL:Common.
+      Devices Support:
+      - Added SDF files (STM32H743.sdf, STM32H747.sdf).
+      Flash Programming Algorithms:
+      - Updated Flash Loader source code (Added CMSIS-CORE component).
+      CMSIS-Driver:
+      - Updated disclaimers.
+      - ETH: Removed Data Cache maintenance. DMA descriptors and frame buffers must be positioned in Non-cacheable memory.
+      - I2C:
+      -- Disabled DMA transfers.
+      -- Corrected pins configuration.
+      -- Synchronized to HAL V1.10.0.
+      - MCI:
+      -- Replaced empty delay loops with _NOP().
+      -- Improved DCache maintenance.
+      - SPI: Improved DCache maintenance.
+      - UART:
+      -- Added UART interface for LPUART1 (Driver_USART9).
+      -- Improved DCache maintenance.
+      - USBH:
+      -- Fixed port resume occasionally getting stuck in resume signaling.
+      -- Added compile time configuration for reducing Bulk IN NAK rate.
+      - USBD:
+      -- Added support for VBUS sensing.
+      -- Corrected USBD_GetFrameNumber function.
+      - OTG: Removed include of stm32h7xx_hal_pcd.h header.
+      Examples:
+      - Migrated CubeMX projects to V6.3.0.
+      - Overridden default HAL_InitTick function.
+      - Added scatter file to Network examples.
+      - Updated USB examples for STM32H743I_EVAL board.
+      - Changed Assembler option to armclang(Auto Select).
+      - Updated config files to CMSIS 5.8.0.
+    </release>
+    <release version="2.7.0" date="2020-10-30">
+      Devices Support:
+      - Added device description for STM32H735VGHx, STM32H725VGHx and STM32H725VEHx.
+      - Updated a subset of SVD files (STM32H723, STM32H73x, STM32H7A3x, STM32H7B3x).
+      - Updated Reference Manual for STM32H7A3/B3 and STM32H7B0.
+    </release>
+    <release version="2.6.0" date="2020-09-11">
+      Updated Pack to STM32Cube_FW_H7 Firmware Package version V1.8.0:
+      - Added device support for STM32H72x/H73x with 1MB ad 512 kB flash size.
+      - Added device support for STM32H730xxQ with 128KB flash size.
+      - Added support to the OSPI external Loader for the STM32H735G Disco board with ITCM RAM at 0x24000000.
+      - Updated external flash programming algorithms and added their projects (source code) for:
+        STM32H747I-EVAL_QSPI, STM32H747I-Disco_QSPI, STM32H7B3I-EVAL_OSPI, STM32H7B0I-EVAL_OSPI, STM32H7B0I-Disco_OSPI, STM32H7B3I-Disco_OSPI, STM32H735G-Disco_OSPI
+      - Updated SVD files.
+      - Updated Documentation.
+      CMSIS-Driver:
+      - ETH: Added data cache enable bit check.
+      - MCI:
+      -- Added handling for separate SD and MMC HAL layers.
+      -- Added busy signal handling after CMDREND interrupt.
+      -- Added data cache enable bit check.
+      Examples:
+      - Migrated CubeMX projects to V6.0.0
+      - Updated all USB Host/Device examples with user templates from MDK-Middleware v7.11.1
+      - Updated emWin driver for STM32H7B3I_EVAL board.
+    </release>
+    <release version="2.5.0" date="2020-03-23">
+      Board Support:
+      - Added STM32H7B3I_EVAL board support.
+      -- Blinky example
+      Flash Programming:
+      - Updated the internal Flash programming algorithm for STM32H7xxxG devices with 1MB flash size.
+      - Updated the external FMC-NOR programming algorithm for both STM32H743I Eval Rev B01 (2015) and B03 (2018).
+      - Added support for the external QSPI programming algorithm for the STM32H747I Disco board.
+      - Added support for the external MMC programming algorithm for the STM32H750B-Disco board.
+    </release>
+    <release version="2.4.0" date="2020-01-29">
+      Updated Pack to STM32Cube_FW_H7 Firmware Package version V1.6.0 (STM32CubeMX V5.5.0).
+      This pack adds device support for:
+      - Value line: STM32H7B0xx.
+      - Product lines: STM32H7A3xx/HB3xx.
+      Updated examples to use Arm Compiler 6 and
+      Added additional Flash Algorithms.
+      Updated SVD files.
+    </release>
+    <release version="2.3.1" date="2019-09-16">
+      Updated GPDSC freemarker template:
+      - Added support for IWDG, WWDG peripherals.
+      - Added support for Timebase Source set to TIMx.
+      CMSIS-Driver:
+      - ETH: Corrected GetRxFrameSize and ReadFrame functions to fix long latencies.
+      Updated board examples:
+      - Terminating app_main thread with osThreadExit() to avoid endless loop.
+      - Updated graphics examples for use with Segger emWin version 5.50.
+    </release>
+    <release version="2.3.0" date="2019-06-14">
+      Updated Pack to STM32Cube_FW_H7 Firmware Package version V1.4.0.
+      Requires STM32CubeMX version 5.2.1.
+      STM32CubeMX Integration:
+      - Only supported for single core devices.
+      - Updated MX_Device_h.ftl:
+         -- Added parsing of USART virtual mode.
+         -- Added handling for bracket symbols '(' and ')' in macro generation.
+      Updated Board Examples for STM32H743I_EVAL:
+      - Updated to MDK-Middleware V7.8.0.
+      - Updated to using CMSIS-RTOS2 RTX(Debug/Release).
+      - Updated to enabling the Event Recorder in debug targets.
+      CMSIS-Driver:
+      - CAN: Corrected CAN SRAM read/write to 4 byte accesses.
+      - ETH: Updated __MEMORY_AT macro supporting AC6.
+      - FDCAN: Updated __MEMORY_AT macro  supporting AC6.
+      - MCI: Updated to HAL drivers version 1.5.0.
+      - USART: Updated Get Count functionality.
+      - USB Host: Enable VDD33USB voltage level detector if internal FS transceiver is used.
+      - USB Device
+      -- Updated to HAL drivers version 1.5.0.
+      -- Updated USBD_EndpointConfigure function to check that maximum packet size requested fits into configured FIFO (compile time configured).
+      - SPI
+      -- Corrected DCache Handling
+      -- Removed __HAL_SPI_ENABLE from SPI_Control function
+    </release>
+    <release version="2.2.0" date="2018-09-04">
+      Updated Pack to STM32Cube_FW_H7 Firmware Package version V1.3.0.
+      - Updated HAL to version V1.3.0.
+      Added device support for subfamily STM32H750.
+      CMSIS Driver:
+      - USB Device: Corrected transmitted count for non-control IN endpoints
+    </release>
+    <release version="2.1.0" date="2018-05-09">
+      Updated Pack to STM32Cube_FW_H7 Firmware Package version V1.21.0.
+      Reworked debug description and debug config files.
+      Updated device documentation.
+      CMSIS-Driver:
+      - CAN:
+      -- Changed FDCAN_ECR_TREC_.. to FDCAN_ECR_REC_.. to align with updated device header.
+      -- Corrected SetBitrate function.
+      - SPI: Corrected Slave select handling.
+      - USART: Corrected UARTx/USARTx related typing mistakes.
+      - I2C: master clock frequency generation corrected.
+      Board Support:
+      - STM32H743I_EVAL:
+      -- Updated LCDConf.c for STM32H743I_EVAL.
+      Board Examples:
+      - Validated using STM32CubeMX version 4.25.0 and STM32Cube_FW_H7 version 1.2.0.
+      - Updated Abstract.txt in examples reflecting Debug/Release targets.
+      - Changed Compiler optimization level to "level 1" for Debug target in all examples.
+      - Updated emWin examples to emWin V5.46e.
+      - Added Event Recorder to the USB Device and Host examples.
+      - Added SNMP_Agent Example.
+      - Updated SMTP_Client example.
+    </release>
+    <release version="2.0.0" date="2017-10-02">
+      This DFP requires STM32CubeMX V4.22.1 and STM32Cube_FW_H7 V1.1.0 or higher to be installed.
+      New projects require the component 'Device:STM32Cube Framework:STM32CubeMX' for configuration of pins and clocks.
+      Updated documentation for STM32Cube Framework usage.
+      Added CMSIS-Driver:
+      - CAN
+      - ETH
+      - I2C
+      - MCI
+      - SPI
+      - UART/USART
+      - USB Host / Device (no RTOS dependency)
+      Added example projects for STM32H743I EVAL Board:
+      - all projects have two targets 'debug' and 'release' and require CMSIS-RTOS2
+      - Blinky
+      - CAN
+      - emWin
+      - FileSystem
+      - Network
+      - USB
+    </release>
+    <release version="1.0.1" date="2017-08-03">
+      fixed location specified in debugvars configfile attribute
+    </release>
+    <release version="1.0.0" date="2017-06-01">
+      Initial release of STM32H7 Device Family Pack.
+      Based on STM32Cube_FW_H7 Firmware Package version V1.0.0 (2017-04-30)
+      Board Support for STM32H743I-EVAL Board:
+      - CMSIS-RTOS2 Blinky
+      - Fractal Demo
+    </release>
+  </releases>
+
+  <keywords>                                                                  <!-- keywords for indexing -->
+    <keyword>ST</keyword>
+    <keyword>Device Support</keyword>
+    <keyword>Device Family Package STMicroelectronics</keyword>
+    <keyword>STM32H7</keyword>
+    <keyword>STM32H7xx</keyword>
+  </keywords>
+
+  <devices>
+    <family Dfamily="STM32H7 Series" Dvendor="STMicroelectronics:13">
+      <!--book name="Documentation/?.pdf" title="STM32H7xx HAL Drivers"/-->
+
+      <algorithm name="CMSIS/Flash/STM32H7B3I_EVAL_FMC-NOR.FLM"        start="0x60000000" size="0x04000000" RAMstart="0x24000000" RAMsize="0xA0000" default="0" />
+      <algorithm name="CMSIS/Flash/MT25TL01G_STM32H747I-DISCO.FLM"     start="0x90000000" size="0x08000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+      <algorithm name="CMSIS/Flash/MTFC4GACAJCN_STM32H750B-DISCO.FLM"  start="0xA0000000" size="0x20000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+      <algorithm name="CMSIS/Flash/STM32H7xx_MT25TL01G.FLM"            start="0x90000000" size="0x04000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+      <algorithm name="CMSIS/Flash/MT25TL01G_STM32H750B-DISCO.FLM"     start="0x90000000" size="0x08000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+      <algorithm name="CMSIS/Flash/MT25TL01G_STM32H745I-DISCO.FLM"     start="0x90000000" size="0x08000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+      <algorithm name="CMSIS/Flash/STM32H743I-eval_FMC.FLM"            start="0x60000000" size="0x01000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+      <algorithm name="CMSIS/Flash/MX25LM51245G_STM32H7B3I-EVAL.FLM"   start="0x90000000" size="0x04000000" RAMstart="0x24000000" RAMsize="0xA0000" default="0" />
+      <algorithm name="CMSIS/Flash/MX25LM51245G_STM32H7B3I-Disco.FLM"  start="0x90000000" size="0x04000000" RAMstart="0x24000000" RAMsize="0xA0000" default="0" />
+      <algorithm name="CMSIS/Flash/MX25LM51245G_STM32H7B0-EVAL.FLM"    start="0x90000000" size="0x04000000" RAMstart="0x24000000" RAMsize="0xA0000" default="0" />
+      <algorithm name="CMSIS/Flash/MX25LM51245G_STM32H7B0-Disco.FLM"   start="0x90000000" size="0x04000000" RAMstart="0x24000000" RAMsize="0xA0000" default="0" />
+      <algorithm name="CMSIS/Flash/MX25LM51245G_STM32H735-Disco.FLM"   start="0x90000000" size="0x04000000" RAMstart="0x24000000" RAMsize="0xFFF4"  default="0" />
+      <algorithm name="CMSIS/Flash/MT25TL01G_STM32H747I-EVAL.FLM"      start="0x90000000" size="0x08000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+      <!-- obsolete algorithms -->
+      <algorithm name="CMSIS/Flash/STM32H7xx_MT25TL01G_DUAL.FLM"       start="0x90000000" size="0x08000000" RAMstart="0x20000000" RAMsize="0xFFF4"  default="0" />
+
+      <description>
+The STM32H7 series now includes dual-core microcontrollers with Arm Cortex-M7 and Cortex-M4 cores able to run up to 480 MHz and 240 MHz respectively.
+Our single-core Cortex-M7 STM32H7 series also benefits from this frequency increase and can now run up to 480 MHz as well.
+Dual-core STM32H7 microcontrollers are available with an embedded SMPS for improved dynamic power efficiency.
+
+Extended temperature range support up to 125 C (*) (ambient) will be available for certain devices for use in harsh environments including industrial applications.
+
+STM32H7 devices embedding a crypto/hash processor support security services such as Secure Firmware Install and Secure Boot - Secure Firmware Upgrade allowing the installation of new application code in a secured manner.
+
+All the other features that have made single-core STM32H7 MCUs a success are still available in the dual-core versions.
+The STM32H7 series remains more than ever the microcontroller with an embedded Flash memory offering the highest performance on the market.
+      </description>
+
+      <sequences>
+        <!-- Override for Pre-Defined Sequences -->
+        <sequence name="TraceStart">
+          <block>
+            __var traceSWO    = (__traceout &amp; 0x1) != 0;                               // SWO (asynchronous) Trace Selected?
+            __var traceTPIU   = (__traceout &amp; 0x2) != 0;                               // TPIU (synchronous) Trace Selected?
+          </block>
+
+          <control if="traceSWO">
+            <block>
+              Sequence("EnableTraceSWO");                                                  // Call SWO Trace Setup
+            </block>
+          </control>
+
+          <control if="traceTPIU">
+            <block>
+              Sequence("EnableTraceTPIU");                                                 // Call TPIU Trace Setup
+            </block>
+          </control>
+        </sequence>
+
+        <sequence name="TraceStop">
+          <block>
+            // Nothing required for SWO Trace
+            __var traceSWO    = (__traceout &amp; 0x1) != 0;                               // SWO enabled?
+            __var traceTPIU   = (__traceout &amp; 0x2) != 0;                               // Synchronous trace port enabled?
+          </block>
+
+          <control if="traceSWO">
+            <block>
+              Sequence("DisableTraceSWO");
+            </block>
+          </control>
+
+          <control if="traceTPIU">
+            <block>
+              Sequence("DisableTraceTPIU");
+            </block>
+          </control>
+        </sequence>
+
+        <!-- User-Defined Sequences -->
+        <sequence name="CheckID">
+          <block>
+            __var pidr1 = 0;
+            __var pidr2 = 0;
+            __var jep106id = 0;
+            __var ROMTableBase = 0;
+
+            __ap = 2;      // System debug access port (APB-AP)
+
+            ROMTableBase = ReadAP(0xF8) &amp; ~0x3;
+
+            pidr1 = Read32(ROMTableBase + 0x0FE4);
+            pidr2 = Read32(ROMTableBase + 0x0FE8);
+            jep106id = ((pidr2 &amp; 0x7) &lt;&lt; 4 ) | ((pidr1 &gt;&gt; 4) &amp; 0xF);
+          </block>
+
+          <control if="jep106id != 0x20">
+            <block>
+              Query(0, "Not a genuine ST Device! Abort connection", 1);
+              Message(2, "Not a genuine ST Device! Abort connection.");
+            </block>
+          </control>
+        </sequence>
+
+        <sequence name="EnableTraceSWO">
+          <block>
+            __var value = 0;
+
+            Sequence("ConfigureTraceSWOPin");
+
+            __ap   = 2;                                                                    // Switch to System Debug Access Port
+
+            // Enable Trace Clock
+            // not necessary because already done in "DebugDeviceUnlock".
+
+            // Configure SWO Funnel (SWTF) at 0xE00E4000
+            value      =  Read32(0xE00E4000);                                              // Read Trace Funnel CONTROL Register
+            value &amp;=  0x00000F00;                                                      // Preserve Hold Time Settings,
+            value     |=  0x00000001;                                                      // Enable ITM slave ports
+            Write32(0xE00E4000, value);                                                    // Update Trace Funnel CONTROL Register
+          </block>
+        </sequence>
+
+        <sequence name="DisableTraceSWO">
+          <block>
+            __var value = 0;
+
+            __ap   = 2;                                                                    // Switch to System Debug Access Port
+
+            // Disable Trace Clock
+            value      =  Read32(0xE00E1004);                                              // Read DBGMCU_CR
+            value &amp;= ~0x00100000;                                                      // DBGMCU_CR[20] : set TraceClkEn
+            Write32(0xE00E1004, value);                                                    // Update DBGMCU_CR
+
+            // Configure SWO Funnel (SWTF) at 0xE00E4000
+            value      =  Read32(0xE00E4000);                                              // Read Trace Funnel CONTROL Register
+            value &amp;=  0x00000F00;                                                      // Preserve Hold Time Settings, disable active slave ports
+            Write32(0xE00E4000, value);                                                    // Update Trace Funnel CONTROL Register
+          </block>
+        </sequence>
+
+        <sequence name="EnableTraceTPIU">
+          <block>
+            __var value = 0;
+
+            Sequence("ConfigureTraceTPIUPins");
+
+            __ap   = 2;                                                                    // Switch to System Debug Access Port
+
+            // Enable Trace Clock
+            // not necessary because already done in "DebugDeviceUnlock".
+
+            // Configure CoreSight Trace Funnel (CSTF) at 0xE00F3000
+            value      =  Read32(0xE00F3000);                                              // Read Trace Funnel CONTROL Register
+            value &amp;=  0x00000F00;                                                      // Preserve Hold Time Settings
+            value     |=  0x00000003;                                                      // Enable ITM and ETM slave ports
+            Write32(0xE00F3000, value);                                                    // Update Trace Funnel CONTROL Register
+          </block>
+        </sequence>
+
+        <sequence name="DisableTraceTPIU">
+          <block>
+            __var value = 0;
+
+            __ap   = 2;                                                                    // Switch to System Debug Access Port
+
+            // Disable Trace Clock
+            value      =  Read32(0xE00E1004);                                              // Read DBGMCU_CR
+            value &amp;= ~0x00100000;                                                      // DBGMCU_CR[20] : set TraceClkEn
+            Write32(0xE00E1004, value);                                                    // Update DBGMCU_CR
+
+            // Configure CoreSight Trace Funnel (CSTF) at 0xE00F3000
+            value      =  Read32(0xE00F3000);                                              // Read Trace Funnel CONTROL Register
+            value &amp;=  0x00000FFC;                                                      // Preserve Hold Time Settings and other possibly set slave ports
+            Write32(0xE00F3000, value);                                                    // Update Trace Funnel CONTROL Register
+          </block>
+        </sequence>
+
+        <sequence name="ConfigureTraceSWOPin">
+          <block>
+            __var pin     = 0;
+            __var port    = 0;
+            __var portAdr = 0;
+            __var pos     = 0;
+
+            __var SWO_Pin = 0x00010003;          // PB3
+          </block>
+
+            <!-- configure SWO -->
+            <block info="configure SWO">
+              pin     =               ((SWO_Pin            ) &amp; 0x0000FFFF);
+              port    =               ((SWO_Pin &gt;&gt; 16) &amp; 0x0000FFFF);
+              portAdr = 0x58020000 + (((SWO_Pin &gt;&gt; 16) &amp; 0x0000FFFF) * 0x400);
+
+              pos = pin * 2;
+              Write32(0x58024540,     ((Read32(0x58024540    )                         ) | (1 &lt;&lt; port)) );  // RCC_C1_AHB4ENR:IO port clock enable
+              Write32(portAdr + 0x00, ((Read32(portAdr + 0x00) &amp; ~( 3 &lt;&lt; pos)) | (2 &lt;&lt; pos )) );  // GPIOx_MODER:   Set Mode (Alternate Function)
+              Write32(portAdr + 0x08, ((Read32(portAdr + 0x08)                         ) | (3 &lt;&lt; pos )) );  // GPIOx_OSPEEDR: Set Speed (Very High Speed)
+              Write32(portAdr + 0x0C, ((Read32(portAdr + 0x0C) &amp; ~( 3 &lt;&lt; pos))                    ) );  // GPIOx_PUPDR:   Set I/O to no pull-up/pull-down
+            </block>
+            <control if="pin &lt;  8">
+              <block>
+              pos = ((pin    ) &amp; 7) * 4;
+              Write32(portAdr + 0x20, ((Read32(portAdr + 0x20) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRL:    Alternate Function to AF0
+              </block>
+            </control>
+            <control if="pin &gt;= 8">
+              <block>
+              pos = ((pin - 8) &amp; 7) * 4;
+              Write32(portAdr + 0x24, ((Read32(portAdr + 0x24) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRH:    Alternate Function to AF0
+              </block>
+            </control>
+        </sequence>
+
+        <sequence name="ConfigureTraceTPIUPins">
+          <block>
+            __var pin     = 8;
+            __var port    = 0;
+            __var portAdr = 0;
+            __var pos     = 0;
+
+            __var width   = (__traceout &amp; 0x003F0000) &gt;&gt; 16;
+          </block>
+
+            <!-- configure TRACECLK -->
+            <block info="configure TRACECLK">
+              pin     =                (TraceClk_Pin            ) &amp; 0x0000FFFF;
+              port    =                (TraceClk_Pin &gt;&gt; 16) &amp; 0x0000FFFF;
+              portAdr = 0x58020000 + (((TraceClk_Pin &gt;&gt; 16) &amp; 0x0000FFFF) * 0x400);
+
+              pos = pin * 2;
+              Write32(0x58024540,     ((Read32(0x58024540    )                         ) | (1 &lt;&lt; port)) );  // RCC_C1_AHB4ENR:IO port clock enable
+              Write32(portAdr + 0x00, ((Read32(portAdr + 0x00) &amp; ~( 3 &lt;&lt; pos)) | (2 &lt;&lt; pos )) );  // GPIOx_MODER:   Set Mode (Alternate Function)
+              Write32(portAdr + 0x08, ((Read32(portAdr + 0x08)                         ) | (3 &lt;&lt; pos )) );  // GPIOx_OSPEEDR: Set Speed (Very High Speed)
+              Write32(portAdr + 0x0C, ((Read32(portAdr + 0x0C) &amp; ~( 3 &lt;&lt; pos))                    ) );  // GPIOx_PUPDR:   Set I/O to no pull-up/pull-down
+            </block>
+            <control if="pin &lt;  8">
+              <block>
+              pos = ((pin    ) &amp; 7) * 4;
+              Write32(portAdr + 0x20, ((Read32(portAdr + 0x20) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRL:    Alternate Function to AF0
+              </block>
+            </control>
+            <control if="pin &gt;= 8">
+              <block>
+              pos = ((pin - 8) &amp; 7) * 4;
+              Write32(portAdr + 0x24, ((Read32(portAdr + 0x24) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRH:    Alternate Function to AF0
+              </block>
+            </control>
+
+          <control if="width &gt;= 1" info="TPIU port width 1">
+            <!-- configure TRACED0 -->
+            <block info="configure TRACED0">
+              pin     =                (TraceD0_Pin            ) &amp; 0x0000FFFF;
+              port    =                (TraceD0_Pin &gt;&gt; 16) &amp; 0x0000FFFF;
+              portAdr = 0x58020000 + (((TraceD0_Pin &gt;&gt; 16) &amp; 0x0000FFFF) * 0x400);
+
+              pos = pin * 2;
+              Write32(0x58024540,     ((Read32(0x58024540    )                         ) | (1 &lt;&lt; port)) );  // RCC_C1_AHB4ENR:IO port clock enable
+              Write32(portAdr + 0x00, ((Read32(portAdr + 0x00) &amp; ~( 3 &lt;&lt; pos)) | (2 &lt;&lt; pos )) );  // GPIOx_MODER:   Set Mode (Alternate Function)
+              Write32(portAdr + 0x08, ((Read32(portAdr + 0x08)                         ) | (3 &lt;&lt; pos )) );  // GPIOx_OSPEEDR: Set Speed (Very High Speed)
+              Write32(portAdr + 0x0C, ((Read32(portAdr + 0x0C) &amp; ~( 3 &lt;&lt; pos))                    ) );  // GPIOx_PUPDR:   Set I/O to no pull-up/pull-down
+            </block>
+            <control if="pin &lt;  8">
+              <block>
+              pos = ((pin    ) &amp; 7) * 4;
+              Write32(portAdr + 0x20, ((Read32(portAdr + 0x20) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRL:    Alternate Function to AF0
+              </block>
+            </control>
+            <control if="pin &gt;= 8">
+              <block>
+              pos = ((pin - 8) &amp; 7) * 4;
+              Write32(portAdr + 0x24, ((Read32(portAdr + 0x24) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRH:    Alternate Function to AF0
+              </block>
+            </control>
+          </control>
+
+          <control if="width &gt;= 2" info="TPIU port width 2">
+            <!-- configure TRACED1 -->
+            <block info="configure TRACED1">
+              pin     =                (TraceD1_Pin            ) &amp; 0x0000FFFF;
+              port    =                (TraceD1_Pin &gt;&gt; 16) &amp; 0x0000FFFF;
+              portAdr = 0x58020000 + (((TraceD1_Pin &gt;&gt; 16) &amp; 0x0000FFFF) * 0x400);
+
+              pos = pin * 2;
+              Write32(0x58024540,     ((Read32(0x58024540    )                         ) | (1 &lt;&lt; port)) );  // RCC_C1_AHB4ENR:IO port clock enable
+              Write32(portAdr + 0x00, ((Read32(portAdr + 0x00) &amp; ~( 3 &lt;&lt; pos)) | (2 &lt;&lt; pos )) );  // GPIOx_MODER:   Set Mode (Alternate Function)
+              Write32(portAdr + 0x08, ((Read32(portAdr + 0x08)                         ) | (3 &lt;&lt; pos )) );  // GPIOx_OSPEEDR: Set Speed (Very High Speed)
+              Write32(portAdr + 0x0C, ((Read32(portAdr + 0x0C) &amp; ~( 3 &lt;&lt; pos))                    ) );  // GPIOx_PUPDR:   Set I/O to no pull-up/pull-down
+            </block>
+            <control if="pin &lt;  8">
+              <block>
+              pos = ((pin    ) &amp; 7) * 4;
+              Write32(portAdr + 0x20, ((Read32(portAdr + 0x20) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRL:    Alternate Function to AF0
+              </block>
+            </control>
+            <control if="pin &gt;= 8">
+              <block>
+              pos = ((pin - 8) &amp; 7) * 4;
+              Write32(portAdr + 0x24, ((Read32(portAdr + 0x24) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRH:    Alternate Function to AF0
+              </block>
+            </control>
+          </control>
+
+          <control if="width &gt;= 4" info="TPIU port width 4">
+            <!-- configure TRACED2 -->
+            <block info="configure TRACED2">
+              pin     =                (TraceD2_Pin            ) &amp; 0x0000FFFF;
+              port    =                (TraceD2_Pin &gt;&gt; 16) &amp; 0x0000FFFF;
+              portAdr = 0x58020000 + (((TraceD2_Pin &gt;&gt; 16) &amp; 0x0000FFFF) * 0x400);
+
+              pos = pin * 2;
+              Write32(0x58024540,     ((Read32(0x58024540    )                         ) | (1 &lt;&lt; port)) );  // RCC_C1_AHB4ENR:IO port clock enable
+              Write32(portAdr + 0x00, ((Read32(portAdr + 0x00) &amp; ~( 3 &lt;&lt; pos)) | (2 &lt;&lt; pos )) );  // GPIOx_MODER:   Set Mode (Alternate Function)
+              Write32(portAdr + 0x08, ((Read32(portAdr + 0x08)                         ) | (3 &lt;&lt; pos )) );  // GPIOx_OSPEEDR: Set Speed (Very High Speed)
+              Write32(portAdr + 0x0C, ((Read32(portAdr + 0x0C) &amp; ~( 3 &lt;&lt; pos))                    ) );  // GPIOx_PUPDR:   Set I/O to no pull-up/pull-down
+            </block>
+            <control if="pin &lt;  8">
+              <block>
+              pos = ((pin    ) &amp; 7) * 4;
+              Write32(portAdr + 0x20, ((Read32(portAdr + 0x20) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRL:    Alternate Function to AF0
+              </block>
+            </control>
+            <control if="pin &gt;= 8">
+              <block>
+              pos = ((pin - 8) &amp; 7) * 4;
+              Write32(portAdr + 0x24, ((Read32(portAdr + 0x24) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRH:    Alternate Function to AF0
+              </block>
+            </control>
+
+            <!-- configure TRACED3 -->
+            <block info="configure TRACED3">
+              pin     =                (TraceD3_Pin            ) &amp; 0x0000FFFF;
+              port    =                (TraceD3_Pin &gt;&gt; 16) &amp; 0x0000FFFF;
+              portAdr = 0x58020000 + (((TraceD3_Pin &gt;&gt; 16) &amp; 0x0000FFFF) * 0x400);
+
+              pos = pin * 2;
+              Write32(0x58024540,     ((Read32(0x58024540    )                         ) | (1 &lt;&lt; port)) );  // RCC_C1_AHB4ENR:IO port clock enable
+              Write32(portAdr + 0x00, ((Read32(portAdr + 0x00) &amp; ~( 3 &lt;&lt; pos)) | (2 &lt;&lt; pos )) );  // GPIOx_MODER:   Set Mode (Alternate Function)
+              Write32(portAdr + 0x08, ((Read32(portAdr + 0x08)                         ) | (3 &lt;&lt; pos )) );  // GPIOx_OSPEEDR: Set Speed (Very High Speed)
+              Write32(portAdr + 0x0C, ((Read32(portAdr + 0x0C) &amp; ~( 3 &lt;&lt; pos))                    ) );  // GPIOx_PUPDR:   Set I/O to no pull-up/pull-down
+            </block>
+            <control if="pin &lt;  8">
+              <block>
+              pos = ((pin    ) &amp; 7) * 4;
+              Write32(portAdr + 0x20, ((Read32(portAdr + 0x20) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRL:    Alternate Function to AF0
+              </block>
+            </control>
+            <control if="pin &gt;= 8">
+              <block>
+              pos = ((pin - 8) &amp; 7) * 4;
+              Write32(portAdr + 0x24, ((Read32(portAdr + 0x24) &amp; ~(15 &lt;&lt; pos))                    ) );  // GPIOx_AFRH:    Alternate Function to AF0
+              </block>
+            </control>
+          </control>
+        </sequence>
+      </sequences>
+
+      <!-- ************************  Subfamily 'STM32H742'  **************************** -->
+      <subFamily DsubFamily="STM32H742">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dclock="480000000" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian"/>
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+
+        <debug svd="CMSIS/SVD/STM32H742.svd"/>
+        <compile define="STM32H742xx"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0433-stm32h742-stm32h743753-and-stm32h750-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H742, STM32H743/753 and STM32H750 Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h743vi.pdf" title="STM32H742xI/G STM32H743xI/G Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H742_743_753_750.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0x8000" default="1" />
+
+        <memory    name="DTCMRAM"  access="rwx"         start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"   access="rwx"         start="0x24000000" size="0x00060000" default="1" init="0"/>
+        <memory    name="RAM_D2"   access="rwx"         start="0x30000000" size="0x00008000" default="1" init="0"/>
+        <memory    name="RAM_D2S2" access="rwx"         start="0x30020000" size="0x00004000" default="1" init="0"/>
+        <memory    name="RAM_D3"   access="rwx"         start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory    name="ITCMRAM"  access="rwx"         start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <!-- *************************  Device 'STM32H742AGIx'  ***************************** -->
+        <device Dname="STM32H742AGIx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742AIIx'  ***************************** -->
+        <device Dname="STM32H742AIIx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742BGTx'  ***************************** -->
+        <device Dname="STM32H742BGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742BITx'  ***************************** -->
+        <device Dname="STM32H742BITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742IGKx'  ***************************** -->
+        <device Dname="STM32H742IGKx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742IGTx'  ***************************** -->
+        <device Dname="STM32H742IGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742IIKx'  ***************************** -->
+        <device Dname="STM32H742IIKx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742IITx'  ***************************** -->
+        <device Dname="STM32H742IITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742VGHx'  ***************************** -->
+        <device Dname="STM32H742VGHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742VGTx'  ***************************** -->
+        <device Dname="STM32H742VGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742VIHx'  ***************************** -->
+        <device Dname="STM32H742VIHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742VITx'  ***************************** -->
+        <device Dname="STM32H742VITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742XGHx'  ***************************** -->
+        <device Dname="STM32H742XGHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742XIHx'  ***************************** -->
+        <device Dname="STM32H742XIHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742ZGTx'  ***************************** -->
+        <device Dname="STM32H742ZGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H742ZITx'  ***************************** -->
+        <device Dname="STM32H742ZITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H743'  **************************** -->
+      <subFamily DsubFamily="STM32H743">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dclock="480000000" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian"/>
+        <!-- Debug configuration settings -->
+        <debugconfig default="swd" swj="true" clock="400000000" sdf="CMSIS/Debug/STM32H743.sdf"/>
+        <debug svd="CMSIS/SVD/STM32H743.svd"/>
+        <compile define="STM32H743xx"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0433-stm32h742-stm32h743753-and-stm32h750-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H742, STM32H743/753 and STM32H750 Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h743vi.pdf" title="STM32H742xI/G STM32H743xI/G Data Sheet"/>
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H742_743_753_750.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0x8000" default="1" />
+
+        <memory    name="DTCMRAM"  access="rwx"         start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"   access="rwx"         start="0x24000000" size="0x00080000" default="1" init="0"/>
+        <memory    name="RAM_D2"   access="rwx"         start="0x30000000" size="0x00048000" default="1" init="0"/>
+        <memory    name="RAM_D3"   access="rwx"         start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory    name="ITCMRAM"  access="rwx"         start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <!-- *************************  Device 'STM32H743AGIx'  ***************************** -->
+        <device Dname="STM32H743AGIx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743AIIx'  ***************************** -->
+        <device Dname="STM32H743AIIx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743BGTx'  ***************************** -->
+        <device Dname="STM32H743BGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743BITx'  ***************************** -->
+        <device Dname="STM32H743BITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743IGKx'  ***************************** -->
+        <device Dname="STM32H743IGKx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743IGTx'  ***************************** -->
+        <device Dname="STM32H743IGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743IIKx'  ***************************** -->
+        <device Dname="STM32H743IIKx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743IITx'  ***************************** -->
+        <device Dname="STM32H743IITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743VGHx'  ***************************** -->
+        <device Dname="STM32H743VGHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743VGTx'  ***************************** -->
+        <device Dname="STM32H743VGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743VIHx'  ***************************** -->
+        <device Dname="STM32H743VIHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743VITx'  ***************************** -->
+        <device Dname="STM32H743VITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743XGHx'  ***************************** -->
+        <device Dname="STM32H743XGHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743XIHx'  ***************************** -->
+        <device Dname="STM32H743XIHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743ZGTx'  ***************************** -->
+        <device Dname="STM32H743ZGTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H743ZITx'  ***************************** -->
+        <device Dname="STM32H743ZITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H753'  **************************** -->
+      <subFamily DsubFamily="STM32H753">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dclock="480000000" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian"/>
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+
+        <debug svd="CMSIS/SVD/STM32H753.svd"/>
+        <compile define="STM32H753xx"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0433-stm32h742-stm32h743753-and-stm32h750-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H742, STM32H743/753 and STM32H750 Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h753vi.pdf" title="STM32H753 Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H742_743_753_750.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0x8000" default="1" />
+
+        <memory    name="DTCMRAM"  access="rwx"         start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"   access="rwx"         start="0x24000000" size="0x00080000" default="1" init="0"/>
+        <memory    name="RAM_D2"   access="rwx"         start="0x30000000" size="0x00048000" default="1" init="0"/>
+        <memory    name="RAM_D3"   access="rwx"         start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory    name="ITCMRAM"  access="rwx"         start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <!-- *************************  Device 'STM32H753AIIx'  ***************************** -->
+        <device Dname="STM32H753AIIx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H753BITx'  ***************************** -->
+        <device Dname="STM32H753BITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H753IIKx'  ***************************** -->
+        <device Dname="STM32H753IIKx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H753IITx'  ***************************** -->
+        <device Dname="STM32H753IITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H753VIHx'  ***************************** -->
+        <device Dname="STM32H753VIHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H753VITx'  ***************************** -->
+        <device Dname="STM32H753VITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H753XIHx'  ***************************** -->
+        <device Dname="STM32H753XIHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H753ZITx'  ***************************** -->
+        <device Dname="STM32H753ZITx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H750'   *************************** -->
+      <subFamily DsubFamily="STM32H750">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dclock="480000000" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian"/>
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+
+        <debug svd="CMSIS/SVD/STM32H750.svd"/>
+        <compile define="STM32H750xx"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0433-stm32h742-stm32h743753-and-stm32h750-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H742, STM32H743/753 and STM32H750 Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h750ib.pdf" title="STM32H750VB STM32H750IB STM32H750XB Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H742_743_753_750.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H7x_128k.FLM" start="0x08000000" size="0x00020000" RAMstart="0x20000000" RAMsize="0x8000" default="1"/>
+
+        <memory    name="DTCMRAM"  access="rwx"         start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"   access="rwx"         start="0x24000000" size="0x00080000" default="1" init="0"/>
+        <memory    name="RAM_D2"   access="rwx"         start="0x30000000" size="0x00048000" default="1" init="0"/>
+        <memory    name="RAM_D3"   access="rwx"         start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory    name="ITCMRAM"  access="rwx"         start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <!-- *************************  Device 'STM32H750IBKx' ***************************** -->
+        <device Dname="STM32H750IBKx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/> <!-- Same as STM32H753IIKx + ROMLess -->
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <device Dname="STM32H750IBTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/> <!-- Same as STM32H753IIKx + ROMLess -->
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H750ZB' ***************************** -->
+        <device Dname="STM32H750ZBTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/> <!-- Same as STM32H753VITx + ROMLess -->
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H750VB' ***************************** -->
+        <device Dname="STM32H750VBTx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/> <!-- Same as STM32H753VITx + ROMLess -->
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H750XB' ***************************** -->
+        <device Dname="STM32H750XBHx">
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/> <!-- Same as STM32H753XIHx + ROMLess -->
+
+          <feature type="BGA" n="240"/>
+        </device>
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H745' Dual Core  ****************** -->
+      <subFamily DsubFamily="STM32H745">
+        <processor Pname="CM7" Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="480000000"/>
+        <processor Pname="CM4" Dcore="Cortex-M4" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="SP_FPU" Dendian="Little-endian" Dclock="240000000"/>
+        <debug Pname="CM7"  __ap="0" svd="CMSIS/SVD/STM32H745_CM7.svd"/>
+        <debug Pname="CM4"  __ap="3" svd="CMSIS/SVD/STM32H745_CM4.svd"/>
+        <compile Pname="CM7" Pdefine="CORE_CM7"/>
+        <compile Pname="CM4" Pdefine="CORE_CM4"/>
+
+        <book Pname="CM7" name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book Pname="CM4" name="https://developer.arm.com/documentation/dui0553/latest" title="Cortex-M4 Generic User Guide"/>
+        <book             name="https://www.st.com/resource/en/reference_manual/rm0399-stm32h745755-and-stm32h747757-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H745/755 and STM32H747/757 Reference Manual"/>
+        <book             name="https://www.st.com/resource/en/datasheet/stm32h745zg.pdf" title="STM32H745xI/G Data Sheet"/>
+
+        <description>
+          The STM32H745 devices are dual processor devices:
+        </description>
+        <description Pname="CM7">
+          32-bit Arm Cortex-M7 core with doubleprecision FPU and L1 cache: 16 Kbytes of data and 16 Kbytes of instruction cache;
+          frequency up to 480 MHz, MPU, 1027 DMIPS/2.14 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+        <description Pname="CM4">
+          32-bit Arm 32-bit Cortex-M4 core with FPU, Adaptive real-time accelerator (ART Accelerator) for internal Flash memory and external memories,
+          frequency up to 240 MHz, MPU, 300 DMIPS/1.25 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+
+        <debugvars configfile="CMSIS/Debug/STM32H745_747_755_757.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 5] DBGSTBY_D2, [ 4] DBGSTOP_D2,  [ 3] DBGSLEEP_D2
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU CPU1 APB3 peripheral freeze register
+          __var DbgMCU_APB3_Fz2  = 0x00000000;   // DBGMCU_APB3FZ2:  DBGMCU CPU2 APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU CPU1 APB1L peripheral freeze register
+          __var DbgMCU_APB1L_Fz2 = 0x00000000;   // DBGMCU_APB1LFZ2: DBGMCU CPU2 APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU CPU1 APB2 peripheral freeze register
+          __var DbgMCU_APB2_Fz2  = 0x00000000;   // DBGMCU_APB2FZ2:  DBGMCU CPU2 APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU CPU1 APB4 peripheral freeze register
+          __var DbgMCU_APB4_Fz2  = 0x00000000;   // DBGMCU_APB4FZ2:  DBGMCU CPU2 APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure CPU1 APB3 peripheral freeze behavior
+              Write32(0xE00E1038 , DbgMCU_APB3_Fz2         );     // DBGMCU_APB3FZ2:  Configure CPU2 APB3 peripheral freeze register
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure CPU1 APB1L peripheral freeze behavior
+              Write32(0xE00E1040 , DbgMCU_APB1L_Fz2        );     // DBGMCU_APB1LFZ2: Configure CPU2 APB1L peripheral freeze register
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure CPU1 APB2 peripheral freeze behavior
+              Write32(0xE00E1050 , DbgMCU_APB2_Fz2         );     // DBGMCU_APB2FZ2:  Configure CPU2 APB2 peripheral freeze register
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure CPU1 APB4 peripheral freeze behavior
+              Write32(0xE00E1058 , DbgMCU_APB4_Fz2         );     // DBGMCU_APB4FZ2:  Configure CPU2 APB4 peripheral freeze register
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm Pname="CM7" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0x8000" default="1" />
+        <algorithm Pname="CM4" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x10000000" RAMsize="0x8000" default="1" />
+
+        <memory Pname="CM7" name="DTCMRAM"  access="rw"             start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory Pname="CM7" name="RAM_D1"   access="rw"             start="0x24000000" size="0x00080000" default="1" init="0"/>
+        <memory Pname="CM7" name="RAM_D3"   access="rw"             start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory Pname="CM7" name="ITCMRAM"  access="rw"             start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <memory Pname="CM4" name="RAM_D2"   access="rw"             start="0x10000000" size="0x00048000" default="1" init="0"/>
+
+        <!-- *************************  Device 'STM32H745BGTx'  ***************************** -->
+        <device Dname="STM32H745BGTx">
+          <compile Pname="CM7" define="STM32H745xG"/>
+          <compile Pname="CM4" define="STM32H745xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745BITx'  ***************************** -->
+        <device Dname="STM32H745BITx">
+          <compile Pname="CM7" define="STM32H745xx"/>
+          <compile Pname="CM4" define="STM32H745xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745IGKx'  ***************************** -->
+        <device Dname="STM32H745IGKx">
+          <compile Pname="CM7" define="STM32H745xG"/>
+          <compile Pname="CM4" define="STM32H745xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745IGTx'  ***************************** -->
+        <device Dname="STM32H745IGTx">
+          <compile Pname="CM7" define="STM32H745xG"/>
+          <compile Pname="CM4" define="STM32H745xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745IIKx'  ***************************** -->
+        <device Dname="STM32H745IIKx">
+          <compile Pname="CM7" define="STM32H745xx"/>
+          <compile Pname="CM4" define="STM32H745xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745IITx'  ***************************** -->
+        <device Dname="STM32H745IITx">
+          <compile Pname="CM7" define="STM32H745xx"/>
+          <compile Pname="CM4" define="STM32H745xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745XGHx'  ***************************** -->
+        <device Dname="STM32H745XGHx">
+          <compile Pname="CM7" define="STM32H745xG"/>
+          <compile Pname="CM4" define="STM32H745xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745XIHx'  ***************************** -->
+        <device Dname="STM32H745XIHx">
+          <compile Pname="CM7" define="STM32H745xx"/>
+          <compile Pname="CM4" define="STM32H745xx"/>
+
+         <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745ZGTx'  ***************************** -->
+        <device Dname="STM32H745ZGTx">
+          <compile Pname="CM7" define="STM32H745xG"/>
+          <compile Pname="CM4" define="STM32H745xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H745ZITx'  ***************************** -->
+        <device Dname="STM32H745ZITx">
+          <compile Pname="CM7" define="STM32H745xx"/>
+          <compile Pname="CM4" define="STM32H745xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H755' Dual Core  ****************** -->
+      <subFamily DsubFamily="STM32H755">
+        <processor Pname="CM7" Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="480000000"/>
+        <processor Pname="CM4" Dcore="Cortex-M4" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="SP_FPU" Dendian="Little-endian" Dclock="240000000"/>
+        <debug Pname="CM7"  __ap="0" svd="CMSIS/SVD/STM32H755_CM7.svd"/>
+        <debug Pname="CM4"  __ap="3" svd="CMSIS/SVD/STM32H755_CM4.svd"/>
+        <compile Pname="CM7" define="STM32H755xx" Pdefine="CORE_CM7"/>
+        <compile Pname="CM4" define="STM32H755xx" Pdefine="CORE_CM4"/>
+
+        <book Pname="CM7" name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book Pname="CM4" name="https://developer.arm.com/documentation/dui0553/latest" title="Cortex-M4 Generic User Guide"/>
+        <book             name="https://www.st.com/resource/en/reference_manual/rm0399-stm32h745755-and-stm32h747757-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H745/755 and STM32H747/757 Reference Manual"/>
+        <book             name="https://www.st.com/resource/en/datasheet/stm32h755bi.pdf" title="STM32H755xI Data Sheet"/>
+
+        <description>
+          The STM32H755 devices are dual processor devices:
+        </description>
+        <description Pname="CM7">
+          32-bit Arm Cortex-M7 core with doubleprecision FPU and L1 cache: 16 Kbytes of data and 16 Kbytes of instruction cache;
+          frequency up to 480 MHz, MPU, 1027 DMIPS/2.14 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+        <description Pname="CM4">
+          32-bit Arm 32-bit Cortex-M4 core with FPU, Adaptive real-time accelerator (ART Accelerator) for internal Flash memory and external memories,
+          frequency up to 240 MHz, MPU, 300 DMIPS/1.25 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+
+        <debugvars configfile="CMSIS/Debug/STM32H745_747_755_757.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 5] DBGSTBY_D2, [ 4] DBGSTOP_D2,  [ 3] DBGSLEEP_D2
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU CPU1 APB3 peripheral freeze register
+          __var DbgMCU_APB3_Fz2  = 0x00000000;   // DBGMCU_APB3FZ2:  DBGMCU CPU2 APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU CPU1 APB1L peripheral freeze register
+          __var DbgMCU_APB1L_Fz2 = 0x00000000;   // DBGMCU_APB1LFZ2: DBGMCU CPU2 APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU CPU1 APB2 peripheral freeze register
+          __var DbgMCU_APB2_Fz2  = 0x00000000;   // DBGMCU_APB2FZ2:  DBGMCU CPU2 APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU CPU1 APB4 peripheral freeze register
+          __var DbgMCU_APB4_Fz2  = 0x00000000;   // DBGMCU_APB4FZ2:  DBGMCU CPU2 APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure CPU1 APB3 peripheral freeze behavior
+              Write32(0xE00E1038 , DbgMCU_APB3_Fz2         );     // DBGMCU_APB3FZ2:  Configure CPU2 APB3 peripheral freeze register
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure CPU1 APB1L peripheral freeze behavior
+              Write32(0xE00E1040 , DbgMCU_APB1L_Fz2        );     // DBGMCU_APB1LFZ2: Configure CPU2 APB1L peripheral freeze register
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure CPU1 APB2 peripheral freeze behavior
+              Write32(0xE00E1050 , DbgMCU_APB2_Fz2         );     // DBGMCU_APB2FZ2:  Configure CPU2 APB2 peripheral freeze register
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure CPU1 APB4 peripheral freeze behavior
+              Write32(0xE00E1058 , DbgMCU_APB4_Fz2         );     // DBGMCU_APB4FZ2:  Configure CPU2 APB4 peripheral freeze register
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm Pname="CM7" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0x8000" default="1" />
+        <algorithm Pname="CM4" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x10000000" RAMsize="0x8000" default="1" />
+
+        <memory Pname="CM7" name="DTCMRAM"  access="rw"             start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory Pname="CM7" name="RAM_D1"   access="rw"             start="0x24000000" size="0x00080000" default="1" init="0"/>
+        <memory Pname="CM7" name="RAM_D3"   access="rw"             start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory Pname="CM7" name="ITCMRAM"  access="rw"             start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <memory Pname="CM4" name="RAM_D2"   access="rw"             start="0x10000000" size="0x00030000" default="1" init="0"/>
+        <memory Pname="CM4" name="RAM_D2S3" access="rw"             start="0x10040000" size="0x00008000" default="1" init="0"/>
+
+        <!-- *************************  Device 'STM32H755BITx'  ***************************** -->
+        <device Dname="STM32H755BITx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H755IIKx'  ***************************** -->
+        <device Dname="STM32H755IIKx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H755IITx'  ***************************** -->
+        <device Dname="STM32H755IITx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H755XIHx'  ***************************** -->
+        <device Dname="STM32H755XIHx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H755ZITx'  ***************************** -->
+        <device Dname="STM32H755ZITx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H747' Dual Core  ****************** -->
+      <subFamily DsubFamily="STM32H747">
+        <processor Pname="CM7" Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="480000000"/>
+        <processor Pname="CM4" Dcore="Cortex-M4" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="SP_FPU" Dendian="Little-endian" Dclock="240000000"/>
+        <!-- Debug configuration settings -->
+        <debugconfig default="swd" swj="true" clock="400000000" sdf="CMSIS/Debug/STM32H747.sdf"/>
+        <debug Pname="CM7"  __ap="0" svd="CMSIS/SVD/STM32H747_CM7.svd"/>
+        <debug Pname="CM4"  __ap="3" svd="CMSIS/SVD/STM32H747_CM4.svd"/>
+        <compile Pname="CM7" Pdefine="CORE_CM7"/>
+        <compile Pname="CM4" Pdefine="CORE_CM4"/>
+
+        <book Pname="CM7" name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book Pname="CM4" name="https://developer.arm.com/documentation/dui0553/latest" title="Cortex-M4 Generic User Guide"/>
+        <book             name="https://www.st.com/resource/en/reference_manual/rm0399-stm32h745755-and-stm32h747757-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H745/755 and STM32H747/757 Reference Manual"/>
+        <book             name="https://www.st.com/resource/en/datasheet/stm32h747ag.pdf" title="STM32H747xI/G Data Sheet"/>
+
+        <description>
+          The STM32H747 devices are dual processor devices:
+        </description>
+        <description Pname="CM7">
+          32-bit Arm Cortex-M7 core with doubleprecision FPU and L1 cache: 16 Kbytes of data and 16 Kbytes of instruction cache;
+          frequency up to 480 MHz, MPU, 1027 DMIPS/2.14 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+        <description Pname="CM4">
+          32-bit Arm 32-bit Cortex-M4 core with FPU, Adaptive real-time accelerator (ART Accelerator) for internal Flash memory and external memories,
+          frequency up to 240 MHz, MPU, 300 DMIPS/1.25 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+
+        <debugvars configfile="CMSIS/Debug/STM32H745_747_755_757.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 5] DBGSTBY_D2, [ 4] DBGSTOP_D2,  [ 3] DBGSLEEP_D2
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU CPU1 APB3 peripheral freeze register
+          __var DbgMCU_APB3_Fz2  = 0x00000000;   // DBGMCU_APB3FZ2:  DBGMCU CPU2 APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU CPU1 APB1L peripheral freeze register
+          __var DbgMCU_APB1L_Fz2 = 0x00000000;   // DBGMCU_APB1LFZ2: DBGMCU CPU2 APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU CPU1 APB2 peripheral freeze register
+          __var DbgMCU_APB2_Fz2  = 0x00000000;   // DBGMCU_APB2FZ2:  DBGMCU CPU2 APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU CPU1 APB4 peripheral freeze register
+          __var DbgMCU_APB4_Fz2  = 0x00000000;   // DBGMCU_APB4FZ2:  DBGMCU CPU2 APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure CPU1 APB3 peripheral freeze behavior
+              Write32(0xE00E1038 , DbgMCU_APB3_Fz2         );     // DBGMCU_APB3FZ2:  Configure CPU2 APB3 peripheral freeze register
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure CPU1 APB1L peripheral freeze behavior
+              Write32(0xE00E1040 , DbgMCU_APB1L_Fz2        );     // DBGMCU_APB1LFZ2: Configure CPU2 APB1L peripheral freeze register
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure CPU1 APB2 peripheral freeze behavior
+              Write32(0xE00E1050 , DbgMCU_APB2_Fz2         );     // DBGMCU_APB2FZ2:  Configure CPU2 APB2 peripheral freeze register
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure CPU1 APB4 peripheral freeze behavior
+              Write32(0xE00E1058 , DbgMCU_APB4_Fz2         );     // DBGMCU_APB4FZ2:  Configure CPU2 APB4 peripheral freeze register
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm Pname="CM7" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0x8000" default="1" />
+        <algorithm Pname="CM4" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x10000000" RAMsize="0x8000" default="1" />
+
+        <memory Pname="CM7" name="DTCMRAM"  access="rw"             start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory Pname="CM7" name="RAM_D1"   access="rw"             start="0x24000000" size="0x00080000" default="1" init="0"/>
+        <memory Pname="CM7" name="RAM_D3"   access="rw"             start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory Pname="CM7" name="ITCMRAM"  access="rw"             start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <memory Pname="CM4" name="RAM_D2"   access="rw"             start="0x10000000" size="0x00048000" default="1" init="0"/>
+
+        <!-- *************************  Device 'STM32H747AGIx'  ***************************** -->
+        <device Dname="STM32H747AGIx">
+          <compile Pname="CM7" define="STM32H747xG"/>
+          <compile Pname="CM4" define="STM32H747xG"/>
+
+         <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747AIIx'  ***************************** -->
+        <device Dname="STM32H747AIIx">
+          <compile Pname="CM7" define="STM32H747xx"/>
+          <compile Pname="CM4" define="STM32H747xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747BGTx'  ***************************** -->
+        <device Dname="STM32H747BGTx">
+          <compile Pname="CM7" define="STM32H747xG"/>
+          <compile Pname="CM4" define="STM32H747xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747BITx'  ***************************** -->
+        <device Dname="STM32H747BITx">
+          <compile Pname="CM7" define="STM32H747xx"/>
+          <compile Pname="CM4" define="STM32H747xx"/>
+
+         <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747IGTx'  ***************************** -->
+        <device Dname="STM32H747IGTx">
+          <compile Pname="CM7" define="STM32H747xG"/>
+          <compile Pname="CM4" define="STM32H747xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747IITx'  ***************************** -->
+        <device Dname="STM32H747IITx">
+          <compile Pname="CM7" define="STM32H747xx"/>
+          <compile Pname="CM4" define="STM32H747xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747XGHx'  ***************************** -->
+        <device Dname="STM32H747XGHx">
+          <compile Pname="CM7" define="STM32H747xG"/>
+          <compile Pname="CM4" define="STM32H747xG"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747XIHx'  ***************************** -->
+        <device Dname="STM32H747XIHx">
+          <compile Pname="CM7" define="STM32H747xx"/>
+          <compile Pname="CM4" define="STM32H747xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H747ZIYx'  ***************************** -->
+        <device Dname="STM32H747ZIYx">
+          <compile Pname="CM7" define="STM32H747xx"/>
+          <compile Pname="CM4" define="STM32H747xx"/>
+
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="CSP" n="156"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H757' Dual Core  ****************** -->
+      <subFamily DsubFamily="STM32H757">
+        <processor Pname="CM7" Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="480000000"/>
+        <processor Pname="CM4" Dcore="Cortex-M4" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="SP_FPU" Dendian="Little-endian" Dclock="240000000"/>
+        <debug Pname="CM7"  __ap="0" svd="CMSIS/SVD/STM32H757_CM7.svd"/>
+        <debug Pname="CM4"  __ap="3" svd="CMSIS/SVD/STM32H757_CM4.svd"/>
+        <compile Pname="CM7" define="STM32H757xx" Pdefine="CORE_CM7"/>
+        <compile Pname="CM4" define="STM32H757xx" Pdefine="CORE_CM4"/>
+
+        <book Pname="CM7" name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book Pname="CM4" name="https://developer.arm.com/documentation/dui0553/latest" title="Cortex-M4 Generic User Guide"/>
+        <book             name="https://www.st.com/resource/en/reference_manual/rm0399-stm32h745755-and-stm32h747757-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H745/755 and STM32H747/757 Reference Manual"/>
+        <book             name="https://www.st.com/resource/en/datasheet/stm32h757ai.pdf" title="STM32H757xI Data Sheet"/>
+
+        <description>
+          The STM32H757 devices are dual processor devices:
+        </description>
+        <description Pname="CM7">
+          32-bit Arm Cortex-M7 core with doubleprecision FPU and L1 cache: 16 Kbytes of data and 16 Kbytes of instruction cache;
+          frequency up to 480 MHz, MPU, 1027 DMIPS/2.14 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+        <description Pname="CM4">
+          32-bit Arm 32-bit Cortex-M4 core with FPU, Adaptive real-time accelerator (ART Accelerator) for internal Flash memory and external memories,
+          frequency up to 240 MHz, MPU, 300 DMIPS/1.25 DMIPS/MHz (Dhrystone 2.1), and DSP instructions.
+        </description>
+
+        <debugvars configfile="CMSIS/Debug/STM32H745_747_755_757.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 5] DBGSTBY_D2, [ 4] DBGSTOP_D2,  [ 3] DBGSLEEP_D2
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU CPU1 APB3 peripheral freeze register
+          __var DbgMCU_APB3_Fz2  = 0x00000000;   // DBGMCU_APB3FZ2:  DBGMCU CPU2 APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU CPU1 APB1L peripheral freeze register
+          __var DbgMCU_APB1L_Fz2 = 0x00000000;   // DBGMCU_APB1LFZ2: DBGMCU CPU2 APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU CPU1 APB2 peripheral freeze register
+          __var DbgMCU_APB2_Fz2  = 0x00000000;   // DBGMCU_APB2FZ2:  DBGMCU CPU2 APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU CPU1 APB4 peripheral freeze register
+          __var DbgMCU_APB4_Fz2  = 0x00000000;   // DBGMCU_APB4FZ2:  DBGMCU CPU2 APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure CPU1 APB3 peripheral freeze behavior
+              Write32(0xE00E1038 , DbgMCU_APB3_Fz2         );     // DBGMCU_APB3FZ2:  Configure CPU2 APB3 peripheral freeze register
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure CPU1 APB1L peripheral freeze behavior
+              Write32(0xE00E1040 , DbgMCU_APB1L_Fz2        );     // DBGMCU_APB1LFZ2: Configure CPU2 APB1L peripheral freeze register
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure CPU1 APB2 peripheral freeze behavior
+              Write32(0xE00E1050 , DbgMCU_APB2_Fz2         );     // DBGMCU_APB2FZ2:  Configure CPU2 APB2 peripheral freeze register
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure CPU1 APB4 peripheral freeze behavior
+              Write32(0xE00E1058 , DbgMCU_APB4_Fz2         );     // DBGMCU_APB4FZ2:  Configure CPU2 APB4 peripheral freeze register
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm Pname="CM7" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0x8000" default="1" />
+        <algorithm Pname="CM4" name="CMSIS/Flash/STM32H7x_2048.FLM" start="0x08000000" size="0x00200000" RAMstart="0x10000000" RAMsize="0x8000" default="1" />
+
+        <memory Pname="CM7" name="DTCMRAM"  access="rw"             start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory Pname="CM7" name="RAM_D1"   access="rw"             start="0x24000000" size="0x00080000" default="1" init="0"/>
+        <memory Pname="CM7" name="RAM_D3"   access="rw"             start="0x38000000" size="0x00010000" default="1" init="0"/>
+     <!--memory Pname="CM7" name="ITCMRAM"  access="rw"             start="0x00000000" size="0x00010000" default="1" init="0"/-->
+
+        <memory Pname="CM4" name="RAM_D2"   access="rw"             start="0x10000000" size="0x00030000" default="1" init="0"/>
+        <memory Pname="CM4" name="RAM_D2S3" access="rw"             start="0x10040000" size="0x00008000" default="1" init="0"/>
+
+        <!-- *************************  Device 'STM32H757AIIx'  ***************************** -->
+        <device Dname="STM32H757AIIx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H757BITx'  ***************************** -->
+        <device Dname="STM32H757BITx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="208"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H757IITx'  ***************************** -->
+        <device Dname="STM32H757IITx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H757XIHx'  ***************************** -->
+        <device Dname="STM32H757XIHx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="240"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H757ZIYx'  ***************************** -->
+        <device Dname="STM32H757ZIYx">
+          <memory Pname="CM7" name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory Pname="CM4" name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="CSP" n="156"/>
+        </device>
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H7A3'  **************************** -->
+      <subFamily DsubFamily="STM32H7A3">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="280000000"/>
+        <debug svd="CMSIS/SVD/STM32H7A3.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0455-stm32h7a37b3-and-stm32h7b0-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H7A3/B3 and STM32H7B0 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h7a3ai.pdf" title="STM32H7A3xI/G Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H7A3_7B3_7B0.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H7A-B3_Flash_2M.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0xFFF4" default="1" />
+
+        <memory    name="DTCMRAM"     access="rwx"             start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"             start="0x24000000" size="0x00100000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"             start="0x30000000" size="0x00020000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"             start="0x38000000" size="0x00008000" default="1" init="0"/>
+
+        <!-- ################################### 2 MB ################################## -->
+        <!-- *************************  Device 'STM32H7A3IIKx'  ***************************** -->
+        <device Dname="STM32H7A3IIKx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3IIKxQ'  ***************************** -->
+        <device Dname="STM32H7A3IIKxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3IITx'  ***************************** -->
+        <device Dname="STM32H7A3IITx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3IITxQ'  ***************************** -->
+        <device Dname="STM32H7A3IITxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3NIHx'  ***************************** -->
+        <device Dname="STM32H7A3NIHx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="216"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3RITx'  ***************************** -->
+        <device Dname="STM32H7A3RITx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="64"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VITx'  ***************************** -->
+        <device Dname="STM32H7A3VITx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VITxQ'  ***************************** -->
+        <device Dname="STM32H7A3VITxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VIHx'  ***************************** -->
+        <device Dname="STM32H7A3VIHx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VIHxQ'  ***************************** -->
+        <device Dname="STM32H7A3VIHxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3ZITx'  ***************************** -->
+        <device Dname="STM32H7A3ZITx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3ZITxQ'  ***************************** -->
+        <device Dname="STM32H7A3ZITxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3QIYxQ'  ***************************** -->
+        <device Dname="STM32H7A3QIYxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="CSP" n="132"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3LIHxQ'  ***************************** -->
+        <device Dname="STM32H7A3LIHxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="225"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3AIIxQ'  ***************************** -->
+        <device Dname="STM32H7A3AIIxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- ################################### 1MB ################################## -->
+        <!-- *************************  Device 'STM32H7A3ZGTx'  ***************************** -->
+        <device Dname="STM32H7A3ZGTx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3ZGTxQ'  ***************************** -->
+        <device Dname="STM32H7A3ZGTxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3NGHx'  ***************************** -->
+        <device Dname="STM32H7A3NGHx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="216"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VGHx'  ***************************** -->
+        <device Dname="STM32H7A3VGHx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VGHxQ'  ***************************** -->
+        <device Dname="STM32H7A3VGHxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VGTx'  ***************************** -->
+        <device Dname="STM32H7A3VGTx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3VGTxQ'  ***************************** -->
+        <device Dname="STM32H7A3VGTxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3RGTx'  ***************************** -->
+        <device Dname="STM32H7A3RGTx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="64"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3LGHxQ'  ***************************** -->
+        <device Dname="STM32H7A3LGHxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="225"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3IGKx'  ***************************** -->
+        <device Dname="STM32H7A3IGKx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3IGKxQ'  ***************************** -->
+        <device Dname="STM32H7A3IGKxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3IGTx'  ***************************** -->
+        <device Dname="STM32H7A3IGTx">
+          <compile define="STM32H7A3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3IGTxQ'  ***************************** -->
+        <device Dname="STM32H7A3IGTxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7A3AGIxQ'  ***************************** -->
+        <device Dname="STM32H7A3AGIxQ">
+          <compile define="STM32H7A3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H7B3'  **************************** -->
+      <subFamily DsubFamily="STM32H7B3">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="280000000"/>
+        <debug svd="CMSIS/SVD/STM32H7B3.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0455-stm32h7a37b3-and-stm32h7b0-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H7A3/B3 and STM32H7B0 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h7b3ri.pdf" title="STM32H7B3xI/G Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H7A3_7B3_7B0.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H7A-B3_Flash_2M.FLM" start="0x08000000" size="0x00200000" RAMstart="0x20000000" RAMsize="0xFFF4" default="1" />
+
+        <memory    name="DTCMRAM"     access="rwx"             start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"             start="0x24000000" size="0x00100000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"             start="0x30000000" size="0x00020000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"             start="0x38000000" size="0x00008000" default="1" init="0"/>
+
+        <!-- ################################### 2 MB ################################## -->
+        <!-- *************************  Device 'STM32H7B3AIIxQ'  ***************************** -->
+        <device Dname="STM32H7B3AIIxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3LIHxQ'  ***************************** -->
+        <device Dname="STM32H7B3LIHxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="225"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3IIKx'  ***************************** -->
+        <device Dname="STM32H7B3IIKx">
+          <compile define="STM32H7B3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3IIKxQ'  ***************************** -->
+        <device Dname="STM32H7B3IIKxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3IITx'  ***************************** -->
+        <device Dname="STM32H7B3IITx">
+          <compile define="STM32H7B3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3IITxQ'  ***************************** -->
+        <device Dname="STM32H7B3IITxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3NIHx'  ***************************** -->
+        <device Dname="STM32H7B3NIHx">
+          <compile define="STM32H7B3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="216"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3RITx'  ***************************** -->
+        <device Dname="STM32H7B3RITx">
+          <compile define="STM32H7B3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="64"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3VITx'  ***************************** -->
+        <device Dname="STM32H7B3VITx">
+          <compile define="STM32H7B3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3VITxQ'  ***************************** -->
+        <device Dname="STM32H7B3VITxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3VIHx'  ***************************** -->
+        <device Dname="STM32H7B3VIHx">
+          <compile define="STM32H7B3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3VIHxQ'  ***************************** -->
+        <device Dname="STM32H7B3VIHxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3ZITx'  ***************************** -->
+        <device Dname="STM32H7B3ZITx">
+          <compile define="STM32H7B3xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3ZITxQ'  ***************************** -->
+        <device Dname="STM32H7B3ZITxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B3QIYxQ'  ***************************** -->
+        <device Dname="STM32H7B3QIYxQ">
+          <compile define="STM32H7B3xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+          <memory name="FLASH_Bank2" access="rx" start="0x08100000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="CSP" n="132"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H7B0'  **************************** -->
+      <subFamily DsubFamily="STM32H7B0">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="280000000"/>
+        <debug svd="CMSIS/SVD/STM32H7B0.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0455-stm32h7a37b3-and-stm32h7b0-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H7A3/B3 and STM32H7B0 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h7b0ab.pdf" title="STM32H7B0xB Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H7A3_7B3_7B0.dbgconf" version="1.1.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H7B0_Flash.FLM" start="0x08000000" size="0x00020000" RAMstart="0x20000000" RAMsize="0xFFF4" default="1" />
+
+        <memory    name="DTCMRAM"     access="rwx"        start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"        start="0x24000000" size="0x00100000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"        start="0x30000000" size="0x00020000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"        start="0x38000000" size="0x00008000" default="1" init="0"/>
+
+        <!-- ################################### 128 kB ################################## -->
+        <!-- *************************  Device 'STM32H7B0RBTx'  ***************************** -->
+        <device Dname="STM32H7B0RBTx">
+          <compile define="STM32H7B0xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="QFP" n="64"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B0VBTx'  ***************************** -->
+        <device Dname="STM32H7B0VBTx">
+          <compile define="STM32H7B0xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B0ZBTx'  ***************************** -->
+        <device Dname="STM32H7B0ZBTx">
+          <compile define="STM32H7B0xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B0IBTx'  ***************************** -->
+        <device Dname="STM32H7B0IBTx">
+          <compile define="STM32H7B0xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B0IBKxQ'  ***************************** -->
+        <device Dname="STM32H7B0IBKxQ">
+          <compile define="STM32H7B0xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H7B0ABIxQ'  ***************************** -->
+        <device Dname="STM32H7B0ABIxQ">
+          <compile define="STM32H7B0xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H723'  **************************** -->
+      <subFamily DsubFamily="STM32H723">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="550000000"/>
+        <debug svd="CMSIS/SVD/STM32H723.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0468-stm32h723733-stm32h725735-and-stm32h730-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H723/733, STM32H725/735 and STM32H730 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h723zg.pdf" title="STM32H723VE STM32H723VG STM32H723ZE STM32H723ZG Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H723_725_730_733_735.dbgconf" version="1.0.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB1H_Fz1 = 0x00000000;   // DBGMCU_APB1HFZ1: DBGMCU APB1H peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E1044 , DbgMCU_APB1H_Fz1        );     // DBGMCU_APB1HFZ1: Configure APB1H peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H72x-73x_1024.FLM" start="0x08000000" size="0x00100000" RAMstart="0x20000000" RAMsize="0x8000" default="1"/>
+
+        <memory    name="DTCMRAM"     access="rwx"           start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"           start="0x24000000" size="0x00050000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"           start="0x30000000" size="0x00008000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"           start="0x38000000" size="0x00004000" default="1" init="0"/>
+
+        <!-- **********************************  1MB ***************************** -->
+        <!-- *************************  Device 'STM32H723VGHx'  ***************************** -->
+        <device Dname="STM32H723VGHx">
+          <compile define="STM32H723xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H723VGTx'  ***************************** -->
+        <device Dname="STM32H723VGTx">
+          <compile define="STM32H723xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H723ZGIx'  ***************************** -->
+        <device Dname="STM32H723ZGIx">
+          <compile define="STM32H723xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H723ZGTx'  ***************************** -->
+        <device Dname="STM32H723ZGTx">
+          <compile define="STM32H723xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- **********************************  512KB ***************************** -->
+        <!-- *************************  Device 'STM32H723VETx'  ***************************** -->
+        <device Dname="STM32H723VETx">
+          <compile define="STM32H723xx"/>
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H723VEHx'  ***************************** -->
+        <device Dname="STM32H723VEHx">
+          <compile define="STM32H723xx"/>
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H723ZETx'  ***************************** -->
+        <device Dname="STM32H723ZETx">
+          <compile define="STM32H723xx"/>
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H723ZEIx'  ***************************** -->
+        <device Dname="STM32H723ZEIx">
+          <compile define="STM32H723xx"/>
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="144"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H733'  **************************** -->
+      <subFamily DsubFamily="STM32H733">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="550000000"/>
+        <debug svd="CMSIS/SVD/STM32H733.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0468-stm32h723733-stm32h725735-and-stm32h730-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H723/733, STM32H725/735 and STM32H730 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h733vg.pdf" title="STM32H733VG STM32H733ZG Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H723_725_730_733_735.dbgconf" version="1.0.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB1H_Fz1 = 0x00000000;   // DBGMCU_APB1HFZ1: DBGMCU APB1H peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E1044 , DbgMCU_APB1H_Fz1        );     // DBGMCU_APB1HFZ1: Configure APB1H peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H72x-73x_1024.FLM" start="0x08000000" size="0x00100000" RAMstart="0x20000000" RAMsize="0x8000" default="1"/>
+
+        <memory    name="DTCMRAM"     access="rwx"           start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"           start="0x24000000" size="0x00050000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"           start="0x30000000" size="0x00008000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"           start="0x38000000" size="0x00004000" default="1" init="0"/>
+
+        <!-- **********************************  1MB ***************************** -->
+        <!-- *************************  Device 'STM32H733VGHx'  ***************************** -->
+        <device Dname="STM32H733VGHx">
+          <compile define="STM32H733xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H733VGTx'  ***************************** -->
+        <device Dname="STM32H733VGTx">
+          <compile define="STM32H733xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H733ZGIx'  ***************************** -->
+        <device Dname="STM32H733ZGIx">
+          <compile define="STM32H733xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H733ZGTx'  ***************************** -->
+        <device Dname="STM32H733ZGTx">
+          <compile define="STM32H733xx"/>
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H725'  **************************** -->
+      <subFamily DsubFamily="STM32H725">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="550000000"/>
+        <debug svd="CMSIS/SVD/STM32H725.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0468-stm32h723733-stm32h725735-and-stm32h730-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H723/733, STM32H725/735 and STM32H730 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h725ae.pdf" title="STM32H725xE/G Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H723_725_730_733_735.dbgconf" version="1.0.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB1H_Fz1 = 0x00000000;   // DBGMCU_APB1HFZ1: DBGMCU APB1H peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E1044 , DbgMCU_APB1H_Fz1        );     // DBGMCU_APB1HFZ1: Configure APB1H peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H72x-73x_1024.FLM" start="0x08000000" size="0x00100000" RAMstart="0x20000000" RAMsize="0x8000" default="1"/>
+
+        <memory    name="DTCMRAM"     access="rwx"           start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"           start="0x24000000" size="0x00050000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"           start="0x30000000" size="0x00008000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"           start="0x38000000" size="0x00004000" default="1" init="0"/>
+
+        <!-- **********************************  1MB ***************************** -->
+        <!-- *************************  Device 'STM32H725VGHx'  ***************************** -->
+        <device Dname="STM32H725VGHx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725IGKx'  ***************************** -->
+        <device Dname="STM32H725IGKx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725IGTx'  ***************************** -->
+        <device Dname="STM32H725IGTx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725AGIx'  ***************************** -->
+        <device Dname="STM32H725AGIx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725RGVx'  ***************************** -->
+        <device Dname="STM32H725RGVx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="68"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725ZGTx'  ***************************** -->
+        <device Dname="STM32H725ZGTx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725VGTx'  ***************************** -->
+        <device Dname="STM32H725VGTx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725VGYx'  ***************************** -->
+        <device Dname="STM32H725VGYx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="CSP" n="100"/>
+        </device>
+
+        <!-- **********************************  512KB ***************************** -->
+        <!-- *************************  Device 'STM32H725REVx'  ***************************** -->
+        <device Dname="STM32H725REVx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="68"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725VETx'  ***************************** -->
+        <device Dname="STM32H725VETx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725VEHx'  ***************************** -->
+        <device Dname="STM32H725VEHx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725ZETx'  ***************************** -->
+        <device Dname="STM32H725ZETx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725AEIx'  ***************************** -->
+        <device Dname="STM32H725AEIx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725IETx'  ***************************** -->
+        <device Dname="STM32H725IETx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H725IEKx'  ***************************** -->
+        <device Dname="STM32H725IEKx">
+          <compile define="STM32H725xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00080000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H735'  **************************** -->
+      <subFamily DsubFamily="STM32H735">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="550000000"/>
+        <debug svd="CMSIS/SVD/STM32H735.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0468-stm32h723733-stm32h725735-and-stm32h730-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H723/733, STM32H725/735 and STM32H730 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h735zg.pdf" title="STM32H735xG Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H723_725_730_733_735.dbgconf" version="1.0.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB1H_Fz1 = 0x00000000;   // DBGMCU_APB1HFZ1: DBGMCU APB1H peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E1044 , DbgMCU_APB1H_Fz1        );     // DBGMCU_APB1HFZ1: Configure APB1H peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H72x-73x_1024.FLM" start="0x08000000" size="0x00100000" RAMstart="0x20000000" RAMsize="0x8000" default="1"/>
+
+        <memory    name="DTCMRAM"     access="rwx"           start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"           start="0x24000000" size="0x00050000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"           start="0x30000000" size="0x00008000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"           start="0x38000000" size="0x00004000" default="1" init="0"/>
+
+
+        <!-- **********************************  1MB ***************************** -->
+        <!-- *************************  Device 'STM32H735VGHx'  ***************************** -->
+        <device Dname="STM32H735VGHx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H735ZGTx'  ***************************** -->
+        <device Dname="STM32H735ZGTx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H735VGTx'  ***************************** -->
+        <device Dname="STM32H735VGTx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H735VGYx'  ***************************** -->
+        <device Dname="STM32H735VGYx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="CSP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H735AGIx'  ***************************** -->
+        <device Dname="STM32H735AGIx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H735IGKx'  ***************************** -->
+        <device Dname="STM32H735IGKx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H735IGTx'  ***************************** -->
+        <device Dname="STM32H735IGTx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H735RGVx'  ***************************** -->
+        <device Dname="STM32H735RGVx">
+          <compile define="STM32H735xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00100000" default="1" startup="1"/>
+
+          <feature type="QFP" n="68"/>
+        </device>
+
+      </subFamily>
+
+      <!-- ************************  Subfamily 'STM32H730'  **************************** -->
+      <subFamily DsubFamily="STM32H730">
+        <processor Dcore="Cortex-M7" DcoreVersion="r0p1" Dmpu="MPU" Dfpu="DP_FPU" Dendian="Little-endian" Dclock="550000000"/>
+        <debug svd="CMSIS/SVD/STM32H730.svd"/>
+
+        <book name="https://developer.arm.com/documentation/dui0646/latest" title="Cortex-M7 Generic User Guide"/>
+        <book name="https://www.st.com/resource/en/reference_manual/rm0468-stm32h723733-stm32h725735-and-stm32h730-value-line-advanced-armbased-32bit-mcus-stmicroelectronics.pdf" title="STM32H723/733, STM32H725/735 and STM32H730 Value line Reference Manual"/>
+        <book name="https://www.st.com/resource/en/datasheet/stm32h730ab.pdf" title="STM32H730AB STM32H730IB STM32H730VB STM32H730ZB Data Sheet"/>
+
+        <debugvars configfile="CMSIS/Debug/STM32H723_725_730_733_735.dbgconf" version="1.0.0">
+          // Debug Access Variables, can be modified by user via copies of DBGCONF files as created by uVision. Also see sub-family level.
+          __var DbgMCU_CR        = 0x00000007;   // DBGMCU_CR:       DBGMCU configuration register
+                                                 //                  [ 8] DBGSTBY_D3, [ 7] DBGSTOP_D3
+                                                 //                  [ 2] DBGSTBY_D1, [ 1] DBGSTOP_D1,  [ 0] DBGSLEEP_D1
+          __var DbgMCU_APB3_Fz1  = 0x00000000;   // DBGMCU_APB3FZ1:  DBGMCU APB3 peripheral freeze register
+          __var DbgMCU_APB1L_Fz1 = 0x00000000;   // DBGMCU_APB1LFZ1: DBGMCU APB1L peripheral freeze register
+          __var DbgMCU_APB1H_Fz1 = 0x00000000;   // DBGMCU_APB1HFZ1: DBGMCU APB1H peripheral freeze register
+          __var DbgMCU_APB2_Fz1  = 0x00000000;   // DBGMCU_APB2FZ1:  DBGMCU APB2 peripheral freeze register
+          __var DbgMCU_APB4_Fz1  = 0x00000000;   // DBGMCU_APB4FZ1:  DBGMCU APB4 peripheral freeze register
+
+          __var TraceClk_Pin     = 0x00040002;   // PE2
+          __var TraceD0_Pin      = 0x00040003;   // PE3
+          __var TraceD1_Pin      = 0x00040004;   // PE4
+          __var TraceD2_Pin      = 0x00040005;   // PE5
+          __var TraceD3_Pin      = 0x00040006;   // PE6
+        </debugvars>
+
+        <sequences>
+          <sequence name="DebugDeviceUnlock">
+            <block>
+              __var value = 0;
+
+              Sequence("CheckID");
+
+              __ap   = 2;                                         // Switch to System Debug Access Port
+
+              value  = Read32(0xE00E1004);                        // Read DBGMCU_CR
+              value |= 0x00670000;                                // set preset values (enable all debug clocks by default)
+                                                                  // DBGMCU_CR[18] CKDBGD3EN, [17] CKDBGD2EN, [16] CKDBGD1EN
+                                                                  // DBGMCU_CR[22] D3DBGCKEN, [21] D1DBGCKEN
+            </block>
+
+            <control if="__traceout"> <!-- Enable Trace Clock and hence access to global trace components now -->
+              <block>
+                value |= 0x00100000;                              // DBGMCU_CR[20] TRACECLKEN
+              </block>
+            </control>
+
+            <block>
+              Write32(0xE00E1004, value);                         // Update DBGMCU_CR
+            </block>
+
+            <block info="DbgMCU registers">
+              Write32(0xE00E1004 , DbgMCU_CR        | value);     // DBGMCU_CR:       Configure MCU Debug
+              Write32(0xE00E1034 , DbgMCU_APB3_Fz1         );     // DBGMCU_APB3FZ1:  Configure APB3 peripheral freeze behavior
+              Write32(0xE00E103C , DbgMCU_APB1L_Fz1        );     // DBGMCU_APB1LFZ1: Configure APB1L peripheral freeze behavior
+              Write32(0xE00E1044 , DbgMCU_APB1H_Fz1        );     // DBGMCU_APB1HFZ1: Configure APB1H peripheral freeze behavior
+              Write32(0xE00E104C , DbgMCU_APB2_Fz1         );     // DBGMCU_APB2FZ1:  Configure APB2 peripheral freeze behavior
+              Write32(0xE00E1054 , DbgMCU_APB4_Fz1         );     // DBGMCU_APB4FZ1:  Configure APB4 peripheral freeze behavior
+            </block>
+          </sequence>
+
+        </sequences>
+
+        <algorithm name="CMSIS/Flash/STM32H730xx_128.FLM" start="0x08000000" size="0x00020000" RAMstart="0x20000000" RAMsize="0x8000" default="1"/>
+
+        <memory    name="DTCMRAM"     access="rwx"        start="0x20000000" size="0x00020000" default="0" init="0"/>
+        <memory    name="RAM_D1"      access="rwx"        start="0x24000000" size="0x00050000" default="1" init="0"/>
+        <memory    name="RAM_D2"      access="rwx"        start="0x30000000" size="0x00008000" default="1" init="0"/>
+        <memory    name="RAM_D3"      access="rwx"        start="0x38000000" size="0x00004000" default="1" init="0"/>
+
+        <!-- *************************  Device 'STM32H730VBHx'  ***************************** -->
+        <device Dname="STM32H730VBHx">
+          <compile define="STM32H730xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="BGA" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H730VBTx'  ***************************** -->
+        <device Dname="STM32H730VBTx">
+          <compile define="STM32H730xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="QFP" n="100"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H730IBTxQ'  ***************************** -->
+        <device Dname="STM32H730IBTxQ">
+          <compile define="stm32h730xxq"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="QFP" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H730IBKxQ'  ***************************** -->
+        <device Dname="STM32H730IBKxQ">
+          <compile define="STM32H730xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="BGA" n="176"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H730ZBTx'  ***************************** -->
+        <device Dname="STM32H730ZBTx">
+          <compile define="STM32H730xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="QFP" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H730ZBIx'  ***************************** -->
+        <device Dname="STM32H730ZBIx">
+          <compile define="STM32H730xx"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="BGA" n="144"/>
+        </device>
+
+        <!-- *************************  Device 'STM32H730ABIxQ'  ***************************** -->
+        <device Dname="STM32H730ABIxQ">
+          <compile define="STM32H730xxQ"/>
+
+          <memory name="FLASH_Bank1" access="rx" start="0x08000000" size="0x00020000" default="1" startup="1"/>
+
+          <feature type="BGA" n="169"/>
+        </device>
+
+      </subFamily>
+
+    </family>
+
+  </devices>
+
+  <conditions>
+    <!-- Device Conditions -->
+    <condition id="STM32H7">
+      <description>STMicroelectronics STM32H7 Series devices</description>
+      <require Dvendor="STMicroelectronics:13" Dname="STM32H7*"/>
+      <deny    Dvendor="STMicroelectronics:13" Dname="STM32H7[R]*"/>
+      <deny    Dvendor="STMicroelectronics:13" Dname="STM32H7[S]*"/>
+    </condition>
+
+    <!-- Device + CMSIS Conditions -->
+    <condition id="STM32H7 CMSIS">
+      <description>STMicroelectronics STM32H7 Device and CMSIS-CORE</description>
+      <require condition="STM32H7"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+
+  </conditions>
+
+  <components>
+    <!-- CubeMX Generator -->
+    <component generator="CubeMX" Cclass="Device" Cgroup="CubeMX" Cversion="1.0.0" condition="STM32H7 CMSIS">
+      <description>Configuration via STM32CubeMX</description>
+      <RTE_Components_h>
+        #define RTE_DEVICE_CUBE_MX
+        #define CMSIS_device_header "stm32h7xx.h"
+      </RTE_Components_h>
+      <files>
+        <file category="doc" name="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/CubeMX.md"/>
+      </files>
+    </component>
+  </components>
+
+  <csolution>
+    <!-- CubeMX Basic CMSIS Solution template -->
+    <template name="CubeMX Basic solution" path="Templates/CubeMX" file="CubeMX.csolution.yml" condition="STM32H7">
+      <description>Create a CubeMX basic solution with project</description>
+    </template>
+    <!-- CubeMX Dual Core CMSIS Solution template -->
+    <template name="CubeMX Dual Core solution" path="Templates/CubeMX_DualCore" file="CubeMX_DualCore.csolution.yml" condition="STM32H7">
+      <description>Create a CubeMX Dual Core solution with CM4 and CM7 projects</description>
+    </template>
+  </csolution>
+</package>
