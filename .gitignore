@@ -1,0 +1,73 @@
+# STM32 Build Folders
+build/
+Debug/
+Release/
+Objects/
+
+# Keil MDK-ARM
+*.uvguix.*
+*.uvopt
+*.uvoptx
+*.uvprojx
+*.scvd
+*.lst
+*.o
+*.d
+*.crf
+*.map
+*.hex
+*.bin
+*.axf
+*.lnp
+*.htm
+*.dep
+*.iex
+*.sct
+*.Administrator
+JLinkLog.txt
+JLinkSettings.ini
+
+# IAR EWARM
+EWARM/
+*.ewp
+*.ewd
+*.eww
+*.ewt
+*.dep
+*.bak
+*.dni
+*.wsdt
+*.dbgdt
+*.xcl
+
+# STM32CubeIDE
+.settings/
+.metadata/
+[Dd]ebug/
+[Rr]elease/
+.launch/
+*.elf
+*.list
+*.map
+*.su
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# General
+*.log
+*.bak
+*.tmp
+*.temp
+*.swp
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
