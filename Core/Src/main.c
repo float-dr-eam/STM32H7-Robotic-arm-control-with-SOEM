@@ -185,6 +185,7 @@ int main(void)
     if (phyEvent)
     {
       phyEvent = FALSE;
+      printf("PHY event\n");
       PhyEventHandler();  /* 处理物理层事件 */
       LD3M_test("hello"); /* LD3M测试 */
       lcd_show_string(100, 1, 20, 16, 16, "1", BLUE);

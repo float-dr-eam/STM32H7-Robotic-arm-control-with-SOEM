@@ -443,14 +443,14 @@ if ((PHY_TYPE & 0xFFF) == 0xFFF) /*LAN8720A*/
         }
         break;
     case SR8201F_PHYREGISTER2:
-        // ʶ��Ϊ SR8201F
+        // Identified as SR8201F
         ETH_CHIP_PHYSCSR = ((uint16_t)0x00);
         ETH_CHIP_SPEED_STATUS = ((uint16_t)0x2020);
         ETH_CHIP_DUPLEX_STATUS = ((uint16_t)0x0100);
         PHY_TYPE = SR8201F;
         break;
     case LAN8720A_PHYREGISTER2:
-        // ʶ��Ϊ LAN8720A
+        // Identified as LAN8720A
         ETH_CHIP_PHYSCSR = ((uint16_t)0x1F);
         ETH_CHIP_SPEED_STATUS = ((uint16_t)0x0004);
         ETH_CHIP_DUPLEX_STATUS = ((uint16_t)0x0010);
@@ -519,7 +519,7 @@ void PhyEventHandler(void)
             macConfig.Speed = speed;
             macConfig.TransmitQueueMode = ETH_TRANSMITTHRESHOLD_128; // ETH transmit queue mode
             HAL_ETH_SetMACConfig(&heth, &macConfig);
-            linkState = TRUE; // ����״̬
+            linkState = TRUE; // Link established
             if (HAL_ETH_Start_IT(&heth) == HAL_OK)
                 printf("HAL_ETH_Start_IT_SUCCESS\r\n");
             else
@@ -530,7 +530,7 @@ void PhyEventHandler(void)
     }
     else
     {
-        linkState = FALSE; // ����״̬
+        linkState = FALSE; // Link down
     }
 }
 
