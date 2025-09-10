@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        myiic.h
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2022-09-06
- * @brief       IIC Çı¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       IIC é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó °¢²¨ÂŞ H743¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ é˜¿æ³¢ç½— H743å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ĞŞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜
  * V1.0 20220906
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  *
  ****************************************************************************************************
  */
@@ -29,19 +29,19 @@
 
 
 /******************************************************************************************/
-/* Òı½Å ¶¨Òå */
+/* å¼•è„š å®šä¹‰ */
 
 #define IIC_SCL_GPIO_PORT               GPIOH
 #define IIC_SCL_GPIO_PIN                GPIO_PIN_4
-#define IIC_SCL_GPIO_CLK_ENABLE()       do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)   /* PH¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define IIC_SCL_GPIO_CLK_ENABLE()       do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)   /* PHå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define IIC_SDA_GPIO_PORT               GPIOH
 #define IIC_SDA_GPIO_PIN                GPIO_PIN_5
-#define IIC_SDA_GPIO_CLK_ENABLE()       do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)   /* PH¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define IIC_SDA_GPIO_CLK_ENABLE()       do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)   /* PHå£æ—¶é’Ÿä½¿èƒ½ */
 
 /******************************************************************************************/
 
-/* IO²Ù×÷ */
+/* IOæ“ä½œ */
 #define IIC_SCL(x)        do{ x ? \
                               HAL_GPIO_WritePin(IIC_SCL_GPIO_PORT, IIC_SCL_GPIO_PIN, GPIO_PIN_SET) : \
                               HAL_GPIO_WritePin(IIC_SCL_GPIO_PORT, IIC_SCL_GPIO_PIN, GPIO_PIN_RESET); \
@@ -52,19 +52,19 @@
                               HAL_GPIO_WritePin(IIC_SDA_GPIO_PORT, IIC_SDA_GPIO_PIN, GPIO_PIN_RESET); \
                           }while(0)       /* SDA */
 
-#define IIC_READ_SDA     HAL_GPIO_ReadPin(IIC_SDA_GPIO_PORT, IIC_SDA_GPIO_PIN) /* ¶ÁÈ¡SDA */
+#define IIC_READ_SDA     HAL_GPIO_ReadPin(IIC_SDA_GPIO_PORT, IIC_SDA_GPIO_PIN) /* è¯»å–SDA */
 
 /******************************************************************************************/
-/* IICËùÓĞ²Ù×÷º¯Êı */
+/* IICæ‰€æœ‰æ“ä½œå‡½æ•° */
 
-void iic_init(void);                /* ³õÊ¼»¯IICµÄIO¿Ú */
-void iic_start(void);               /* ·¢ËÍIIC¿ªÊ¼ĞÅºÅ */
-void iic_stop(void);                /* ·¢ËÍIICÍ£Ö¹ĞÅºÅ */
-void iic_ack(void);                 /* IIC·¢ËÍACKĞÅºÅ */
-void iic_nack(void);                /* IIC²»·¢ËÍACKĞÅºÅ */
-uint8_t iic_wait_ack(void);         /* IICµÈ´ıACKĞÅºÅ */
-void iic_send_byte(uint8_t data);   /* IIC·¢ËÍÒ»¸ö×Ö½Ú */
-uint8_t iic_read_byte(uint8_t ack); /* IIC¶ÁÈ¡Ò»¸ö×Ö½Ú */
+void iic_init(void);                /* åˆå§‹åŒ–IICçš„IOå£ */
+void iic_start(void);               /* å‘é€IICå¼€å§‹ä¿¡å· */
+void iic_stop(void);                /* å‘é€IICåœæ­¢ä¿¡å· */
+void iic_ack(void);                 /* IICå‘é€ACKä¿¡å· */
+void iic_nack(void);                /* IICä¸å‘é€ACKä¿¡å· */
+uint8_t iic_wait_ack(void);         /* IICç­‰å¾…ACKä¿¡å· */
+void iic_send_byte(uint8_t data);   /* IICå‘é€ä¸€ä¸ªå­—èŠ‚ */
+uint8_t iic_read_byte(uint8_t ack); /* IICè¯»å–ä¸€ä¸ªå­—èŠ‚ */
 
 #endif
 

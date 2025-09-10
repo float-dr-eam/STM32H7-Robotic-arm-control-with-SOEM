@@ -91,7 +91,8 @@ void validate_trajectory_planning(void);
 // 释放关节轨迹占用的内存
 void free_joint_trajectory(JointTrajectory *joint_traj);
 // 关节轨迹规划函数
-void trajectory_planning_with_joints(void);
-
+void trajectory_planning_with_joints_line(void);// 直线轨迹规划
+void trajectory_planning_with_joints_arc(void);// 圆弧轨迹规划
+void wave_action(void);// 打招呼动作
 extern void start_nonblocking_motion(JointTrajectory* traj);// 开始非阻塞运动
 #endif

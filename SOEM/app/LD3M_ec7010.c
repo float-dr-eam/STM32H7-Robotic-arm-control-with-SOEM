@@ -14,7 +14,7 @@ extern int dorun;
 LD3M_All LD3M_all = {0}; // 定义一个全局变量，用于存储所有从站的 PDO 数据
 int32 origin_point[NUM_SLAVES + 1];
 
-#define saved_flag 123456789
+#define saved_flag 987654321
 
 /*
 1. 将 EtherCAT 状态机切换到预操作，此状态下可以用 SD0 来配置 PDO 映射。
@@ -690,31 +690,14 @@ void LD3M_loop(void)
         }
         else if (LD3M_all.LD3Mflag[cnt] == 2)
         {
-           
-            // uint8 n = LD3M_all.total_time[cnt] / 100; 
-            // if (LD3M_all.trajectory_time[cnt] < LD3M_all.total_time[cnt])
-            // {
-            //     if(LD3M_all.trajectory_time[cnt] % n == 0) // 每100ms更新一次位置
-            //     {
-            //         // 更新目标位置为轨迹点
-            //         LD3M_all.outputs[cnt]->TargetPos = LD3M_all.trajectory[cnt][LD3M_all.trajectory_time[cnt]/n];
-            //     }
-            //     //LD3M_all.outputs[cnt]->TargetPos = LD3M_all.trajectory[cnt][LD3M_all.trajectory_time[cnt]];
-            // }
-            // else
-            // {
-            //     // 到达终点
-            //     LD3M_all.outputs[cnt]->TargetPos = LD3M_all.target_pos[cnt];
-            // }
-            // LD3M_all.trajectory_time[cnt] += 1; //ms
 
             if (a_cnt[cnt] < LD3M_all.target_pos[cnt] - LD3M_all.cur_pos[cnt])          //正转
             {
-                LD3M_all.outputs[cnt]->TargetPos = LD3M_all.cur_pos[cnt] + a_cnt[cnt];  // °/0.5ms
+                LD3M_all.outputs[cnt]->TargetPos = LD3M_all.cur_pos[cnt] + a_cnt[cnt];  
             }
             else if (LD3M_all.target_pos[cnt] - LD3M_all.cur_pos[cnt] < -a_cnt[cnt])    //反转
             {
-                LD3M_all.outputs[cnt]->TargetPos = LD3M_all.cur_pos[cnt] - a_cnt[cnt];  // °/0.5ms
+                LD3M_all.outputs[cnt]->TargetPos = LD3M_all.cur_pos[cnt] - a_cnt[cnt]; 
             }
             else if (LD3M_all.target_pos[cnt] - LD3M_all.cur_pos[cnt] > 0)           //正转结束
             {
@@ -732,10 +715,6 @@ void LD3M_loop(void)
             LD3M_all.outputs[cnt]->ControlWord = 0x1F; // 伺服运行   4-6运行模式相关	与各伺服运行模式相关
             
         }
-        // else if (LD3M_all.LD3Mflag[cnt] == 3)
-        // {
-        //     LD3M_all.outputs[cnt]->ControlWord = 0x0F; // 4-6运行模式相关	与各伺服运行模式相关
-        // }
         // 设置目标模式为 0x08
         LD3M_all.outputs[cnt]->TargetMode = 0x08;
     }

@@ -3,49 +3,49 @@
 #include "stdio.h"
 KeyInfo key[KEY_NUM];
 
-// ¶¨Òå³¤°´Ê±¼äãĞÖµ£¨µ¥Î»£º10ms£©
+// å®šä¹‰é•¿æŒ‰æ—¶é—´é˜ˆå€¼ï¼ˆå•ä½ï¼š10msï¼‰
 #define LONG_PRESS_TIME 60 // 600ms
-// ¶¨ÒåË«»÷¼ä¸ôÊ±¼äãĞÖµ£¨µ¥Î»£º10ms£©
+// å®šä¹‰åŒå‡»é—´éš”æ—¶é—´é˜ˆå€¼ï¼ˆå•ä½ï¼š10msï¼‰
 #define DOUBLE_CLICK_TIME 20 // 200ms
 
 /**
- * @brief       °´¼ü³õÊ¼»¯º¯Êı
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @brief       æŒ‰é”®åˆå§‹åŒ–å‡½æ•°
+ * @param       æ— 
+ * @retval      æ— 
  */
 void key_init(void)
 {
-    GPIO_InitTypeDef gpio_init_struct; /* GPIOÅäÖÃ²ÎÊı´æ´¢±äÁ¿ */
-    KEY0_GPIO_CLK_ENABLE();            /* KEY0Ê±ÖÓÊ¹ÄÜ */
-    KEY1_GPIO_CLK_ENABLE();            /* KEY1Ê±ÖÓÊ¹ÄÜ */
-    KEY2_GPIO_CLK_ENABLE();            /* KEY2Ê±ÖÓÊ¹ÄÜ */
-    WKUP_GPIO_CLK_ENABLE();            /* WKUPÊ±ÖÓÊ¹ÄÜ */
+    GPIO_InitTypeDef gpio_init_struct; /* GPIOé…ç½®å‚æ•°å­˜å‚¨å˜é‡ */
+    KEY0_GPIO_CLK_ENABLE();            /* KEY0æ—¶é’Ÿä½¿èƒ½ */
+    KEY1_GPIO_CLK_ENABLE();            /* KEY1æ—¶é’Ÿä½¿èƒ½ */
+    KEY2_GPIO_CLK_ENABLE();            /* KEY2æ—¶é’Ÿä½¿èƒ½ */
+    WKUP_GPIO_CLK_ENABLE();            /* WKUPæ—¶é’Ÿä½¿èƒ½ */
 
-    gpio_init_struct.Pin = KEY0_GPIO_PIN;             /* KEY0Òı½Å */
-    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* ÊäÈë */
-    gpio_init_struct.Pull = GPIO_PULLUP;              /* ÉÏÀ­ */
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* ¸ßËÙ */
-    HAL_GPIO_Init(KEY0_GPIO_PORT, &gpio_init_struct); /* KEY0Òı½ÅÄ£Ê½ÉèÖÃ,ÉÏÀ­ÊäÈë */
+    gpio_init_struct.Pin = KEY0_GPIO_PIN;             /* KEY0å¼•è„š */
+    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* è¾“å…¥ */
+    gpio_init_struct.Pull = GPIO_PULLUP;              /* ä¸Šæ‹‰ */
+    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* é«˜é€Ÿ */
+    HAL_GPIO_Init(KEY0_GPIO_PORT, &gpio_init_struct); /* KEY0å¼•è„šæ¨¡å¼è®¾ç½®,ä¸Šæ‹‰è¾“å…¥ */
 
-    gpio_init_struct.Pin = KEY1_GPIO_PIN;             /* KEY1Òı½Å */
-    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* ÊäÈë */
-    gpio_init_struct.Pull = GPIO_PULLUP;              /* ÉÏÀ­ */
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* ¸ßËÙ */
-    HAL_GPIO_Init(KEY1_GPIO_PORT, &gpio_init_struct); /* KEY1Òı½ÅÄ£Ê½ÉèÖÃ,ÉÏÀ­ÊäÈë */
+    gpio_init_struct.Pin = KEY1_GPIO_PIN;             /* KEY1å¼•è„š */
+    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* è¾“å…¥ */
+    gpio_init_struct.Pull = GPIO_PULLUP;              /* ä¸Šæ‹‰ */
+    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* é«˜é€Ÿ */
+    HAL_GPIO_Init(KEY1_GPIO_PORT, &gpio_init_struct); /* KEY1å¼•è„šæ¨¡å¼è®¾ç½®,ä¸Šæ‹‰è¾“å…¥ */
 
-    gpio_init_struct.Pin = KEY2_GPIO_PIN;             /* KEY2Òı½Å */
-    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* ÊäÈë */
-    gpio_init_struct.Pull = GPIO_PULLUP;              /* ÉÏÀ­ */
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* ¸ßËÙ */
-    HAL_GPIO_Init(KEY2_GPIO_PORT, &gpio_init_struct); /* KEY2Òı½ÅÄ£Ê½ÉèÖÃ,ÉÏÀ­ÊäÈë */
+    gpio_init_struct.Pin = KEY2_GPIO_PIN;             /* KEY2å¼•è„š */
+    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* è¾“å…¥ */
+    gpio_init_struct.Pull = GPIO_PULLUP;              /* ä¸Šæ‹‰ */
+    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* é«˜é€Ÿ */
+    HAL_GPIO_Init(KEY2_GPIO_PORT, &gpio_init_struct); /* KEY2å¼•è„šæ¨¡å¼è®¾ç½®,ä¸Šæ‹‰è¾“å…¥ */
 
-    gpio_init_struct.Pin = WKUP_GPIO_PIN;             /* WKUPÒı½Å */
-    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* ÊäÈë */
-    gpio_init_struct.Pull = GPIO_PULLDOWN;            /* ÏÂÀ­ */
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* ¸ßËÙ */
-    HAL_GPIO_Init(WKUP_GPIO_PORT, &gpio_init_struct); /* WKUPÒı½ÅÄ£Ê½ÉèÖÃ,ÏÂÀ­ÊäÈë */
+    gpio_init_struct.Pin = WKUP_GPIO_PIN;             /* WKUPå¼•è„š */
+    gpio_init_struct.Mode = GPIO_MODE_INPUT;          /* è¾“å…¥ */
+    gpio_init_struct.Pull = GPIO_PULLDOWN;            /* ä¸‹æ‹‰ */
+    gpio_init_struct.Speed = GPIO_SPEED_FREQ_HIGH;    /* é«˜é€Ÿ */
+    HAL_GPIO_Init(WKUP_GPIO_PORT, &gpio_init_struct); /* WKUPå¼•è„šæ¨¡å¼è®¾ç½®,ä¸‹æ‹‰è¾“å…¥ */
 
-    // ³õÊ¼»¯°´¼üĞÅÏ¢
+    // åˆå§‹åŒ–æŒ‰é”®ä¿¡æ¯
     for (int i = 0; i < KEY_NUM; i++)
     {
         key[i].state = KEY_STATE_IDLE;
@@ -61,11 +61,11 @@ void key_init(void)
 
 void read_keys(uint8_t key_index)
 {
-    if (key_index >= KEY_NUM) // ¼ì²é°´¼üË÷ÒıÊÇ·ñÓĞĞ§
+    if (key_index >= KEY_NUM) // æ£€æŸ¥æŒ‰é”®ç´¢å¼•æ˜¯å¦æœ‰æ•ˆ
     {
         return;
     }
-    switch (key_index) // ¸ù¾İ°´¼üË÷Òı¶ÁÈ¡¶ÔÓ¦µÄ°´¼ü×´Ì¬
+    switch (key_index) // æ ¹æ®æŒ‰é”®ç´¢å¼•è¯»å–å¯¹åº”çš„æŒ‰é”®çŠ¶æ€
     {
         case KEY0_INDEX:
             key[KEY0_INDEX].Read_level = HAL_GPIO_ReadPin(KEY0_GPIO_PORT, KEY0_GPIO_PIN);
@@ -86,7 +86,7 @@ void read_keys(uint8_t key_index)
 
 void handle_key_event(KeyInfo *key, uint8_t key_index)
 {
-    if (key_index >= KEY_NUM) // ¼ì²é°´¼üË÷ÒıÊÇ·ñÓĞĞ§
+    if (key_index >= KEY_NUM) // æ£€æŸ¥æŒ‰é”®ç´¢å¼•æ˜¯å¦æœ‰æ•ˆ
     {
         return;
     }
@@ -94,7 +94,7 @@ void handle_key_event(KeyInfo *key, uint8_t key_index)
     uint8_t key_pres_value = key_index == WK_UP_INDEX ? 1 : 0;
     key_state_machine(key, key->Read_level, key_pres_value);
 }
-// °´¼ü×´Ì¬»ú´¦Àíº¯Êı
+// æŒ‰é”®çŠ¶æ€æœºå¤„ç†å‡½æ•°
 void key_state_machine(KeyInfo *key_info, uint8_t key_state, uint8_t key_pres_value)
 {
 
@@ -113,9 +113,9 @@ void key_state_machine(KeyInfo *key_info, uint8_t key_state, uint8_t key_pres_va
             key_info->press_time++;
             if (key_info->press_time >= LONG_PRESS_TIME)
             {
-                // ³¤°´ÊÂ¼ş
+                // é•¿æŒ‰äº‹ä»¶
                 key_info->key_result = KEY_LONG_PRESS;
-                // ÕâÀï¿ÉÒÔÌí¼Ó³¤°´´¦Àí´úÂë
+                // è¿™é‡Œå¯ä»¥æ·»åŠ é•¿æŒ‰å¤„ç†ä»£ç 
                 key_info->state = KEY_STATE_IDLE;
                 key_info->click_count = 0;
                 key_info->press_time = 0;
@@ -130,7 +130,7 @@ void key_state_machine(KeyInfo *key_info, uint8_t key_state, uint8_t key_pres_va
             }
             else
             {
-                // ³¤°´½áÊøºóÖ±½Ó»Øµ½¿ÕÏĞ×´Ì¬
+                // é•¿æŒ‰ç»“æŸåç›´æ¥å›åˆ°ç©ºé—²çŠ¶æ€
                 key_info->state = KEY_STATE_IDLE;
                 key_info->click_count = 0;
                 key_info->press_time = 0;
@@ -145,9 +145,9 @@ void key_state_machine(KeyInfo *key_info, uint8_t key_state, uint8_t key_pres_va
         }
         else if (key_info->click_count == 2)
         {
-            // Ë«»÷ÊÂ¼ş
+            // åŒå‡»äº‹ä»¶
             key_info->key_result = KEY_DOUBLE_CLICK;
-            // ÕâÀï¿ÉÒÔÌí¼ÓË«»÷´¦Àí´úÂë
+            // è¿™é‡Œå¯ä»¥æ·»åŠ åŒå‡»å¤„ç†ä»£ç 
             key_info->state = KEY_STATE_IDLE;
             key_info->click_count = 0;
         }
@@ -156,9 +156,9 @@ void key_state_machine(KeyInfo *key_info, uint8_t key_state, uint8_t key_pres_va
         key_info->press_time++;
         if (key_info->press_time >= DOUBLE_CLICK_TIME)
         {
-            // µ¥»÷ÊÂ¼ş
+            // å•å‡»äº‹ä»¶
             key_info->key_result = KEY_SINGLE_CLICK;
-            // ÕâÀï¿ÉÒÔÌí¼Óµ¥»÷´¦Àí´úÂë
+            // è¿™é‡Œå¯ä»¥æ·»åŠ å•å‡»å¤„ç†ä»£ç 
             key_info->state = KEY_STATE_IDLE;
             key_info->click_count = 0;
         }
@@ -184,7 +184,7 @@ void key_function(void)
         if (key[i].key_result != KEY_NO_EVENT)
         {
             key_event_handler(i,key[i].key_result);
-            key[i].key_result = KEY_NO_EVENT; // ÖØÖÃ°´¼ü½á¹û×´Ì¬
+            key[i].key_result = KEY_NO_EVENT; // é‡ç½®æŒ‰é”®ç»“æœçŠ¶æ€
         }
     }
 }
@@ -195,7 +195,7 @@ void key_event_handler(uint8_t index , KeyResult key_result)
     {
         return;
     }
-    Key_last_Result = key_result;// ±£´æÉÏÒ»´ÎµÄ°´¼ü½á¹û×´Ì¬
+    Key_last_Result = key_result;// ä¿å­˜ä¸Šä¸€æ¬¡çš„æŒ‰é”®ç»“æœçŠ¶æ€
     switch (key_result)
     {
     case KEY_SINGLE_CLICK:
@@ -203,78 +203,78 @@ void key_event_handler(uint8_t index , KeyResult key_result)
         switch (index)
         {
             case KEY0_INDEX:
-                // ´¦Àí KEY0 µ¥»÷ÊÂ¼ş
+                // å¤„ç† KEY0 å•å‡»äº‹ä»¶
                 printf("KEY0 Single Click\n");
-                set_motor_target_degree(0, 22.5f); // ÉèÖÃµç»ú0Ä¿±ê½Ç¶È
+                set_motor_target_degree(0, 22.5f); // è®¾ç½®ç”µæœº0ç›®æ ‡è§’åº¦
                 break;  
             case KEY1_INDEX:    
-                // ´¦Àí KEY1 µ¥»÷ÊÂ¼ş
+                // å¤„ç† KEY1 å•å‡»äº‹ä»¶
                 printf("KEY1 Single Click\n");
-                set_motor_target_degree(0, -22.5f); // ÉèÖÃµç»ú1Ä¿±ê½Ç¶È
+                set_motor_target_degree(0, -22.5f); // è®¾ç½®ç”µæœº1ç›®æ ‡è§’åº¦
                 break;
             case KEY2_INDEX:
-                // ´¦Àí KEY2 µ¥»÷ÊÂ¼ş   
+                // å¤„ç† KEY2 å•å‡»äº‹ä»¶   
                 printf("KEY2 Single Click\n");
-                emergency_stop();    // ¼±Í£ËùÓĞµç»ú
+                emergency_stop();    // æ€¥åœæ‰€æœ‰ç”µæœº
 
                 break;  
             case WK_UP_INDEX:
-                // ´¦Àí WK_UP µ¥»÷ÊÂ¼ş  
+                // å¤„ç† WK_UP å•å‡»äº‹ä»¶  
                 printf("WK_UP Single Click\n");
-                restart_motors(); // ÖØÆôËùÓĞµç»ú
+                restart_motors(); // é‡å¯æ‰€æœ‰ç”µæœº
                 break;
             default:
                 break;
         }
-        // ´¦Àíµ¥»÷ÊÂ¼ş
+        // å¤„ç†å•å‡»äº‹ä»¶
         break;
     case KEY_DOUBLE_CLICK:  
         switch (index)  
         {
             case KEY0_INDEX:
-                // ´¦Àí KEY0 Ë«»÷ÊÂ¼ş   
+                // å¤„ç† KEY0 åŒå‡»äº‹ä»¶   
                 printf("KEY0 Double Click\n");
                 break;
             case KEY1_INDEX:
-                // ´¦Àí KEY1 Ë«»÷ÊÂ¼ş   
+                // å¤„ç† KEY1 åŒå‡»äº‹ä»¶   
                 printf("KEY1 Double Click\n");
                 break;
             case KEY2_INDEX:
-                // ´¦Àí KEY2 Ë«»÷ÊÂ¼ş   
+                // å¤„ç† KEY2 åŒå‡»äº‹ä»¶   
                 printf("KEY2 Double Click\n");
                 break;
             case WK_UP_INDEX:
-                // ´¦Àí WK_UP Ë«»÷ÊÂ¼ş  
+                // å¤„ç† WK_UP åŒå‡»äº‹ä»¶  
                 printf("WK_UP Double Click\n"); 
                 break;
             default:
                 break;
         }
-        // ´¦ÀíË«»÷ÊÂ¼ş
+        // å¤„ç†åŒå‡»äº‹ä»¶
         break;
     case KEY_LONG_PRESS:    
         switch (index)
         {
             case KEY0_INDEX:
-                // ´¦Àí KEY0 ³¤°´ÊÂ¼ş   
+                // å¤„ç† KEY0 é•¿æŒ‰äº‹ä»¶   
                 printf("KEY0 Long Press\n");
                 break;  
             case KEY1_INDEX:
-                // ´¦Àí KEY1 ³¤°´ÊÂ¼ş   
+                // å¤„ç† KEY1 é•¿æŒ‰äº‹ä»¶   
                 printf("KEY1 Long Press\n");
                 break;
             case KEY2_INDEX:
-                // ´¦Àí KEY2 ³¤°´ÊÂ¼ş       
+                // å¤„ç† KEY2 é•¿æŒ‰äº‹ä»¶       
                 printf("KEY2 Long Press\n");
                 break;  
             case WK_UP_INDEX:
-                // ´¦Àí WK_UP ³¤°´ÊÂ¼ş  
+                // å¤„ç† WK_UP é•¿æŒ‰äº‹ä»¶  
                 printf("WK_UP Long Press\n");
                 break;
             default:
                 break;
         }
-        // ´¦Àí³¤°´ÊÂ¼ş
+        // å¤„ç†é•¿æŒ‰äº‹ä»¶
         break;
     default:
         break;

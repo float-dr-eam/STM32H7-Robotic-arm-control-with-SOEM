@@ -510,6 +510,58 @@ Trajectory* arc_trajectory(  Matrix4x4_t T_start, Vector3D p_mid , Matrix4x4_t T
     return traj;
 }
 
+// 将位姿轨迹转换为关节轨迹
+JointTrajectory* trajectory_to_joint_angles(Trajectory* traj, Robot* robot) 
+{
+    JointTrajectory* joint_traj = (JointTrajectory*)mymalloc(SRAMEX, sizeof(JointTrajectory));
+    joint_traj->num_points = traj->num_points;
+    joint_traj->joint_angles = (my_float**)mymalloc(SRAMEX, traj->num_points * sizeof(my_float*));
+    
+    // 初始化关节角度
+    my_float q_init[DOF] = {0, 0, 0, 0, 0, 0, 0};
+    
+    // 逆向运动学求解每个点的关节角度
+    for (int i = 0; i < traj->num_points; i++) 
+    {
+        // 为每个关节分配内存
+        joint_traj->joint_angles[i] = (my_float*)mymalloc(SRAMEX, DOF * sizeof(my_float));
+        
+        // 将位姿转换为4x4的变换矩阵
+        my_float T_desired[16];
+        for (int row = 0; row < 4; row++) 
+        {
+            for (int col = 0; col < 4; col++) 
+            {
+                T_desired[row*4 + col] = traj->transforms[i].data[row][col];
+            }
+        }
+        // 使用逆运动学计算关节角度
+        // 对于第一个点，使用初始猜测；对于后续点，使用前一点的结果作为初始猜测
+        my_float* q_guess = (i == 0) ? q_init : joint_traj->joint_angles[i-1];
+        my_float T_current[16];
+        my_float error[6];
+        int iter = inverse_kinematics(robot, T_desired, q_guess, joint_traj->joint_angles[i],  1000, 1e-6f, 0.1f, 0.5f, 1); // 璋冪敤閫嗚繍鍔拷?姹傝В
+        if (iter <= 0) 
+        {
+            forward_kinematics(robot, joint_traj->joint_angles[i], T_current);
+            compute_pose_error(T_current, T_desired, error);
+            my_float error_norm = vector_norm(error, 6);
+            printf("第%d次迭代，点%d的逆运动学求解失败,误差：%f\n", iter, i, error_norm);
+        }
+        else
+        {
+            // 计算当前点的正向运动学
+            forward_kinematics(robot, joint_traj->joint_angles[i], T_current);
+            // 计算当前点的误差
+            compute_pose_error(T_current, T_desired, error);
+            // 计算误差的范数
+            my_float error_norm = vector_norm(error, 6);
+            printf("第%d次迭代，点%d的逆运动学求解成功，误差：%f\n", iter, i, error_norm);
+        }
+    }
+    
+    return joint_traj;
+}
 // 打印轨迹信息
 void print_trajectory(Trajectory* traj, const char* name) 
 {
@@ -550,11 +602,49 @@ void print_trajectory(Trajectory* traj, const char* name)
     }
 }
 
-// 释放轨迹内存
-void free_trajectory(Trajectory* traj) {
-    myfree(SRAMEX, traj->transforms);
-    myfree(SRAMEX, traj->positions);
-    myfree(SRAMEX, traj);
+// 打印关节轨迹
+void print_joint_trajectory(JointTrajectory* joint_traj ,bool is_degree) 
+{
+    printf("\n=== 关节角度轨迹 ===\n");
+    printf("轨迹点数量: %d\n", joint_traj->num_points);
+    
+    // 打印部分轨迹点（如果点很多，只打印开始、中间和结束部分）
+    int num_to_print = (joint_traj->num_points <= 10) ? joint_traj->num_points : 10;
+    
+    for (int i = 0; i < num_to_print; i++) 
+    {
+        int idx;
+        if (joint_traj->num_points <= 10) 
+        {
+            idx = i;
+        } else if (i < 3) 
+        {
+            idx = i; // 前3个点
+        } else if (i < 6) 
+        {
+            idx = joint_traj->num_points / 2 - 3 + i - 3; // 中间3个点
+        } else 
+        {
+            idx = joint_traj->num_points - 10 + i; // 最后3个点
+        }
+        
+        printf("\n点 %d 关节角度:\n", idx);
+        for (int j = 0; j < DOF; j++) 
+        {
+            if(is_degree)
+            {
+                printf("关节%d: %.6f 度 \n", j, 
+                   joint_traj->joint_angles[idx][j]);
+                
+            }
+            else
+            {
+                printf("关节%d: %.6f 弧度 (%.2f 度)\n", j, 
+                   joint_traj->joint_angles[idx][j],
+                   joint_traj->joint_angles[idx][j] * 180.0f / PI);
+            }
+        }
+    }
 }
 
 // 轨迹规划测试函数
@@ -716,133 +806,53 @@ void validate_trajectory_planning() {
 }
 
 
-// 将位姿轨迹转换为关节轨迹
-JointTrajectory* trajectory_to_joint_angles(Trajectory* traj, Robot* robot) 
+
+// 释放轨迹内存
+void free_trajectory(Trajectory* traj) 
 {
-    JointTrajectory* joint_traj = (JointTrajectory*)mymalloc(SRAMEX, sizeof(JointTrajectory));
-    joint_traj->num_points = traj->num_points;
-    joint_traj->joint_angles = (my_float**)mymalloc(SRAMEX, traj->num_points * sizeof(my_float*));
-    
-    // 初始化关节角度
-    my_float q_init[DOF] = {0, 0, 0, 0, 0, 0, 0};
-    
-    // 逆向运动学求解每个点的关节角度
-    for (int i = 0; i < traj->num_points; i++) 
-    {
-        // 为每个关节分配内存
-        joint_traj->joint_angles[i] = (my_float*)mymalloc(SRAMEX, DOF * sizeof(my_float));
-        
-        // 将位姿转换为4x4的变换矩阵
-        my_float T_desired[16];
-        for (int row = 0; row < 4; row++) 
-        {
-            for (int col = 0; col < 4; col++) 
-            {
-                T_desired[row*4 + col] = traj->transforms[i].data[row][col];
-            }
-        }
-        // 使用逆运动学计算关节角度
-        // 对于第一个点，使用初始猜测；对于后续点，使用前一点的结果作为初始猜测
-        my_float* q_guess = (i == 0) ? q_init : joint_traj->joint_angles[i-1];
-        my_float T_current[16];
-        my_float error[6];
-        int iter = inverse_kinematics(robot, T_desired, q_guess, joint_traj->joint_angles[i],  1000, 1e-6f, 0.1f, 0.5f, 1); // 璋冪敤閫嗚繍鍔拷?姹傝В
-        if (iter <= 0) 
-        {
-            forward_kinematics(robot, joint_traj->joint_angles[i], T_current);
-            compute_pose_error(T_current, T_desired, error);
-            my_float error_norm = vector_norm(error, 6);
-            printf("第%d次迭代，点%d的逆运动学求解失败,误差：%f\n", iter, i, error_norm);
-        }
-        else
-        {
-            // 计算当前点的正向运动学
-            forward_kinematics(robot, joint_traj->joint_angles[i], T_current);
-            // 计算当前点的误差
-            compute_pose_error(T_current, T_desired, error);
-            // 计算误差的范数
-            my_float error_norm = vector_norm(error, 6);
-            printf("第%d次迭代，点%d的逆运动学求解成功，误差：%f\n", iter, i, error_norm);
-        }
-    }
-    
-    return joint_traj;
+    myfree(SRAMEX, traj->transforms);
+    myfree(SRAMEX, traj->positions);
+    myfree(SRAMEX, traj);
 }
-
-// 打印关节轨迹
-void print_joint_trajectory(JointTrajectory* joint_traj) {
-    printf("\n=== 关节角度轨迹 ===\n");
-    printf("轨迹点数量: %d\n", joint_traj->num_points);
-    
-    // 打印部分轨迹点（如果点很多，只打印开始、中间和结束部分）
-    int num_to_print = (joint_traj->num_points <= 10) ? joint_traj->num_points : 10;
-    
-    for (int i = 0; i < num_to_print; i++) {
-        int idx;
-        if (joint_traj->num_points <= 10) {
-            idx = i;
-        } else if (i < 3) {
-            idx = i; // 前3个点
-        } else if (i < 6) {
-            idx = joint_traj->num_points / 2 - 3 + i - 3; // 中间3个点
-        } else {
-            idx = joint_traj->num_points - 10 + i; // 最后3个点
-        }
-        
-        printf("\n点 %d 关节角度:\n", idx);
-        for (int j = 0; j < DOF; j++) {
-            printf("关节%d: %.6f 弧度 (%.2f 度)\n", j, 
-                   joint_traj->joint_angles[idx][j],
-                   joint_traj->joint_angles[idx][j] * 180.0f / PI);
-        }
-    }
-}
-
 // 释放关节轨迹内存
-void free_joint_trajectory(JointTrajectory* joint_traj) {
-    for (int i = 0; i < joint_traj->num_points; i++) {
+void free_joint_trajectory(JointTrajectory* joint_traj) 
+{
+    for (int i = 0; i < joint_traj->num_points; i++) 
+    {
         myfree(SRAMEX, joint_traj->joint_angles[i]);
     }
     myfree(SRAMEX, joint_traj->joint_angles);
     myfree(SRAMEX, joint_traj);
 }
 
-// 在轨迹规划验证函数中添加关节角度计算
-void trajectory_planning_with_joints(void) {
+
+
+// 在圆弧轨迹规划关节角度计算demo
+void trajectory_planning_with_joints_arc(void) 
+{
     Robot robot;
     init_robot(&robot);
-
-    printf("\n=== 轨迹规划与关节轨迹验证 ===\n");
-
-    // 1. 直线轨迹
-    //printf("\n--- 直线轨迹 ---\n");
+    // 2. 圆弧轨迹
+    printf("\n--- 圆弧轨迹 ---\n");
     Matrix4x4_t start_pose = transl(-0.5522f, 0.0f, 0.1299f);
     Matrix4x4_t rotation1 = rot(X, -90.0f);
     Matrix4x4_t rotation2 = rot(Y, -90.0f);
     start_pose = multiply_matrix(start_pose, rotation1);
     start_pose = multiply_matrix(start_pose, rotation2);
-    
+
     Matrix4x4_t end_pose = transl(0.0f, -0.216f, 0.466f);
     Matrix4x4_t rotation3 = rot(Z, 90.0f);
     end_pose = multiply_matrix(end_pose, rotation3);
-    
     int num_points = 51;
-    // Trajectory* line_traj = quintic_line_trajectory(start_pose, end_pose, num_points);// 计算直线轨迹
 
-    // // 计算关节角度轨迹
-    // JointTrajectory* line_joint_traj = trajectory_to_joint_angles(line_traj, &robot);
-    // print_joint_trajectory(line_joint_traj);
-    
-    // 2. 圆弧轨迹
-    printf("\n--- 圆弧轨迹 ---\n");
-    Vector3D p_mid = {-0.2f, -0.20f, 0.20f};
-    my_float radius;
-    Vector3D center;
+    Vector3D p_mid = {-0.2f, -0.20f, 0.20f};//中间点
+    my_float radius;//圆弧半径
+    Vector3D center;//圆心
     Trajectory* arc_traj = arc_trajectory(start_pose, p_mid, end_pose, num_points, &radius, &center);// 计算圆弧轨迹
 
     // 计算关节角度轨迹（弧度制）
     JointTrajectory* arc_joint_traj = trajectory_to_joint_angles(arc_traj, &robot);
-    print_joint_trajectory(arc_joint_traj);
+    print_joint_trajectory(arc_joint_traj,0);
     //改为角度制
     for (size_t i = 0; i < arc_joint_traj->num_points; i++)//50
     {
@@ -851,26 +861,105 @@ void trajectory_planning_with_joints(void) {
             arc_joint_traj->joint_angles[i][j] *= 180.0f / PI;
         }
     }
-
     // 释放轨迹内存
-    //free_trajectory(line_traj);
     free_trajectory(arc_traj);
-
     start_nonblocking_motion(arc_joint_traj); // 开始非阻塞运动
-    //free_joint_trajectory(line_joint_traj);
-    //free_joint_trajectory(arc_joint_traj);
+}
+// 在直线轨迹规划关节角度计算demo
+void trajectory_planning_with_joints_line(void)
+{
+    Robot robot;
+    init_robot(&robot);
+    // 1. 直线轨迹
+    printf("\n--- 直线轨迹 ---\n");
+    Matrix4x4_t start_pose = transl(-0.5522f, 0.0f, 0.1299f);
+    Matrix4x4_t rotation1 = rot(X, -90.0f);
+    Matrix4x4_t rotation2 = rot(Y, -90.0f);
+    start_pose = multiply_matrix(start_pose, rotation1);
+    start_pose = multiply_matrix(start_pose, rotation2);// 起始位姿
+
+    Matrix4x4_t end_pose = transl(0.0f, -0.216f, 0.466f);
+    Matrix4x4_t rotation3 = rot(Z, 90.0f);
+    end_pose = multiply_matrix(end_pose, rotation3);// 终止位姿
+
+    int num_points = 51;
+    Trajectory* line_traj = quintic_line_trajectory(start_pose, end_pose, num_points);// 计算直线轨迹
+
+    // 计算关节角度轨迹（弧度制）
+    JointTrajectory* line_joint_traj = trajectory_to_joint_angles(line_traj, &robot);
+    print_joint_trajectory(line_joint_traj,0);
+
+    //改为角度制
+    for (size_t i = 0; i < line_joint_traj->num_points; i++)//50
+    {
+        for (size_t j = 0; j < DOF; j++)//7
+        {
+            line_joint_traj->joint_angles[i][j] *= 180.0f / PI;
+        }
+    }
+    free_trajectory(line_traj);
+    start_nonblocking_motion(line_joint_traj); // 开始非阻塞运动
 }
 
-// // 轨迹规划与关节轨迹验证demo函数
-// JointTrajectory* demo(void) 
-// {
-//     //trajectory_planning_test();
-//     // validate_trajectory_planning();
-//     //JointTrajectory* arc_joint_traj = 
+//打招呼动作demo
+void wave_action(void)
+{
+    JointTrajectory* joint_traj = (JointTrajectory*)mymalloc(SRAMEX, sizeof(JointTrajectory));
+    joint_traj->num_points = 6;
+    joint_traj->joint_angles = (my_float**)mymalloc(SRAMEX, sizeof(my_float*) * joint_traj->num_points);
+    for (int i = 0; i < joint_traj->num_points; i++) 
+    {
+        joint_traj->joint_angles[i] = (my_float*)mymalloc(SRAMEX, sizeof(my_float) * DOF);
+    }
+    // 1
+    joint_traj->joint_angles[0][0] = 45.0f;
+    joint_traj->joint_angles[0][1] = 0.0f;
+    joint_traj->joint_angles[0][2] = 0.0f;
+    joint_traj->joint_angles[0][3] = 45.0f;
+    joint_traj->joint_angles[0][4] = 90.0f;
+    joint_traj->joint_angles[0][5] = 0.0f;
+    joint_traj->joint_angles[0][6] = 0.0f;
+    // 2
+    joint_traj->joint_angles[1][0] = 45.0f;
+    joint_traj->joint_angles[1][1] = 0.0f;
+    joint_traj->joint_angles[1][2] = 0.0f;
+    joint_traj->joint_angles[1][3] = 45.0f;
+    joint_traj->joint_angles[1][4] = 90.0f;
+    joint_traj->joint_angles[1][5] = -45.0f;
+    joint_traj->joint_angles[1][6] = 0.0f;
+    // 3
+    joint_traj->joint_angles[2][0] = 45.0f;
+    joint_traj->joint_angles[2][1] = 0.0f;
+    joint_traj->joint_angles[2][2] = 0.0f;
+    joint_traj->joint_angles[2][3] = 45.0f;
+    joint_traj->joint_angles[2][4] = 90.0f;
+    joint_traj->joint_angles[2][5] = 45.0f;
+    joint_traj->joint_angles[2][6] = 0.0f;
+    // 4
+    joint_traj->joint_angles[3][0] = 45.0f;
+    joint_traj->joint_angles[3][1] = 0.0f;
+    joint_traj->joint_angles[3][2] = 0.0f;
+    joint_traj->joint_angles[3][3] = 45.0f;
+    joint_traj->joint_angles[3][4] = 90.0f;
+    joint_traj->joint_angles[3][5] = -45.0f;
+    joint_traj->joint_angles[3][6] = 0.0f;
+    // 5
+    joint_traj->joint_angles[4][0] = 45.0f;
+    joint_traj->joint_angles[4][1] = 0.0f;
+    joint_traj->joint_angles[4][2] = 0.0f;
+    joint_traj->joint_angles[4][3] = 45.0f;
+    joint_traj->joint_angles[4][4] = 90.0f;
+    joint_traj->joint_angles[4][5] = 45.0f;
+    joint_traj->joint_angles[4][6] = 0.0f;
+    // 6
+    joint_traj->joint_angles[5][0] = 45.0f;
+    joint_traj->joint_angles[5][1] = 0.0f;
+    joint_traj->joint_angles[5][2] = 0.0f;
+    joint_traj->joint_angles[5][3] = 45.0f;
+    joint_traj->joint_angles[5][4] = 90.0f;
+    joint_traj->joint_angles[5][5] = 0.0f;
+    joint_traj->joint_angles[5][6] = 0.0f;
 
-//     //free_joint_trajectory(arc_joint_traj);
-
-//     return trajectory_planning_with_joints();
-// }
-
-
+    print_joint_trajectory(joint_traj, 1);
+    start_nonblocking_motion(joint_traj); // 开始非阻塞运动
+}

@@ -4,25 +4,25 @@
 #include "LD3M_ec7010.h"
 #include "stm32h7xx_hal.h"
 /******************************************************************************************/
-/* Ê¹ÄÜHAL_TIM_MODULE */
+/* ä½¿èƒ½HAL_TIM_MODULE */
 #define USE_HAL_TIM_MODULE 1   
 
-/* Òı½Å ¶¨Òå */
+/* å¼•è„š å®šä¹‰ */
 #define KEY0_GPIO_PORT                  GPIOH
 #define KEY0_GPIO_PIN                   GPIO_PIN_3
-#define KEY0_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)     /* PH¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define KEY0_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)     /* PHå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define KEY1_GPIO_PORT                  GPIOH
 #define KEY1_GPIO_PIN                   GPIO_PIN_2
-#define KEY1_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)     /* PH¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define KEY1_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)     /* PHå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define KEY2_GPIO_PORT                  GPIOC
 #define KEY2_GPIO_PIN                   GPIO_PIN_13
-#define KEY2_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOC_CLK_ENABLE(); }while(0)     /* PC¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define KEY2_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOC_CLK_ENABLE(); }while(0)     /* PCå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define WKUP_GPIO_PORT                  GPIOA
 #define WKUP_GPIO_PIN                   GPIO_PIN_0
-#define WKUP_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOA_CLK_ENABLE(); }while(0)     /* PA¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define WKUP_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOA_CLK_ENABLE(); }while(0)     /* PAå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define KEY0_INDEX  0              
 #define KEY1_INDEX  1             
@@ -31,7 +31,7 @@
 
 #define KEY_NUM   4
 /******************************************************************************************/
-// °´¼ü¹ı³Ì×´Ì¬¶¨Òå
+// æŒ‰é”®è¿‡ç¨‹çŠ¶æ€å®šä¹‰
 typedef enum
 {
     KEY_STATE_IDLE,
@@ -40,7 +40,7 @@ typedef enum
     KEY_STATE_WAIT_DOUBLE_CLICK
 } KeyState;
 
-// °´¼ü½á¹û×´Ì¬¶¨Òå
+// æŒ‰é”®ç»“æœçŠ¶æ€å®šä¹‰
 typedef enum
 {
     KEY_NO_EVENT,
@@ -48,24 +48,24 @@ typedef enum
     KEY_DOUBLE_CLICK,
     KEY_LONG_PRESS
 } KeyResult;
-// °´¼üĞÅÏ¢½á¹¹Ìå
+// æŒ‰é”®ä¿¡æ¯ç»“æ„ä½“
 typedef struct
 {
-    KeyState state;        // °´¼ü×´Ì¬
-    uint8_t click_count;     // °´¼üµã»÷´ÎÊı
-    uint16_t press_time;     // °´¼ü°´ÏÂÊ±¼ä£¨µ¥Î»£º10ms£©
-    uint8_t Read_level;      // °´¼ü¶ÁÈ¡µçÆ½
-    KeyResult key_result;    // °´¼ü½á¹û×´Ì¬
+    KeyState state;        // æŒ‰é”®çŠ¶æ€
+    uint8_t click_count;     // æŒ‰é”®ç‚¹å‡»æ¬¡æ•°
+    uint16_t press_time;     // æŒ‰é”®æŒ‰ä¸‹æ—¶é—´ï¼ˆå•ä½ï¼š10msï¼‰
+    uint8_t Read_level;      // æŒ‰é”®è¯»å–ç”µå¹³
+    KeyResult key_result;    // æŒ‰é”®ç»“æœçŠ¶æ€
 } KeyInfo;
 
 extern KeyInfo key[KEY_NUM];
 
-void key_init(void);                    /* °´¼ü³õÊ¼»¯º¯Êı */
-void handle_key_event(KeyInfo *key, uint8_t key_index); /* ¶¨Ê±Æ÷´¦Àí°´¼üÊÂ¼ş */
+void key_init(void);                    /* æŒ‰é”®åˆå§‹åŒ–å‡½æ•° */
+void handle_key_event(KeyInfo *key, uint8_t key_index); /* å®šæ—¶å™¨å¤„ç†æŒ‰é”®äº‹ä»¶ */
 
-void key_state_machine(KeyInfo *key_info, uint8_t key_state, uint8_t key_pres_value);// °´¼ü×´Ì¬»ú´¦Àíº¯Êı
-void key_event_handler(uint8_t index , KeyResult key_result);   /* °´¼üÊÂ¼ş´¦Àíº¯Êı */
-void key_function(void);                /* °´¼üº¯Êı */
+void key_state_machine(KeyInfo *key_info, uint8_t key_state, uint8_t key_pres_value);// æŒ‰é”®çŠ¶æ€æœºå¤„ç†å‡½æ•°
+void key_event_handler(uint8_t index , KeyResult key_result);   /* æŒ‰é”®äº‹ä»¶å¤„ç†å‡½æ•° */
+void key_function(void);                /* æŒ‰é”®å‡½æ•° */
 
 #endif
 

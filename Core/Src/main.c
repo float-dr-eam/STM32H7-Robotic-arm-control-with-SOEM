@@ -83,7 +83,7 @@ static JointTrajectory* current_traj = NULL;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MPU_Config(void);
+//static void MPU_Config(void);//MPU配置使用正点原子（也可使用hal库函数）
 void ltdc_show(void);
 //void start_nonblocking_motion(JointTrajectory* traj); // 初始化非阻塞运动
 void process_nonblocking_motion(void); // 非阻塞运动处理函数（需在主循环中调用）
@@ -110,8 +110,8 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MPU Configuration--------------------------------------------------------*/
-  MPU_Config();
- // mpu_memory_protection();    // 使能MPU内存保护
+  //MPU_Config();
+  mpu_memory_protection();    // 使能MPU内存保护
   /* Enable the CPU Cache */
 
   /* Enable I-Cache---------------------------------------------------------*/
@@ -169,7 +169,7 @@ int main(void)
   printf("PCF8574 Check Success!\n");
   lcd_show_string(200, 30, 200, 16, 16, "PCF8574 Check Success!\n", BLACK);
   MX_ETH_Init();       /* 以太网初始化 */
-  get_eth_linkstate(); /* 获取ETH连接状态 */
+  //get_eth_linkstate(); /* 获取ETH连接状态 */
   linkState = FALSE;
   /* USER CODE END 2 */
   // uint8 u8val = 0;
@@ -214,37 +214,27 @@ int main(void)
       //arm_forward_kinematics2(degree, RIGHT);                 /* 计算机械臂运动学 */
       // JointTrajectory* arc_joint_traj = demo();
       // start_nonblocking_motion(arc_joint_traj);
-      trajectory_planning_with_joints();
-      // for (int i = 0; i < arc_joint_traj->num_points; i++) 
-      // {
-      //   // 1. 获取当前点的关节角度
-      //   my_float* target_angles = arc_joint_traj->joint_angles[i];
-
-      //   // 2. 发送角度到电机（需实现电机控制函数）
-      //   motors_run_to_angles(target_angles);  // 所有电机运行到指定角度
-
-      //   // 3. 等待电机到达目标位置
-      //   while (get_position_difference() > 1000) 
-      //   {  // 参考main.c:213的位置差判断
-      //       HAL_Delay(10);  // 短暂延时
-      //   }
-
-      //   // 4. 可选：添加运动完成后的停留时间
-      //   HAL_Delay(500);
-      // }
-      // free_joint_trajectory(arc_joint_traj);  // 释放动态数组
+      wave_action();
+      //trajectory_planning_with_joints_arc();
+      //trajectory_planning_with_joints_line();
 
       //arm_forward_kinematics(LD3M_all.cur_degree);
       //all_motors_return_to_origin();
       //HAL_Delay(10000);
       //simple_demo();
     }
-    if (update_flag && get_position_difference() < 1000)
+    if(motion_state == MOTION_IDLE)
     {
-      update_flag = 0;
       get_cur_degree(); /* 获取当前角度 */
       arm_forward_kinematics(LD3M_all.cur_degree); /* 计算机械臂运动学 */
+      all_motors_return_to_origin();
     }
+
+    // if (update_flag && get_position_difference() < 1000)
+    // {
+    //   update_flag = 0;
+      
+    // }
     process_nonblocking_motion(); // 非阻塞运动处理
     /* USER CODE BEGIN 3 */
   }
@@ -427,41 +417,41 @@ void SystemClock_Config(void)
 
 /* MPU Configuration */
 
-void MPU_Config(void)
-{
-  MPU_Region_InitTypeDef MPU_InitStruct = {0};
+// void MPU_Config(void)
+// {
+//   MPU_Region_InitTypeDef MPU_InitStruct = {0};
 
-  /* Disables the MPU */
-  HAL_MPU_Disable();
+//   /* Disables the MPU */
+//   HAL_MPU_Disable();
 
-  /** Initializes and configures the Region and the memory to be protected
-   */
-  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
-  MPU_InitStruct.Number = MPU_REGION_NUMBER0;
-  MPU_InitStruct.BaseAddress = 0x30040000;
-  MPU_InitStruct.Size = MPU_REGION_SIZE_256B;
-  MPU_InitStruct.SubRegionDisable = 0x0;
-  MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-  MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
-  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
-  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
-  MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
-  MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
+//   /** Initializes and configures the Region and the memory to be protected
+//    */
+//   MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+//   MPU_InitStruct.Number = MPU_REGION_NUMBER0;
+//   MPU_InitStruct.BaseAddress = 0x30040000;
+//   MPU_InitStruct.Size = MPU_REGION_SIZE_256B;
+//   MPU_InitStruct.SubRegionDisable = 0x0;
+//   MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+//   MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
+//   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_ENABLE;
+//   MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+//   MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
+//   MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
 
-  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+//   HAL_MPU_ConfigRegion(&MPU_InitStruct);
 
-  /** Initializes and configures the Region and the memory to be protected
-   */
-  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
-  MPU_InitStruct.BaseAddress = 0x30044000;
-  MPU_InitStruct.Size = MPU_REGION_SIZE_16KB;
-  MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+//   /** Initializes and configures the Region and the memory to be protected
+//    */
+//   MPU_InitStruct.Number = MPU_REGION_NUMBER1;
+//   MPU_InitStruct.BaseAddress = 0x30044000;
+//   MPU_InitStruct.Size = MPU_REGION_SIZE_16KB;
+//   MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
+//   MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
 
-  HAL_MPU_ConfigRegion(&MPU_InitStruct);
-  /* Enables the MPU */
-  HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
-}
+//   HAL_MPU_ConfigRegion(&MPU_InitStruct);
+//   /* Enables the MPU */
+//   HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
+// }
 /**
  * @brief  This function is executed in case of error occurrence.
  * @retval None

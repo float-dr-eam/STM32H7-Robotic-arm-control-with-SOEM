@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        mpu.c
- * @author      ÕýµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŽŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2022-09-06
- * @brief       MPU Çý¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾
+ * @brief       MPU é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕýµãÔ­×Ó °¢²¨ÂÞ H743¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®žéªŒå¹³å°:æ­£ç‚¹åŽŸå­ é˜¿æ³¢ç½— H743å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ÐÞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜Ž
  * V1.0 20220906
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  *
  ****************************************************************************************************
  */
@@ -27,118 +27,118 @@
 
 
 /**
- * @brief       ÉèÖÃÄ³¸öÇøÓòµÄMPU±£»¤
- * @param       baseaddr:MPU±£»¤ÇøÓòµÄ»ùÖ·(Ê×µØÖ·)
- * @param       size:MPU±£»¤ÇøÓòµÄ´óÐ¡(±ØÐëÊÇ32µÄ±¶Êý,µ¥Î»Îª×Ö½Ú),¿ÉÉèÖÃµÄÖµ²Î¿¼:CORTEX_MPU_Region_Size
- * @param       rnum:MPU±£»¤Çø±àºÅ,·¶Î§:0~7,×î´óÖ§³Ö8¸ö±£»¤ÇøÓò,¿ÉÉèÖÃµÄÖµ²Î¿¼£ºCORTEX_MPU_Region_Number
- * @param       de:½ûÖ¹Ö¸Áî·ÃÎÊ;0,ÔÊÐíÖ¸Áî·ÃÎÊ;1,½ûÖ¹Ö¸Áî·ÃÎÊ
- * @param       ap:·ÃÎÊÈ¨ÏÞ,·ÃÎÊ¹ØÏµÈçÏÂ:¿ÉÉèÖÃµÄÖµ²Î¿¼£ºCORTEX_MPU_Region_Permission_Attributes
- *   @arg       MPU_REGION_NO_ACCESS,ÎÞ·ÃÎÊ£¨ÌØÈ¨&ÓÃ»§¶¼²»¿É·ÃÎÊ£©
- *   @arg       MPU_REGION_PRIV_RW,½öÖ§³ÖÌØÈ¨¶ÁÐ´·ÃÎÊ
- *   @arg       MPU_REGION_PRIV_RW_URO,½ûÖ¹ÓÃ»§Ð´·ÃÎÊ£¨ÌØÈ¨¿É¶ÁÐ´·ÃÎÊ£©
- *   @arg       MPU_REGION_FULL_ACCESS,È«·ÃÎÊ£¨ÌØÈ¨&ÓÃ»§¶¼¿É·ÃÎÊ£©
- *   @arg       MPU_REGION_PRIV_RO,½öÖ§³ÖÌØÈ¨¶Á·ÃÎÊ
- *   @arg       MPU_REGION_PRIV_RO_URO,Ö»¶Á£¨ÌØÈ¨&ÓÃ»§¶¼²»¿ÉÒÔÐ´£©
- *   @arg       Ïê¼û:STM32F7±à³ÌÊÖ²á.pdf,4.6½Ú,Table 89.
- * @param       sen  : ÊÇ·ñÔÊÐí¹²ÓÃ;MPU_ACCESS_NOT_SHAREABLE,²»ÔÊÐí;MPU_ACCESS_SHAREABLE,ÔÊÐí
- * @param       cen  : ÊÇ·ñÔÊÐícache;MPU_ACCESS_NOT_CACHEABLE,²»ÔÊÐí;MPU_ACCESS_CACHEABLE,ÔÊÐí
- * @param       ben  : ÊÇ·ñÔÊÐí»º³å;MPU_ACCESS_NOT_BUFFERABLE,²»ÔÊÐí;MPU_ACCESS_BUFFERABLE,ÔÊÐí
- * @retval      0,³É¹¦.
- *              ÆäËû,´íÎó.
+ * @brief       è®¾ç½®æŸä¸ªåŒºåŸŸçš„MPUä¿æŠ¤
+ * @param       baseaddr:MPUä¿æŠ¤åŒºåŸŸçš„åŸºå€(é¦–åœ°å€)
+ * @param       size:MPUä¿æŠ¤åŒºåŸŸçš„å¤§å°(å¿…é¡»æ˜¯32çš„å€æ•°,å•ä½ä¸ºå­—èŠ‚),å¯è®¾ç½®çš„å€¼å‚è€ƒ:CORTEX_MPU_Region_Size
+ * @param       rnum:MPUä¿æŠ¤åŒºç¼–å·,èŒƒå›´:0~7,æœ€å¤§æ”¯æŒ8ä¸ªä¿æŠ¤åŒºåŸŸ,å¯è®¾ç½®çš„å€¼å‚è€ƒï¼šCORTEX_MPU_Region_Number
+ * @param       de:ç¦æ­¢æŒ‡ä»¤è®¿é—®;0,å…è®¸æŒ‡ä»¤è®¿é—®;1,ç¦æ­¢æŒ‡ä»¤è®¿é—®
+ * @param       ap:è®¿é—®æƒé™,è®¿é—®å…³ç³»å¦‚ä¸‹:å¯è®¾ç½®çš„å€¼å‚è€ƒï¼šCORTEX_MPU_Region_Permission_Attributes
+ *   @arg       MPU_REGION_NO_ACCESS,æ— è®¿é—®ï¼ˆç‰¹æƒ&ç”¨æˆ·éƒ½ä¸å¯è®¿é—®ï¼‰
+ *   @arg       MPU_REGION_PRIV_RW,ä»…æ”¯æŒç‰¹æƒè¯»å†™è®¿é—®
+ *   @arg       MPU_REGION_PRIV_RW_URO,ç¦æ­¢ç”¨æˆ·å†™è®¿é—®ï¼ˆç‰¹æƒå¯è¯»å†™è®¿é—®ï¼‰
+ *   @arg       MPU_REGION_FULL_ACCESS,å…¨è®¿é—®ï¼ˆç‰¹æƒ&ç”¨æˆ·éƒ½å¯è®¿é—®ï¼‰
+ *   @arg       MPU_REGION_PRIV_RO,ä»…æ”¯æŒç‰¹æƒè¯»è®¿é—®
+ *   @arg       MPU_REGION_PRIV_RO_URO,åªè¯»ï¼ˆç‰¹æƒ&ç”¨æˆ·éƒ½ä¸å¯ä»¥å†™ï¼‰
+ *   @arg       è¯¦è§:STM32F7ç¼–ç¨‹æ‰‹å†Œ.pdf,4.6èŠ‚,Table 89.
+ * @param       sen  : æ˜¯å¦å…è®¸å…±ç”¨;MPU_ACCESS_NOT_SHAREABLE,ä¸å…è®¸;MPU_ACCESS_SHAREABLE,å…è®¸
+ * @param       cen  : æ˜¯å¦å…è®¸cache;MPU_ACCESS_NOT_CACHEABLE,ä¸å…è®¸;MPU_ACCESS_CACHEABLE,å…è®¸
+ * @param       ben  : æ˜¯å¦å…è®¸ç¼“å†²;MPU_ACCESS_NOT_BUFFERABLE,ä¸å…è®¸;MPU_ACCESS_BUFFERABLE,å…è®¸
+ * @retval      0,æˆåŠŸ.
+ *              å…¶ä»–,é”™è¯¯.
  */
 uint8_t mpu_set_protection(uint32_t baseaddr, uint32_t size, uint32_t rnum, uint8_t de, uint8_t ap, uint8_t sen, uint8_t cen, uint8_t ben)
 {
     MPU_Region_InitTypeDef mpu_region_init_handle;
 
-    HAL_MPU_Disable();                                                   /* ÅäÖÃMPUÖ®Ç°ÏÈ¹Ø±ÕMPU,ÅäÖÃÍê³ÉÒÔºóÔÚÊ¹ÄÜMPU */
+    HAL_MPU_Disable();                                                   /* é…ç½®MPUä¹‹å‰å…ˆå…³é—­MPU,é…ç½®å®Œæˆä»¥åŽåœ¨ä½¿èƒ½MPU */
 
-    mpu_region_init_handle.Enable = MPU_REGION_ENABLE;                   /* Ê¹ÄÜ¸Ã±£»¤ÇøÓò */
-    mpu_region_init_handle.Number = rnum;                                /* ÉèÖÃ±£»¤ÇøÓò */
-    mpu_region_init_handle.BaseAddress = baseaddr;                       /* ÉèÖÃ»ùÖ· */
-    mpu_region_init_handle.DisableExec = de;                             /* ÊÇ·ñÔÊÐíÖ¸Áî·ÃÎÊ */
-    mpu_region_init_handle.Size = size;                                  /* ÉèÖÃ±£»¤ÇøÓò´óÐ¡ */
-    mpu_region_init_handle.SubRegionDisable = 0X00;                      /* ½ûÖ¹×ÓÇøÓò */
-    mpu_region_init_handle.TypeExtField = MPU_TEX_LEVEL0;                /* ÉèÖÃÀàÐÍÀ©Õ¹ÓòÎªlevel0 */
-    mpu_region_init_handle.AccessPermission = (uint8_t)ap;               /* ÉèÖÃ·ÃÎÊÈ¨ÏÞ, */
-    mpu_region_init_handle.IsShareable = sen;                            /* ÊÇ·ñ¹²ÓÃ? */
-    mpu_region_init_handle.IsCacheable = cen;                            /* ÊÇ·ñcache? */
-    mpu_region_init_handle.IsBufferable = ben;                           /* ÊÇ·ñ»º³å? */
-    HAL_MPU_ConfigRegion(&mpu_region_init_handle);                       /* ÅäÖÃMPU */
-    HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);                              /* ¿ªÆôMPU */
+    mpu_region_init_handle.Enable = MPU_REGION_ENABLE;                   /* ä½¿èƒ½è¯¥ä¿æŠ¤åŒºåŸŸ */
+    mpu_region_init_handle.Number = rnum;                                /* è®¾ç½®ä¿æŠ¤åŒºåŸŸ */
+    mpu_region_init_handle.BaseAddress = baseaddr;                       /* è®¾ç½®åŸºå€ */
+    mpu_region_init_handle.DisableExec = de;                             /* æ˜¯å¦å…è®¸æŒ‡ä»¤è®¿é—® */
+    mpu_region_init_handle.Size = size;                                  /* è®¾ç½®ä¿æŠ¤åŒºåŸŸå¤§å° */
+    mpu_region_init_handle.SubRegionDisable = 0X00;                      /* ç¦æ­¢å­åŒºåŸŸ */
+    mpu_region_init_handle.TypeExtField = MPU_TEX_LEVEL0;                /* è®¾ç½®ç±»åž‹æ‰©å±•åŸŸä¸ºlevel0 */
+    mpu_region_init_handle.AccessPermission = (uint8_t)ap;               /* è®¾ç½®è®¿é—®æƒé™, */
+    mpu_region_init_handle.IsShareable = sen;                            /* æ˜¯å¦å…±ç”¨? */
+    mpu_region_init_handle.IsCacheable = cen;                            /* æ˜¯å¦cache? */
+    mpu_region_init_handle.IsBufferable = ben;                           /* æ˜¯å¦ç¼“å†²? */
+    HAL_MPU_ConfigRegion(&mpu_region_init_handle);                       /* é…ç½®MPU */
+    HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);                              /* å¼€å¯MPU */
     return 0;
 }
 
 /**
- * @brief       ÉèÖÃÐèÒª±£»¤µÄ´æ´¢¿é
- * @param       ÎÞ
- * @note        ±ØÐë¶Ô²¿·Ö´æ´¢ÇøÓò½øÐÐMPU±£»¤,·ñÔò¿ÉÄÜµ¼ÖÂ³ÌÐòÔËÐÐÒì³£
- *              ±ÈÈçMCUÆÁ²»ÏÔÊ¾,ÉãÏñÍ·²É¼¯Êý¾Ý³ö´íµÈµÈÎÊÌâ...
+ * @brief       è®¾ç½®éœ€è¦ä¿æŠ¤çš„å­˜å‚¨å—
+ * @param       æ— 
+ * @note        å¿…é¡»å¯¹éƒ¨åˆ†å­˜å‚¨åŒºåŸŸè¿›è¡ŒMPUä¿æŠ¤,å¦åˆ™å¯èƒ½å¯¼è‡´ç¨‹åºè¿è¡Œå¼‚å¸¸
+ *              æ¯”å¦‚MCUå±ä¸æ˜¾ç¤º,æ‘„åƒå¤´é‡‡é›†æ•°æ®å‡ºé”™ç­‰ç­‰é—®é¢˜...
  */
 void mpu_memory_protection(void)
 {
-    /* ±£»¤Õû¸öDTCM,¹²128K×Ö½Ú */
-    mpu_set_protection( 0x20000000,                 /* »ùµØÖ· */
-                        MPU_REGION_SIZE_128KB,      /* ³¤¶È */
-                        MPU_REGION_NUMBER1, 0,      /* NUMER1,ÔÊÐíÖ¸Áî·ÃÎÊ */
-                        MPU_REGION_FULL_ACCESS,     /* È«·ÃÎÊ */
-                        MPU_ACCESS_NOT_SHAREABLE,   /* ½ûÖ¹¹²ÓÃ */
-                        MPU_ACCESS_CACHEABLE,       /* ÔÊÐícache */
-                        MPU_ACCESS_BUFFERABLE);     /* ÔÊÐí»º³å */
+    /* ä¿æŠ¤æ•´ä¸ªDTCM,å…±128Kå­—èŠ‚ */
+    mpu_set_protection( 0x20000000,                 /* åŸºåœ°å€ */
+                        MPU_REGION_SIZE_128KB,      /* é•¿åº¦ */
+                        MPU_REGION_NUMBER1, 0,      /* NUMER1,å…è®¸æŒ‡ä»¤è®¿é—® */
+                        MPU_REGION_FULL_ACCESS,     /* å…¨è®¿é—® */
+                        MPU_ACCESS_NOT_SHAREABLE,   /* ç¦æ­¢å…±ç”¨ */
+                        MPU_ACCESS_CACHEABLE,       /* å…è®¸cache */
+                        MPU_ACCESS_BUFFERABLE);     /* å…è®¸ç¼“å†² */
 
-    /* ±£»¤Õû¸öAXI SRAM,¹²512K×Ö½Ú */
-    mpu_set_protection( 0x24000000,                 /* »ùµØÖ· */
-                        MPU_REGION_SIZE_512KB,      /* ³¤¶È */
-                        MPU_REGION_NUMBER2, 0,      /* NUMER2,ÔÊÐíÖ¸Áî·ÃÎÊ */
-                        MPU_REGION_FULL_ACCESS,     /* È«·ÃÎÊ */
-                        MPU_ACCESS_SHAREABLE,       /* ÔÊÐí¹²ÓÃ */
-                        MPU_ACCESS_CACHEABLE,       /* ÔÊÐícache */
-                        MPU_ACCESS_NOT_BUFFERABLE); /* ½ûÖ¹»º³å */
+    /* ä¿æŠ¤æ•´ä¸ªAXI SRAM,å…±512Kå­—èŠ‚ */
+    mpu_set_protection( 0x24000000,                 /* åŸºåœ°å€ */
+                        MPU_REGION_SIZE_512KB,      /* é•¿åº¦ */
+                        MPU_REGION_NUMBER2, 0,      /* NUMER2,å…è®¸æŒ‡ä»¤è®¿é—® */
+                        MPU_REGION_FULL_ACCESS,     /* å…¨è®¿é—® */
+                        MPU_ACCESS_SHAREABLE,       /* å…è®¸å…±ç”¨ */
+                        MPU_ACCESS_CACHEABLE,       /* å…è®¸cache */
+                        MPU_ACCESS_NOT_BUFFERABLE); /* ç¦æ­¢ç¼“å†² */
     
-    /* ±£»¤Õû¸öSRAM1~SRAM3,¹²512K×Ö½Ú */
-    mpu_set_protection( 0x30000000,                 /* »ùµØÖ· */
-                        MPU_REGION_SIZE_512KB,      /* ³¤¶È */
-                        MPU_REGION_NUMBER3, 0,      /* NUMER3,ÔÊÐíÖ¸Áî·ÃÎÊ */
-                        MPU_REGION_FULL_ACCESS,     /* È«·ÃÎÊ */
-                        MPU_ACCESS_NOT_SHAREABLE,   /* ½ûÖ¹¹²ÓÃ */
-                        MPU_ACCESS_CACHEABLE,       /* ÔÊÐícache */
-                        MPU_ACCESS_BUFFERABLE);     /* ÔÊÐí»º³å */
+    /* ä¿æŠ¤æ•´ä¸ªSRAM1~SRAM3,å…±512Kå­—èŠ‚ */
+    mpu_set_protection( 0x30000000,                 /* åŸºåœ°å€ */
+                        MPU_REGION_SIZE_512KB,      /* é•¿åº¦ */
+                        MPU_REGION_NUMBER3, 0,      /* NUMER3,å…è®¸æŒ‡ä»¤è®¿é—® */
+                        MPU_REGION_FULL_ACCESS,     /* å…¨è®¿é—® */
+                        MPU_ACCESS_NOT_SHAREABLE,   /* ç¦æ­¢å…±ç”¨ */
+                        MPU_ACCESS_CACHEABLE,       /* å…è®¸cache */
+                        MPU_ACCESS_BUFFERABLE);     /* å…è®¸ç¼“å†² */
                         
-    /* ±£»¤Õû¸öSRAM4,¹²64K×Ö½Ú */
-    mpu_set_protection( 0x38000000,                 /* »ùµØÖ· */
-                        MPU_REGION_SIZE_64KB,       /* ³¤¶È */
-                        MPU_REGION_NUMBER4, 0,      /* NUMER4,ÔÊÐíÖ¸Áî·ÃÎÊ */
-                        MPU_REGION_FULL_ACCESS,     /* È«·ÃÎÊ */
-                        MPU_ACCESS_NOT_SHAREABLE,   /* ½ûÖ¹¹²ÓÃ */
-                        MPU_ACCESS_CACHEABLE,       /* ÔÊÐícache */
-                        MPU_ACCESS_BUFFERABLE);     /* ÔÊÐí»º³å */
+    /* ä¿æŠ¤æ•´ä¸ªSRAM4,å…±64Kå­—èŠ‚ */
+    mpu_set_protection( 0x38000000,                 /* åŸºåœ°å€ */
+                        MPU_REGION_SIZE_64KB,       /* é•¿åº¦ */
+                        MPU_REGION_NUMBER4, 0,      /* NUMER4,å…è®¸æŒ‡ä»¤è®¿é—® */
+                        MPU_REGION_FULL_ACCESS,     /* å…¨è®¿é—® */
+                        MPU_ACCESS_NOT_SHAREABLE,   /* ç¦æ­¢å…±ç”¨ */
+                        MPU_ACCESS_CACHEABLE,       /* å…è®¸cache */
+                        MPU_ACCESS_BUFFERABLE);     /* å…è®¸ç¼“å†² */
                         
-    /* ±£»¤MCU LCDÆÁËùÔÚµÄFMCÇøÓò,¹²64M×Ö½Ú */
-    mpu_set_protection( 0x60000000,                 /* »ùµØÖ· */
-                        MPU_REGION_SIZE_64MB,       /* ³¤¶È */
-                        MPU_REGION_NUMBER5, 0,      /* NUMER5,ÔÊÐíÖ¸Áî·ÃÎÊ */
-                        MPU_REGION_FULL_ACCESS,     /* È«·ÃÎÊ */
-                        MPU_ACCESS_NOT_SHAREABLE,   /* ½ûÖ¹¹²ÓÃ */
-                        MPU_ACCESS_NOT_CACHEABLE,   /* ½ûÖ¹cache */
-                        MPU_ACCESS_NOT_BUFFERABLE); /* ½ûÖ¹»º³å */
+    /* ä¿æŠ¤MCU LCDå±æ‰€åœ¨çš„FMCåŒºåŸŸ,å…±64Må­—èŠ‚ */
+    mpu_set_protection( 0x60000000,                 /* åŸºåœ°å€ */
+                        MPU_REGION_SIZE_64MB,       /* é•¿åº¦ */
+                        MPU_REGION_NUMBER5, 0,      /* NUMER5,å…è®¸æŒ‡ä»¤è®¿é—® */
+                        MPU_REGION_FULL_ACCESS,     /* å…¨è®¿é—® */
+                        MPU_ACCESS_NOT_SHAREABLE,   /* ç¦æ­¢å…±ç”¨ */
+                        MPU_ACCESS_NOT_CACHEABLE,   /* ç¦æ­¢cache */
+                        MPU_ACCESS_NOT_BUFFERABLE); /* ç¦æ­¢ç¼“å†² */
                         
-    /* ±£»¤SDRAMÇøÓò,¹²32M×Ö½Ú */
-    mpu_set_protection( 0xC0000000,                 /* »ùµØÖ· */
-                        MPU_REGION_SIZE_32MB,       /* ³¤¶È */
-                        MPU_REGION_NUMBER6, 0,      /* NUMER6,ÔÊÐíÖ¸Áî·ÃÎÊ */
-                        MPU_REGION_FULL_ACCESS,     /* È«·ÃÎÊ */
-                        MPU_ACCESS_NOT_SHAREABLE,   /* ½ûÖ¹¹²ÓÃ */
-                        MPU_ACCESS_CACHEABLE,       /* ÔÊÐícache */
-                        MPU_ACCESS_BUFFERABLE);     /* ÔÊÐí»º³å */
+    /* ä¿æŠ¤SDRAMåŒºåŸŸ,å…±32Må­—èŠ‚ */
+    mpu_set_protection( 0xC0000000,                 /* åŸºåœ°å€ */
+                        MPU_REGION_SIZE_32MB,       /* é•¿åº¦ */
+                        MPU_REGION_NUMBER6, 0,      /* NUMER6,å…è®¸æŒ‡ä»¤è®¿é—® */
+                        MPU_REGION_FULL_ACCESS,     /* å…¨è®¿é—® */
+                        MPU_ACCESS_NOT_SHAREABLE,   /* ç¦æ­¢å…±ç”¨ */
+                        MPU_ACCESS_CACHEABLE,       /* å…è®¸cache */
+                        MPU_ACCESS_BUFFERABLE);     /* å…è®¸ç¼“å†² */
 
                         
-    /* ±£»¤Õû¸öNAND FLASHÇøÓò,¹²256M×Ö½Ú */
-    mpu_set_protection( 0x80000000,                 /* »ùµØÖ· */
-                        MPU_REGION_SIZE_256MB,      /* ³¤¶È */
-                        MPU_REGION_NUMBER7, 1,      /* NUMER7,½ûÖ¹Ö¸Áî·ÃÎÊ */
-                        MPU_REGION_FULL_ACCESS,     /* È«·ÃÎÊ */
-                        MPU_ACCESS_NOT_SHAREABLE,   /* ½ûÖ¹¹²ÓÃ */
-                        MPU_ACCESS_NOT_CACHEABLE,   /* ½ûÖ¹cache */
-                        MPU_ACCESS_NOT_BUFFERABLE); /* ½ûÖ¹»º³å */
+    /* ä¿æŠ¤æ•´ä¸ªNAND FLASHåŒºåŸŸ,å…±256Må­—èŠ‚ */
+    mpu_set_protection( 0x80000000,                 /* åŸºåœ°å€ */
+                        MPU_REGION_SIZE_256MB,      /* é•¿åº¦ */
+                        MPU_REGION_NUMBER7, 1,      /* NUMER7,ç¦æ­¢æŒ‡ä»¤è®¿é—® */
+                        MPU_REGION_FULL_ACCESS,     /* å…¨è®¿é—® */
+                        MPU_ACCESS_NOT_SHAREABLE,   /* ç¦æ­¢å…±ç”¨ */
+                        MPU_ACCESS_NOT_CACHEABLE,   /* ç¦æ­¢cache */
+                        MPU_ACCESS_NOT_BUFFERABLE); /* ç¦æ­¢ç¼“å†² */
 }
 
 

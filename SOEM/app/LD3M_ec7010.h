@@ -37,7 +37,7 @@ static const int32 UNIT_PULSES[NUM_SLAVES] =
    59710, // 电机4的单位脉冲数
    72817, // 电机5的单位脉冲数
    72817, // 电机6的单位脉冲数
-   30583, // 电机7的单位脉冲数
+   72817*2, // 电机7的单位脉冲数
 };
 // 定义每个电机的最大速度值
 static const int32 a_cnt[NUM_SLAVES] =
@@ -50,7 +50,7 @@ static const int32 a_cnt[NUM_SLAVES] =
    80000, // 电机4的最大速度值
    23333, // 电机5的最大速度值
    23333, // 电机6的最大速度值
-   10000  // 电机7的最大速度值
+   23333*2  // 电机7的最大速度值
 };
 // 定义每个电机的相对正转值
 static const int8_t rotate_sign[NUM_SLAVES] =

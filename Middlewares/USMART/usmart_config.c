@@ -12,7 +12,7 @@
 #include "lcd.h"
 #include "LD3M_ec7010.h"
 #include "my_arm.h"
-
+#include "interpolation.h"
 void lcd_show_static_string(void)
 {
     // 显示字符串的函数实现 
@@ -20,7 +20,15 @@ void lcd_show_static_string(void)
 }
 void calculate_arm()
 {
-    arm_forward_kinematics(LD3M_all.cur_degree);
+    arm_forward_kinematics(LD3M_all.cur_degree);// 计算机械臂正运动学
+}
+void trajectory_planning_arc()
+{
+    trajectory_planning_with_joints_arc();// 圆弧
+}
+void trajectory_planning_line()
+{
+    trajectory_planning_with_joints_line();// 直线
 }
 /* 函数名列表初始化(用户自己添加)
  * 用户直接在这里输入要执行的函数名及其查找串
@@ -45,6 +53,10 @@ struct _m_usmart_nametab usmart_nametab[] =
     (void *)restart_motors,"void restart_motors()",
     (void *)simple_demo,"void simple_demo(void)",
     (void *)set_max_velocity,"void set_max_velocity(uint8 slave_index, int32 target_vel)",
+    (void *)trajectory_planning_arc,"void trajectory_planning_arc(void)",
+    (void *)trajectory_planning_line,"void trajectory_planning_line(void)",
+    (void *)wave_action,"void wave_action(void)",
+
 };
 
 /******************************************************************************************/

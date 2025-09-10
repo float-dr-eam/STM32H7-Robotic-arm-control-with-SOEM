@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        CT_IIC.h
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2022-09-06
- * @brief       µçÈİ´¥ÃşÆÁ Çı¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       ç”µå®¹è§¦æ‘¸å± é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó °¢²¨ÂŞ H743¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ é˜¿æ³¢ç½— H743å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ĞŞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜
  * V1.0 20220906
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  *
  ****************************************************************************************************
  */
@@ -28,18 +28,18 @@
 //#include "./SYSTEM/sys/sys.h"   
 #include "stm32h7xx_hal.h"
 /******************************************************************************************/
-/* CT_IIC Òı½Å ¶¨Òå */
+/* CT_IIC å¼•è„š å®šä¹‰ */
 #define CT_IIC_SCL_GPIO_PORT              GPIOH
 #define CT_IIC_SCL_GPIO_PIN               GPIO_PIN_6
-#define CT_IIC_SCL_GPIO_CLK_ENABLE()      do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)    /* PH¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define CT_IIC_SCL_GPIO_CLK_ENABLE()      do{ __HAL_RCC_GPIOH_CLK_ENABLE(); }while(0)    /* PHå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define CT_IIC_SDA_GPIO_PORT              GPIOI
 #define CT_IIC_SDA_GPIO_PIN               GPIO_PIN_3
-#define CT_IIC_SDA_GPIO_CLK_ENABLE()      do{ __HAL_RCC_GPIOI_CLK_ENABLE(); }while(0)    /* PI¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define CT_IIC_SDA_GPIO_CLK_ENABLE()      do{ __HAL_RCC_GPIOI_CLK_ENABLE(); }while(0)    /* PIå£æ—¶é’Ÿä½¿èƒ½ */
 
 /******************************************************************************************/
 
-/* IO²Ù×÷ */
+/* IOæ“ä½œ */
 #define CT_IIC_SCL(x)       do{ x ? \
                                    HAL_GPIO_WritePin(CT_IIC_SCL_GPIO_PORT, CT_IIC_SCL_GPIO_PIN, GPIO_PIN_SET) : \
                                    HAL_GPIO_WritePin(CT_IIC_SCL_GPIO_PORT, CT_IIC_SCL_GPIO_PIN, GPIO_PIN_RESET); \
@@ -50,18 +50,18 @@
                                    HAL_GPIO_WritePin(CT_IIC_SDA_GPIO_PORT, CT_IIC_SDA_GPIO_PIN, GPIO_PIN_RESET); \
                                }while(0)                                                /* SDA */
 
-#define CT_READ_SDA         HAL_GPIO_ReadPin(CT_IIC_SDA_GPIO_PORT, CT_IIC_SDA_GPIO_PIN) /* ÊäÈëSDA */
+#define CT_READ_SDA         HAL_GPIO_ReadPin(CT_IIC_SDA_GPIO_PORT, CT_IIC_SDA_GPIO_PIN) /* è¾“å…¥SDA */
 
 
-/* IICËùÓĞ²Ù×÷º¯Êı */
-void ct_iic_init(void);                      /* ³õÊ¼»¯IICµÄIO¿Ú */
-void ct_iic_start(void);                     /* ·¢ËÍIIC¿ªÊ¼ĞÅºÅ */
-void ct_iic_stop(void);                      /* ·¢ËÍIICÍ£Ö¹ĞÅºÅ */
-void ct_iic_send_byte(uint8_t data);         /* IIC·¢ËÍÒ»¸ö×Ö½Ú */
-uint8_t ct_iic_read_byte(unsigned char ack); /* IIC¶ÁÈ¡Ò»¸ö×Ö½Ú */
-uint8_t ct_iic_wait_ack(void);               /* IICµÈ´ıACKĞÅºÅ */
-void ct_iic_ack(void);                       /* IIC·¢ËÍACKĞÅºÅ */
-void ct_iic_nack(void);                      /* IIC²»·¢ËÍACKĞÅºÅ */
+/* IICæ‰€æœ‰æ“ä½œå‡½æ•° */
+void ct_iic_init(void);                      /* åˆå§‹åŒ–IICçš„IOå£ */
+void ct_iic_start(void);                     /* å‘é€IICå¼€å§‹ä¿¡å· */
+void ct_iic_stop(void);                      /* å‘é€IICåœæ­¢ä¿¡å· */
+void ct_iic_send_byte(uint8_t data);         /* IICå‘é€ä¸€ä¸ªå­—èŠ‚ */
+uint8_t ct_iic_read_byte(unsigned char ack); /* IICè¯»å–ä¸€ä¸ªå­—èŠ‚ */
+uint8_t ct_iic_wait_ack(void);               /* IICç­‰å¾…ACKä¿¡å· */
+void ct_iic_ack(void);                       /* IICå‘é€ACKä¿¡å· */
+void ct_iic_nack(void);                      /* IICä¸å‘é€ACKä¿¡å· */
 
 #endif
 

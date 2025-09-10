@@ -1,26 +1,26 @@
 /**
  ****************************************************************************************************
  * @file        ft5206.c
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.1
  * @date        2022-09-06
- * @brief       7´çµçÈİ´¥ÃşÆÁ-FT5206/FT5426 Çı¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       7å¯¸ç”µå®¹è§¦æ‘¸å±-FT5206/FT5426 é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó °¢²¨ÂŞ H743¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ é˜¿æ³¢ç½— H743å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ĞŞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜
  * V1.0 20220906
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  * V1.1 20230607
- * 1£¬ĞÂÔö¶ÔST7796 3.5´çÆÁ GT1151µÄÖ§³Ö
- * 2£¬ĞÂÔö¶ÔILI9806 4.3´çÆÁ GT1151µÄÖ§³Ö
+ * 1ï¼Œæ–°å¢å¯¹ST7796 3.5å¯¸å± GT1151çš„æ”¯æŒ
+ * 2ï¼Œæ–°å¢å¯¹ILI9806 4.3å¯¸å± GT1151çš„æ”¯æŒ
  *
  ****************************************************************************************************
  */
@@ -35,103 +35,103 @@
 #include "tim.h"
 
 /**
- * @brief       ÏòFT5206Ğ´ÈëÒ»´ÎÊı¾İ
- * @param       reg : ÆğÊ¼¼Ä´æÆ÷µØÖ·
- * @param       buf : Êı¾İ»º»º´æÇø
- * @param       len : Ğ´Êı¾İ³¤¶È
- * @retval      0, ³É¹¦; 1, Ê§°Ü;
+ * @brief       å‘FT5206å†™å…¥ä¸€æ¬¡æ•°æ®
+ * @param       reg : èµ·å§‹å¯„å­˜å™¨åœ°å€
+ * @param       buf : æ•°æ®ç¼“ç¼“å­˜åŒº
+ * @param       len : å†™æ•°æ®é•¿åº¦
+ * @retval      0, æˆåŠŸ; 1, å¤±è´¥;
  */
 uint8_t ft5206_wr_reg(uint16_t reg, uint8_t *buf, uint8_t len)
 {
     uint8_t i;
     uint8_t ret = 0;
     ct_iic_start();
-    ct_iic_send_byte(FT5206_CMD_WR);    /* ·¢ËÍĞ´ÃüÁî */
+    ct_iic_send_byte(FT5206_CMD_WR);    /* å‘é€å†™å‘½ä»¤ */
     ct_iic_wait_ack();
-    ct_iic_send_byte(reg & 0XFF);       /* ·¢ËÍµÍ8Î»µØÖ· */
+    ct_iic_send_byte(reg & 0XFF);       /* å‘é€ä½8ä½åœ°å€ */
     ct_iic_wait_ack();
 
     for (i = 0; i < len; i++)
     {
-        ct_iic_send_byte(buf[i]);       /* ·¢Êı¾İ */
+        ct_iic_send_byte(buf[i]);       /* å‘æ•°æ® */
         ret = ct_iic_wait_ack();
 
         if (ret)break;
     }
 
-    ct_iic_stop();                      /* ²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş */
+    ct_iic_stop();                      /* äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶ */
     return ret;
 }
 
 /**
- * @brief       ´ÓFT5206¶Á³öÒ»´ÎÊı¾İ
- * @param       reg : ÆğÊ¼¼Ä´æÆ÷µØÖ·
- * @param       buf : Êı¾İ»º»º´æÇø
- * @param       len : ¶ÁÊı¾İ³¤¶È
- * @retval      ÎŞ
+ * @brief       ä»FT5206è¯»å‡ºä¸€æ¬¡æ•°æ®
+ * @param       reg : èµ·å§‹å¯„å­˜å™¨åœ°å€
+ * @param       buf : æ•°æ®ç¼“ç¼“å­˜åŒº
+ * @param       len : è¯»æ•°æ®é•¿åº¦
+ * @retval      æ— 
  */
 void ft5206_rd_reg(uint16_t reg, uint8_t *buf, uint8_t len)
 {
     uint8_t i;
     ct_iic_start();
-    ct_iic_send_byte(FT5206_CMD_WR);                        /* ·¢ËÍĞ´ÃüÁî */
+    ct_iic_send_byte(FT5206_CMD_WR);                        /* å‘é€å†™å‘½ä»¤ */
     ct_iic_wait_ack();
-    ct_iic_send_byte(reg & 0XFF);                           /* ·¢ËÍµÍ8Î»µØÖ· */
+    ct_iic_send_byte(reg & 0XFF);                           /* å‘é€ä½8ä½åœ°å€ */
     ct_iic_wait_ack();
     ct_iic_start();
-    ct_iic_send_byte(FT5206_CMD_RD);                        /* ·¢ËÍ¶ÁÃüÁî */
+    ct_iic_send_byte(FT5206_CMD_RD);                        /* å‘é€è¯»å‘½ä»¤ */
     ct_iic_wait_ack();
 
     for (i = 0; i < len; i++)
     {
-        buf[i] = ct_iic_read_byte(i == (len - 1) ? 0 : 1);  /* ¶ÁÈ¡Êı¾İ */
+        buf[i] = ct_iic_read_byte(i == (len - 1) ? 0 : 1);  /* è¯»å–æ•°æ® */
     }
 
-    ct_iic_stop();                                          /* ²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş */
+    ct_iic_stop();                                          /* äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶ */
 }
 
 /**
- * @brief       ³õÊ¼»¯FT5206´¥ÃşÆÁ
- * @param       ÎŞ
- * @retval      0, ³õÊ¼»¯³É¹¦; 1, ³õÊ¼»¯Ê§°Ü;
+ * @brief       åˆå§‹åŒ–FT5206è§¦æ‘¸å±
+ * @param       æ— 
+ * @retval      0, åˆå§‹åŒ–æˆåŠŸ; 1, åˆå§‹åŒ–å¤±è´¥;
  */
 uint8_t ft5206_init(void)
 {
     GPIO_InitTypeDef gpio_init_struct;
     uint8_t temp[2];
 
-    FT5206_RST_GPIO_CLK_ENABLE();                               /* RSTÒı½ÅÊ±ÖÓÊ¹ÄÜ */
-    FT5206_INT_GPIO_CLK_ENABLE();                               /* INTÒı½ÅÊ±ÖÓÊ¹ÄÜ */
+    FT5206_RST_GPIO_CLK_ENABLE();                               /* RSTå¼•è„šæ—¶é’Ÿä½¿èƒ½ */
+    FT5206_INT_GPIO_CLK_ENABLE();                               /* INTå¼•è„šæ—¶é’Ÿä½¿èƒ½ */
 
     gpio_init_struct.Pin = FT5206_RST_GPIO_PIN;
-    gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;                /* ÍÆÍìÊä³ö */
-    gpio_init_struct.Pull = GPIO_PULLUP;                        /* ÉÏÀ­ */
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;         /* ¸ßËÙ */
-    HAL_GPIO_Init(FT5206_RST_GPIO_PORT, &gpio_init_struct);     /* ³õÊ¼»¯RSTÒı½Å */
+    gpio_init_struct.Mode = GPIO_MODE_OUTPUT_PP;                /* æ¨æŒ½è¾“å‡º */
+    gpio_init_struct.Pull = GPIO_PULLUP;                        /* ä¸Šæ‹‰ */
+    gpio_init_struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;         /* é«˜é€Ÿ */
+    HAL_GPIO_Init(FT5206_RST_GPIO_PORT, &gpio_init_struct);     /* åˆå§‹åŒ–RSTå¼•è„š */
 
     gpio_init_struct.Pin = FT5206_INT_GPIO_PIN;
-    gpio_init_struct.Mode = GPIO_MODE_INPUT;                    /* ÊäÈë */
-    gpio_init_struct.Pull = GPIO_PULLUP;                        /* ÉÏÀ­ */
-    gpio_init_struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;         /* ¸ßËÙ */
-    HAL_GPIO_Init(FT5206_INT_GPIO_PORT, &gpio_init_struct);     /* ³õÊ¼»¯INTÒı½Å */
+    gpio_init_struct.Mode = GPIO_MODE_INPUT;                    /* è¾“å…¥ */
+    gpio_init_struct.Pull = GPIO_PULLUP;                        /* ä¸Šæ‹‰ */
+    gpio_init_struct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;         /* é«˜é€Ÿ */
+    HAL_GPIO_Init(FT5206_INT_GPIO_PORT, &gpio_init_struct);     /* åˆå§‹åŒ–INTå¼•è„š */
 
-    ct_iic_init();                                  /* ³õÊ¼»¯µçÈİÆÁµÄI2C×ÜÏß */
-    FT5206_RST(0);                                  /* ¸´Î» */
+    ct_iic_init();                                  /* åˆå§‹åŒ–ç”µå®¹å±çš„I2Cæ€»çº¿ */
+    FT5206_RST(0);                                  /* å¤ä½ */
     Delay_us(20);
-    FT5206_RST(1);                                  /* ÊÍ·Å¸´Î» */
+    FT5206_RST(1);                                  /* é‡Šæ”¾å¤ä½ */
     Delay_us(50);
     temp[0] = 0;
-    ft5206_wr_reg(FT5206_DEVIDE_MODE, temp, 1);     /* ½øÈëÕı³£²Ù×÷Ä£Ê½ */
-    ft5206_wr_reg(FT5206_ID_G_MODE, temp, 1);       /* ²éÑ¯Ä£Ê½ */
-    temp[0] = 22;                                   /* ´¥ÃşÓĞĞ§Öµ£¬22£¬Ô½Ğ¡Ô½ÁéÃô */
-    ft5206_wr_reg(FT5206_ID_G_THGROUP, temp, 1);    /* ÉèÖÃ´¥ÃşÓĞĞ§Öµ */
-    temp[0] = 12;                                   /* ¼¤»îÖÜÆÚ£¬²»ÄÜĞ¡ÓÚ12£¬×î´ó14 */
+    ft5206_wr_reg(FT5206_DEVIDE_MODE, temp, 1);     /* è¿›å…¥æ­£å¸¸æ“ä½œæ¨¡å¼ */
+    ft5206_wr_reg(FT5206_ID_G_MODE, temp, 1);       /* æŸ¥è¯¢æ¨¡å¼ */
+    temp[0] = 22;                                   /* è§¦æ‘¸æœ‰æ•ˆå€¼ï¼Œ22ï¼Œè¶Šå°è¶Šçµæ• */
+    ft5206_wr_reg(FT5206_ID_G_THGROUP, temp, 1);    /* è®¾ç½®è§¦æ‘¸æœ‰æ•ˆå€¼ */
+    temp[0] = 12;                                   /* æ¿€æ´»å‘¨æœŸï¼Œä¸èƒ½å°äº12ï¼Œæœ€å¤§14 */
     ft5206_wr_reg(FT5206_ID_G_PERIODACTIVE, temp, 1);
     
-    /* ¶ÁÈ¡°æ±¾ºÅ£¬²Î¿¼Öµ£º0x3003 */
+    /* è¯»å–ç‰ˆæœ¬å·ï¼Œå‚è€ƒå€¼ï¼š0x3003 */
     ft5206_rd_reg(FT5206_ID_G_LIB_VERSION, &temp[0], 2);
 
-    if ((temp[0] == 0X30 && temp[1] == 0X03) || temp[1] == 0X01 || temp[1] == 0X02 || (temp[0] == 0x0 && temp[1] == 0X0))   /* °æ±¾:0X3003/0X0001/0X0002/CST340 */
+    if ((temp[0] == 0X30 && temp[1] == 0X03) || temp[1] == 0X01 || temp[1] == 0X02 || (temp[0] == 0x0 && temp[1] == 0X0))   /* ç‰ˆæœ¬:0X3003/0X0001/0X0002/CST340 */
     {
         printf("CTP ID:%x\r\n", ((uint16_t)temp[0] << 8) + temp[1]);
         return 0;
@@ -140,15 +140,15 @@ uint8_t ft5206_init(void)
     return 1;
 }
 
-/* FT5206 5¸ö´¥Ãşµã ¶ÔÓ¦µÄ¼Ä´æÆ÷±í */
+/* FT5206 5ä¸ªè§¦æ‘¸ç‚¹ å¯¹åº”çš„å¯„å­˜å™¨è¡¨ */
 const uint16_t FT5206_TPX_TBL[5] = {FT5206_TP1_REG, FT5206_TP2_REG, FT5206_TP3_REG, FT5206_TP4_REG, FT5206_TP5_REG};
 
 /**
- * @brief       É¨Ãè´¥ÃşÆÁ(²ÉÓÃ²éÑ¯·½Ê½)
- * @param       mode : µçÈİÆÁÎ´ÓÃµ½´Î²ÎÊı, ÎªÁË¼æÈİµç×èÆÁ
- * @retval      µ±Ç°´¥ÆÁ×´Ì¬
- *   @arg       0, ´¥ÆÁÎŞ´¥Ãş; 
- *   @arg       1, ´¥ÆÁÓĞ´¥Ãş;
+ * @brief       æ‰«æè§¦æ‘¸å±(é‡‡ç”¨æŸ¥è¯¢æ–¹å¼)
+ * @param       mode : ç”µå®¹å±æœªç”¨åˆ°æ¬¡å‚æ•°, ä¸ºäº†å…¼å®¹ç”µé˜»å±
+ * @retval      å½“å‰è§¦å±çŠ¶æ€
+ *   @arg       0, è§¦å±æ— è§¦æ‘¸; 
+ *   @arg       1, è§¦å±æœ‰è§¦æ‘¸;
  */
 uint8_t ft5206_scan(uint8_t mode)
 {
@@ -157,28 +157,28 @@ uint8_t ft5206_scan(uint8_t mode)
     uint8_t i = 0;
     uint8_t res = 0;
     uint16_t temp;
-    static uint8_t t = 0;    /* ¿ØÖÆ²éÑ¯¼ä¸ô,´Ó¶ø½µµÍCPUÕ¼ÓÃÂÊ */
+    static uint8_t t = 0;    /* æ§åˆ¶æŸ¥è¯¢é—´éš”,ä»è€Œé™ä½CPUå ç”¨ç‡ */
 
     t++;
 
-    if ((t % 10) == 0 || t < 10)                              /* ¿ÕÏĞÊ±,Ã¿½øÈë10´ÎCTP_Scanº¯Êı²Å¼ì²â1´Î,´Ó¶ø½ÚÊ¡CPUÊ¹ÓÃÂÊ */
+    if ((t % 10) == 0 || t < 10)                              /* ç©ºé—²æ—¶,æ¯è¿›å…¥10æ¬¡CTP_Scanå‡½æ•°æ‰æ£€æµ‹1æ¬¡,ä»è€ŒèŠ‚çœCPUä½¿ç”¨ç‡ */
     {
-        ft5206_rd_reg(FT5206_REG_NUM_FINGER, &sta, 1);        /* ¶ÁÈ¡´¥ÃşµãµÄ×´Ì¬ */
+        ft5206_rd_reg(FT5206_REG_NUM_FINGER, &sta, 1);        /* è¯»å–è§¦æ‘¸ç‚¹çš„çŠ¶æ€ */
 
         if ((sta & 0XF) && ((sta & 0XF) < 6))
         {
-            temp = 0XFFFF << (sta & 0XF);                     /* ½«µãµÄ¸öÊı×ª»»Îª1µÄÎ»Êı,Æ¥Åätp_dev.sta¶¨Òå */
+            temp = 0XFFFF << (sta & 0XF);                     /* å°†ç‚¹çš„ä¸ªæ•°è½¬æ¢ä¸º1çš„ä½æ•°,åŒ¹é…tp_dev.staå®šä¹‰ */
             tp_dev.sta = (~temp) | TP_PRES_DOWN | TP_CATH_PRES;
 
-            Delay_us(4);                                      /* ±ØÒªµÄÑÓÊ±£¬·ñÔòÀÏÊÇÈÏÎªÓĞ°´¼ü°´ÏÂ */
+            Delay_us(4);                                      /* å¿…è¦çš„å»¶æ—¶ï¼Œå¦åˆ™è€æ˜¯è®¤ä¸ºæœ‰æŒ‰é”®æŒ‰ä¸‹ */
 
             for (i = 0; i < 5; i++)
             {
-                if (tp_dev.sta & (1 << i))                    /* ´¥ÃşÓĞĞ§? */
+                if (tp_dev.sta & (1 << i))                    /* è§¦æ‘¸æœ‰æ•ˆ? */
                 {
-                    ft5206_rd_reg(FT5206_TPX_TBL[i], buf, 4); /* ¶ÁÈ¡XY×ø±êÖµ */
+                    ft5206_rd_reg(FT5206_TPX_TBL[i], buf, 4); /* è¯»å–XYåæ ‡å€¼ */
 
-                    if (tp_dev.touchtype & 0X01)              /* ºáÆÁ */
+                    if (tp_dev.touchtype & 0X01)              /* æ¨ªå± */
                     {
                         tp_dev.y[i] = ((uint16_t)(buf[0] & 0X0F) << 8) + buf[1];
                         tp_dev.x[i] = ((uint16_t)(buf[2] & 0X0F) << 8) + buf[3];
@@ -189,7 +189,7 @@ uint8_t ft5206_scan(uint8_t mode)
                         tp_dev.y[i] = ((uint16_t)(buf[2] & 0X0F) << 8) + buf[3];
                     }
 
-                    if ((buf[0] & 0XF0) != 0X80)tp_dev.x[i] = tp_dev.y[i] = 0;      /* ±ØĞëÊÇcontactÊÂ¼ş£¬²ÅÈÏÎªÓĞĞ§ */
+                    if ((buf[0] & 0XF0) != 0X80)tp_dev.x[i] = tp_dev.y[i] = 0;      /* å¿…é¡»æ˜¯contactäº‹ä»¶ï¼Œæ‰è®¤ä¸ºæœ‰æ•ˆ */
 
                     //printf("x[%d]:%d,y[%d]:%d\r\n", i, tp_dev.x[i], i, tp_dev.y[i]);
                 }
@@ -199,29 +199,29 @@ uint8_t ft5206_scan(uint8_t mode)
 
             if (tp_dev.x[0] == 0 && tp_dev.y[0] == 0)
             {
-                sta = 0;     /* ¶Áµ½µÄÊı¾İ¶¼ÊÇ0,ÔòºöÂÔ´Ë´ÎÊı¾İ */
+                sta = 0;     /* è¯»åˆ°çš„æ•°æ®éƒ½æ˜¯0,åˆ™å¿½ç•¥æ­¤æ¬¡æ•°æ® */
             }
-            t = 0;           /* ´¥·¢Ò»´Î,Ôò»á×îÉÙÁ¬Ğø¼à²â10´Î,´Ó¶øÌá¸ßÃüÖĞÂÊ */
+            t = 0;           /* è§¦å‘ä¸€æ¬¡,åˆ™ä¼šæœ€å°‘è¿ç»­ç›‘æµ‹10æ¬¡,ä»è€Œæé«˜å‘½ä¸­ç‡ */
         }
     }
 
-    if ((sta & 0X1F) == 0)                    /* ÎŞ´¥Ãşµã°´ÏÂ */
+    if ((sta & 0X1F) == 0)                    /* æ— è§¦æ‘¸ç‚¹æŒ‰ä¸‹ */
     {
-        if (tp_dev.sta & TP_PRES_DOWN)        /* Ö®Ç°ÊÇ±»°´ÏÂµÄ */
+        if (tp_dev.sta & TP_PRES_DOWN)        /* ä¹‹å‰æ˜¯è¢«æŒ‰ä¸‹çš„ */
         {
-            tp_dev.sta &= ~TP_PRES_DOWN;      /* ±ê¼Ç°´¼üËÉ¿ª */
+            tp_dev.sta &= ~TP_PRES_DOWN;      /* æ ‡è®°æŒ‰é”®æ¾å¼€ */
         }
-        else                                  /* Ö®Ç°¾ÍÃ»ÓĞ±»°´ÏÂ */
+        else                                  /* ä¹‹å‰å°±æ²¡æœ‰è¢«æŒ‰ä¸‹ */
         {
             tp_dev.x[0] = 0xffff;
             tp_dev.y[0] = 0xffff;
-            tp_dev.sta &= 0XE000;            /* Çå³ıµãÓĞĞ§±ê¼Ç */
+            tp_dev.sta &= 0XE000;            /* æ¸…é™¤ç‚¹æœ‰æ•ˆæ ‡è®° */
         }
     }
 
     if (t > 240)
     {
-        t = 10;        /* ÖØĞÂ´Ó10¿ªÊ¼¼ÆÊı */
+        t = 10;        /* é‡æ–°ä»10å¼€å§‹è®¡æ•° */
     }
 
     return res;

@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        pcf8574.h
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2022-09-06
- * @brief       PCF8574 Çı¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       PCF8574 é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó °¢²¨ÂŞ H743¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ é˜¿æ³¢ç½— H743å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ĞŞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜
  * V1.0 20220906
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  *
  ****************************************************************************************************
  */
@@ -29,27 +29,27 @@
 #include "myiic.h"
 
 /******************************************************************************************/
-/* Òı½Å ¶¨Òå */
+/* å¼•è„š å®šä¹‰ */
 
 #define PCF8574_GPIO_PORT                  GPIOB
 #define PCF8574_GPIO_PIN                   GPIO_PIN_12
-#define PCF8574_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOB_CLK_ENABLE(); }while(0)      /* PB¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define PCF8574_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOB_CLK_ENABLE(); }while(0)      /* PBå£æ—¶é’Ÿä½¿èƒ½ */
 
 /******************************************************************************************/
 
-#define PCF8574_INT  HAL_GPIO_ReadPin(PCF8574_GPIO_PORT,PCF8574_GPIO_PIN)                   /* PCF8574 INT½Å */
+#define PCF8574_INT  HAL_GPIO_ReadPin(PCF8574_GPIO_PORT,PCF8574_GPIO_PIN)                   /* PCF8574 INTè„š */
 
-#define PCF8574_ADDR  0X40      /* PCF8574µØÖ·(×óÒÆÁËÒ»Î») */
+#define PCF8574_ADDR  0X40      /* PCF8574åœ°å€(å·¦ç§»äº†ä¸€ä½) */
 
-/* PCF8574¸÷¸öIOµÄ¹¦ÄÜ */
-#define BEEP_IO         0       /* ·äÃùÆ÷¿ØÖÆÒı½Å        P0 */
-#define AP_INT_IO       1       /* AP3216CÖĞ¶ÏÒı½Å       P1 */
-#define DCMI_PWDN_IO    2       /* DCMIµÄµçÔ´¿ØÖÆÒı½Å    P2 */
-#define USB_PWR_IO      3       /* USBµçÔ´¿ØÖÆÒı½Å       P3 */
-#define EX_IO           4       /* À©Õ¹IO,×Ô¶¨ÒåÊ¹ÓÃ     P4 */
-#define MPU_INT_IO      5       /* SH3001ÖĞ¶ÏÒı½Å        P5 */
-#define RS485_RE_IO     6       /* RS485_REÒı½Å          P6 */
-#define ETH_RESET_IO    7       /* ÒÔÌ«Íø¸´Î»Òı½Å        P7 */
+/* PCF8574å„ä¸ªIOçš„åŠŸèƒ½ */
+#define BEEP_IO         0       /* èœ‚é¸£å™¨æ§åˆ¶å¼•è„š        P0 */
+#define AP_INT_IO       1       /* AP3216Cä¸­æ–­å¼•è„š       P1 */
+#define DCMI_PWDN_IO    2       /* DCMIçš„ç”µæºæ§åˆ¶å¼•è„š    P2 */
+#define USB_PWR_IO      3       /* USBç”µæºæ§åˆ¶å¼•è„š       P3 */
+#define EX_IO           4       /* æ‰©å±•IO,è‡ªå®šä¹‰ä½¿ç”¨     P4 */
+#define MPU_INT_IO      5       /* SH3001ä¸­æ–­å¼•è„š        P5 */
+#define RS485_RE_IO     6       /* RS485_REå¼•è„š          P6 */
+#define ETH_RESET_IO    7       /* ä»¥å¤ªç½‘å¤ä½å¼•è„š        P7 */
 
 /******************************************************************************************/
 

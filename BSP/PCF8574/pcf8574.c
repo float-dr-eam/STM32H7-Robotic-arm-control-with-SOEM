@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        pcf8574.c
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2022-09-06
- * @brief       PCF8574 Çı¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       PCF8574 é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó °¢²¨ÂŞ H743¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ é˜¿æ³¢ç½— H743å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ĞŞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜
  * V1.0 20220906
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  *
  ****************************************************************************************************
  */
@@ -26,78 +26,78 @@
 #include "tim.h"
 
 /**
- * @brief       ³õÊ¼»¯PCF8574
- * @param       ÎŞ
- * @retval      0, ³É¹¦;
-                1, Ê§°Ü;
+ * @brief       åˆå§‹åŒ–PCF8574
+ * @param       æ— 
+ * @retval      0, æˆåŠŸ;
+                1, å¤±è´¥;
  */
 uint8_t pcf8574_init(void)
 {
     uint8_t temp = 0;
     GPIO_InitTypeDef gpio_init_struct;
-    PCF8574_GPIO_CLK_ENABLE();                            /* Ê¹ÄÜGPIOBÊ±ÖÓ */
+    PCF8574_GPIO_CLK_ENABLE();                            /* ä½¿èƒ½GPIOBæ—¶é’Ÿ */
 
     gpio_init_struct.Pin = PCF8574_GPIO_PIN;              /* PB12 */
-    gpio_init_struct.Mode = GPIO_MODE_INPUT;              /* ÊäÈë */
-    gpio_init_struct.Pull = GPIO_PULLUP;                  /* ÉÏÀ­ */
-    gpio_init_struct.Speed = GPIO_SPEED_HIGH;             /* ¸ßËÙ */
-    HAL_GPIO_Init(PCF8574_GPIO_PORT, &gpio_init_struct);  /* ³õÊ¼»¯ */
-    iic_init();                                           /* IIC³õÊ¼»¯ */
+    gpio_init_struct.Mode = GPIO_MODE_INPUT;              /* è¾“å…¥ */
+    gpio_init_struct.Pull = GPIO_PULLUP;                  /* ä¸Šæ‹‰ */
+    gpio_init_struct.Speed = GPIO_SPEED_HIGH;             /* é«˜é€Ÿ */
+    HAL_GPIO_Init(PCF8574_GPIO_PORT, &gpio_init_struct);  /* åˆå§‹åŒ– */
+    iic_init();                                           /* IICåˆå§‹åŒ– */
 
-    /* ¼ì²éPCF8574ÊÇ·ñÔÚÎ» */
+    /* æ£€æŸ¥PCF8574æ˜¯å¦åœ¨ä½ */
     iic_start();
-    iic_send_byte(PCF8574_ADDR);                          /* Ğ´µØÖ· */
-    temp = iic_wait_ack();                                /* µÈ´ıÓ¦´ğ,Í¨¹ıÅĞ¶ÏÊÇ·ñÓĞACKÓ¦´ğ,À´ÅĞ¶ÏPCF8574µÄ×´Ì¬ */
-    iic_stop();                                           /* ²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş */
-    pcf8574_write_byte(0XFF);                             /* Ä¬ÈÏÇé¿öÏÂËùÓĞIOÊä³ö¸ßµçÆ½ */
+    iic_send_byte(PCF8574_ADDR);                          /* å†™åœ°å€ */
+    temp = iic_wait_ack();                                /* ç­‰å¾…åº”ç­”,é€šè¿‡åˆ¤æ–­æ˜¯å¦æœ‰ACKåº”ç­”,æ¥åˆ¤æ–­PCF8574çš„çŠ¶æ€ */
+    iic_stop();                                           /* äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶ */
+    pcf8574_write_byte(0XFF);                             /* é»˜è®¤æƒ…å†µä¸‹æ‰€æœ‰IOè¾“å‡ºé«˜ç”µå¹³ */
     return temp;
 }
 
 /**
- * @brief       ¶ÁÈ¡PCF8574µÄ8Î»IOÖµ
- * @param       ÎŞ
- * @retval      ·µ»ØÖµ:¶Áµ½µÄÊı¾İ
+ * @brief       è¯»å–PCF8574çš„8ä½IOå€¼
+ * @param       æ— 
+ * @retval      è¿”å›å€¼:è¯»åˆ°çš„æ•°æ®
  */
 uint8_t pcf8574_read_byte(void)
 { 
     uint8_t temp = 0;
 
     iic_start();
-    iic_send_byte(PCF8574_ADDR | 0X01);                   /* ½øÈë½ÓÊÕÄ£Ê½ */
+    iic_send_byte(PCF8574_ADDR | 0X01);                   /* è¿›å…¥æ¥æ”¶æ¨¡å¼ */
     iic_wait_ack();
     temp = iic_read_byte(0);
-    iic_stop();                                           /* ²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş */
+    iic_stop();                                           /* äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶ */
 
     return temp;
 }
 
 /**
- * @brief       ÏòPCF8574Ğ´Èë8Î»IOÖµ
- * @param       data:ÒªĞ´ÈëµÄÊı¾İ
- * @retval      ÎŞ
+ * @brief       å‘PCF8574å†™å…¥8ä½IOå€¼
+ * @param       data:è¦å†™å…¥çš„æ•°æ®
+ * @retval      æ— 
  */
 void pcf8574_write_byte(uint8_t data)
 {
     iic_start();  
-    iic_send_byte(PCF8574_ADDR | 0X00);   /* ·¢ËÍÆ÷¼şµØÖ·0X40,Ğ´Êı¾İ */
+    iic_send_byte(PCF8574_ADDR | 0X00);   /* å‘é€å™¨ä»¶åœ°å€0X40,å†™æ•°æ® */
     iic_wait_ack();
-    iic_send_byte(data);                  /* ·¢ËÍ×Ö½Ú */
+    iic_send_byte(data);                  /* å‘é€å­—èŠ‚ */
     iic_wait_ack();
-    iic_stop();                           /* ²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş  */
+    iic_stop();                           /* äº§ç”Ÿä¸€ä¸ªåœæ­¢æ¡ä»¶  */
     Delay_us(10); 
 }
 
 /**
- * @brief       ÉèÖÃPCF8574Ä³¸öIOµÄ¸ßµÍµçÆ½
- * @param       bit  : ÒªÉèÖÃµÄIO±àºÅ,0~7
- * @param       sta  : IOµÄ×´Ì¬;0»ò1
- * @retval      ÎŞ
+ * @brief       è®¾ç½®PCF8574æŸä¸ªIOçš„é«˜ä½ç”µå¹³
+ * @param       bit  : è¦è®¾ç½®çš„IOç¼–å·,0~7
+ * @param       sta  : IOçš„çŠ¶æ€;0æˆ–1
+ * @retval      æ— 
  */
 void pcf8574_write_bit(uint8_t bit, uint8_t sta)
 {
     uint8_t data;
 
-    data = pcf8574_read_byte();     /* ÏÈ¶Á³öÔ­À´µÄÉèÖÃ */
+    data = pcf8574_read_byte();     /* å…ˆè¯»å‡ºåŸæ¥çš„è®¾ç½® */
     if (sta == 0)
     {
         data &= ~(1 << bit);
@@ -106,19 +106,19 @@ void pcf8574_write_bit(uint8_t bit, uint8_t sta)
     {
         data |= 1 << bit;
     }
-    pcf8574_write_byte(data);       /* Ğ´ÈëĞÂµÄÊı¾İ */
+    pcf8574_write_byte(data);       /* å†™å…¥æ–°çš„æ•°æ® */
 }
 
 /**
- * @brief       ¶ÁÈ¡PCF8574µÄÄ³¸öIOµÄÖµ
- * @param       bit£ºÒª¶ÁÈ¡µÄIO±àºÅ,0~7
- * @retval      ·µ»ØÖµ:´ËIOµÄÖµ,0»ò1
+ * @brief       è¯»å–PCF8574çš„æŸä¸ªIOçš„å€¼
+ * @param       bitï¼šè¦è¯»å–çš„IOç¼–å·,0~7
+ * @retval      è¿”å›å€¼:æ­¤IOçš„å€¼,0æˆ–1
  */
 uint8_t pcf8574_read_bit(uint8_t bit)
 {
     uint8_t data;
 
-    data = pcf8574_read_byte();     /* ÏÈ¶ÁÈ¡Õâ¸ö8Î»IOµÄÖµ  */
+    data = pcf8574_read_byte();     /* å…ˆè¯»å–è¿™ä¸ª8ä½IOçš„å€¼  */
     if (data & (1 << bit))
     {
         return 1;
