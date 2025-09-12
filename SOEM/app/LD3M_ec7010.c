@@ -14,7 +14,7 @@ extern int dorun;
 LD3M_All LD3M_all = {0}; // 定义一个全局变量，用于存储所有从站的 PDO 数据
 int32 origin_point[NUM_SLAVES + 1];
 
-#define saved_flag 987654321
+#define saved_flag 112233445
 
 /*
 1. 将 EtherCAT 状态机切换到预操作，此状态下可以用 SD0 来配置 PDO 映射。

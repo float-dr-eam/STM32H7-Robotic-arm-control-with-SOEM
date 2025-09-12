@@ -912,50 +912,50 @@ void wave_action(void)
         joint_traj->joint_angles[i] = (my_float*)mymalloc(SRAMEX, sizeof(my_float) * DOF);
     }
     // 1
-    joint_traj->joint_angles[0][0] = 45.0f;
+    joint_traj->joint_angles[0][0] = -60.0f;
     joint_traj->joint_angles[0][1] = 0.0f;
     joint_traj->joint_angles[0][2] = 0.0f;
-    joint_traj->joint_angles[0][3] = 45.0f;
+    joint_traj->joint_angles[0][3] = -60.0f;
     joint_traj->joint_angles[0][4] = 90.0f;
     joint_traj->joint_angles[0][5] = 0.0f;
     joint_traj->joint_angles[0][6] = 0.0f;
     // 2
-    joint_traj->joint_angles[1][0] = 45.0f;
+    joint_traj->joint_angles[1][0] = -60.0f;
     joint_traj->joint_angles[1][1] = 0.0f;
     joint_traj->joint_angles[1][2] = 0.0f;
-    joint_traj->joint_angles[1][3] = 45.0f;
+    joint_traj->joint_angles[1][3] = -60.0f;
     joint_traj->joint_angles[1][4] = 90.0f;
-    joint_traj->joint_angles[1][5] = -45.0f;
+    joint_traj->joint_angles[1][5] = -60.0f;
     joint_traj->joint_angles[1][6] = 0.0f;
     // 3
-    joint_traj->joint_angles[2][0] = 45.0f;
+    joint_traj->joint_angles[2][0] = -60.0f;
     joint_traj->joint_angles[2][1] = 0.0f;
     joint_traj->joint_angles[2][2] = 0.0f;
-    joint_traj->joint_angles[2][3] = 45.0f;
+    joint_traj->joint_angles[2][3] = -60.0f;
     joint_traj->joint_angles[2][4] = 90.0f;
-    joint_traj->joint_angles[2][5] = 45.0f;
+    joint_traj->joint_angles[2][5] = 60.0f;
     joint_traj->joint_angles[2][6] = 0.0f;
     // 4
-    joint_traj->joint_angles[3][0] = 45.0f;
+    joint_traj->joint_angles[3][0] = -60.0f;
     joint_traj->joint_angles[3][1] = 0.0f;
     joint_traj->joint_angles[3][2] = 0.0f;
-    joint_traj->joint_angles[3][3] = 45.0f;
+    joint_traj->joint_angles[3][3] = -60.0f;
     joint_traj->joint_angles[3][4] = 90.0f;
-    joint_traj->joint_angles[3][5] = -45.0f;
+    joint_traj->joint_angles[3][5] = -60.0f;
     joint_traj->joint_angles[3][6] = 0.0f;
     // 5
-    joint_traj->joint_angles[4][0] = 45.0f;
+    joint_traj->joint_angles[4][0] = -60.0f;
     joint_traj->joint_angles[4][1] = 0.0f;
     joint_traj->joint_angles[4][2] = 0.0f;
-    joint_traj->joint_angles[4][3] = 45.0f;
+    joint_traj->joint_angles[4][3] = -60.0f;
     joint_traj->joint_angles[4][4] = 90.0f;
-    joint_traj->joint_angles[4][5] = 45.0f;
+    joint_traj->joint_angles[4][5] = 60.0f;
     joint_traj->joint_angles[4][6] = 0.0f;
     // 6
-    joint_traj->joint_angles[5][0] = 45.0f;
+    joint_traj->joint_angles[5][0] = -60.0f;
     joint_traj->joint_angles[5][1] = 0.0f;
     joint_traj->joint_angles[5][2] = 0.0f;
-    joint_traj->joint_angles[5][3] = 45.0f;
+    joint_traj->joint_angles[5][3] = -60.0f;
     joint_traj->joint_angles[5][4] = 90.0f;
     joint_traj->joint_angles[5][5] = 0.0f;
     joint_traj->joint_angles[5][6] = 0.0f;
